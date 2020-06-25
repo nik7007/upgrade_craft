@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft;
 
+import com.nik7.upgradecraft.init.RegisterBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,9 +20,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("upgradecraft")
+@Mod(UpgradeCraft.MOD_ID)
 public class UpgradeCraft {
-    // Directly reference a log4j logger.
+    public final static String MOD_ID = "upgradecraft";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public UpgradeCraft() {
@@ -33,6 +34,8 @@ public class UpgradeCraft {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+
+        RegisterBlocks.init();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -51,7 +54,7 @@ public class UpgradeCraft {
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
         // some example code to dispatch IMC to another mod
-        InterModComms.sendTo("examplemod", "helloworld", () -> {
+        InterModComms.sendTo("upgradecraft", "helloworld", () -> {
             LOGGER.info("Hello world from the MDK");
             return "Hello world";
         });
