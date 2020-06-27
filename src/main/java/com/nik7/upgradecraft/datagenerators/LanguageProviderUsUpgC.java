@@ -16,5 +16,6 @@ public class LanguageProviderUsUpgC extends LanguageProviderUpgC {
 
         //block
         addBlock(RegisterBlocks.SLIMY_PLANKS_BLOCK, "Slimy Planks");
+        addBlock(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK, "Wooden Fluid Tank");
     }
 }

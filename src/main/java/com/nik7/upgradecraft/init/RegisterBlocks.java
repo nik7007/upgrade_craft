@@ -1,6 +1,7 @@
 package com.nik7.upgradecraft.init;
 
 import com.nik7.upgradecraft.block.SlimyPlanksBlock;
+import com.nik7.upgradecraft.block.WoodenFluidTankBlock;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -17,5 +18,6 @@ public class RegisterBlocks {
     }
 
     public static final RegistryObject<SlimyPlanksBlock> SLIMY_PLANKS_BLOCK = BLOCKS_REGISTER.register("slimy_planks_block", SlimyPlanksBlock::new);
+    public static final RegistryObject<WoodenFluidTankBlock> WOODEN_FLUID_TANK_BLOCK = BLOCKS_REGISTER.register("wooden_fluid_tank_block", WoodenFluidTankBlock::new);
 
 }

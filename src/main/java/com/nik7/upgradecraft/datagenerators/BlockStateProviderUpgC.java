@@ -17,5 +17,9 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(RegisterBlocks.SLIMY_PLANKS_BLOCK.get(),
                 models().cubeAll("slimy_planks_block", new ResourceLocation(MOD_ID, "block/slimy_planks_block")));
+
+        simpleBlock(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get(),
+                models().withExistingParent("wooden_fluid_tank", modLoc("block/fluid_tank"))
+                        .texture("all", modLoc("block/wooden_fluid_tank")));
     }
 }

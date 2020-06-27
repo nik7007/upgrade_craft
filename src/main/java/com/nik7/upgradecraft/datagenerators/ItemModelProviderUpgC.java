@@ -19,5 +19,8 @@ public class ItemModelProviderUpgC extends ItemModelProvider {
     protected void registerModels() {
         withExistingParent(Objects.requireNonNull(RegisterBlocks.SLIMY_PLANKS_BLOCK.get().getRegistryName()).getPath(),
                 new ResourceLocation(MOD_ID, "block/slimy_planks_block"));
+
+        withExistingParent(Objects.requireNonNull(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get().getRegistryName()).getPath(),
+                new ResourceLocation(MOD_ID, "block/wooden_fluid_tank"));
     }
 }
