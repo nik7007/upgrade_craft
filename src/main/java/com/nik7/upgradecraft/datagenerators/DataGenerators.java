@@ -23,6 +23,7 @@ public class DataGenerators {
             generator.addProvider(new BlockStateProviderUpgC(generator, helper));
             generator.addProvider(new ItemModelProviderUpgC(generator, helper));
             //lang
+            generator.addProvider(new LanguageProviderUsUpgC(generator));
         }
     }
 }
