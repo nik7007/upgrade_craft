@@ -2,6 +2,7 @@ package com.nik7.upgradecraft;
 
 import com.nik7.upgradecraft.init.RegisterBlocks;
 import com.nik7.upgradecraft.init.RegisterItems;
+import com.nik7.upgradecraft.init.RegisterTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,6 +38,7 @@ public class UpgradeCraft {
 
         RegisterBlocks.init();
         RegisterItems.init();
+        RegisterTileEntity.init();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

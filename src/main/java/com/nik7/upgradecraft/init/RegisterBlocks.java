@@ -11,13 +11,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
 
 public class RegisterBlocks {
-    private static final DeferredRegister<Block> BLOCKS_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
+    private static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
 
     public static void init() {
-        BLOCKS_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<SlimyPlanksBlock> SLIMY_PLANKS_BLOCK = BLOCKS_REGISTER.register("slimy_planks_block", SlimyPlanksBlock::new);
-    public static final RegistryObject<WoodenFluidTankBlock> WOODEN_FLUID_TANK_BLOCK = BLOCKS_REGISTER.register("wooden_fluid_tank_block", WoodenFluidTankBlock::new);
+    public static final RegistryObject<SlimyPlanksBlock> SLIMY_PLANKS_BLOCK = REGISTER.register("slimy_planks_block", SlimyPlanksBlock::new);
+    public static final RegistryObject<WoodenFluidTankBlock> WOODEN_FLUID_TANK_BLOCK = REGISTER.register("wooden_fluid_tank_block", WoodenFluidTankBlock::new);
 
 }
