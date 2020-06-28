@@ -1,4 +1,4 @@
-package com.nik7.upgradecraft.block;
+package com.nik7.upgradecraft.blocks;
 
 import com.nik7.upgradecraft.tileentity.WoodenFluidTankTileEntity;
 import net.minecraft.block.Block;

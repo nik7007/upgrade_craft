@@ -1,7 +1,7 @@
 package com.nik7.upgradecraft.init;
 
-import com.nik7.upgradecraft.block.SlimyPlanksBlock;
-import com.nik7.upgradecraft.block.WoodenFluidTankBlock;
+import com.nik7.upgradecraft.blocks.SlimyPlanksBlock;
+import com.nik7.upgradecraft.blocks.WoodenFluidTankBlock;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
