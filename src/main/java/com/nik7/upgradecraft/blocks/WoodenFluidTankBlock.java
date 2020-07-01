@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.blocks;
 
+import com.nik7.upgradecraft.state.properties.TankType;
 import com.nik7.upgradecraft.tileentity.WoodenFluidTankTileEntity;
 import com.nik7.upgradecraft.utils.LazyOptionalHelper;
 import com.nik7.upgradecraft.utils.UpgCInventoryHelper;
@@ -14,6 +15,7 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -39,13 +41,15 @@ import javax.annotation.Nullable;
 public class WoodenFluidTankBlock extends Block {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final EnumProperty<TankType> TYPE = EnumProperty.create("type", TankType.class);
+
 
     public WoodenFluidTankBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.GREEN)
                 .notSolid()
                 .hardnessAndResistance(2.5F)
                 .sound(SoundType.WOOD));
-        this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false));
+        this.setDefaultState(this.getDefaultState().with(TYPE, TankType.SINGLE).with(WATERLOGGED, false));
     }
 
     @Override
@@ -115,7 +119,7 @@ public class WoodenFluidTankBlock extends Block {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, TYPE);
     }
 
     @Override
