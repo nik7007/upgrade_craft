@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
@@ -110,6 +111,31 @@ public class WoodenFluidTankBlock extends Block {
 
         }
         return ActionResultType.SUCCESS;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (state.get(TYPE) == TankType.SINGLE) {
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if (tileEntity instanceof WoodenFluidTankTileEntity) {
+                ((WoodenFluidTankTileEntity) tileEntity).mergeTank();
+            }
+        }
+    }
+
+    @Deprecated
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            TankType tankType = state.get(TYPE);
+            if (tankType != TankType.SINGLE) {
+                TileEntity tileEntity = worldIn.getTileEntity(pos);
+                if (tileEntity instanceof WoodenFluidTankTileEntity) {
+                    ((WoodenFluidTankTileEntity) tileEntity).separateTank(tankType);
+                }
+            }
+        }
+
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     @Override
