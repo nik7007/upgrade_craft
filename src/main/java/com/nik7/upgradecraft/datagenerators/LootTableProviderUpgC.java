@@ -10,7 +10,7 @@ import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -39,11 +39,12 @@ public class LootTableProviderUpgC extends LootTableProvider {
         @Override
         protected void addTables() {
             this.registerDropSelfLootTable(RegisterBlocks.SLIMY_PLANKS_BLOCK.get());
+            this.registerDropSelfLootTable(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get());
         }
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return Collections.singletonList(RegisterBlocks.SLIMY_PLANKS_BLOCK.get());
+            return Arrays.asList(RegisterBlocks.SLIMY_PLANKS_BLOCK.get(), RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get());
         }
     }
 
