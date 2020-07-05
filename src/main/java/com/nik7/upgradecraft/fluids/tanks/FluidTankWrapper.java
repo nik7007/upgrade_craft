@@ -1,13 +1,13 @@
 package com.nik7.upgradecraft.fluids.tanks;
 
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
+import java.util.function.Predicate;
 
-public class FluidTankWrapper<T extends IFluidHandler & IFluidTank> extends FluidTank {
+public class FluidTankWrapper<T extends FluidTank> extends FluidTank {
 
     private T internalTank;
 
@@ -16,6 +16,7 @@ public class FluidTankWrapper<T extends IFluidHandler & IFluidTank> extends Flui
         this.internalTank = internalTank;
     }
 
+
     public T getInternalTank() {
         return internalTank;
     }
@@ -23,6 +24,27 @@ public class FluidTankWrapper<T extends IFluidHandler & IFluidTank> extends Flui
     public void setInternalTank(T internalTank) {
         this.internalTank = internalTank;
     }
+
+    @Override
+    public FluidTank setCapacity(int capacity) {
+        return internalTank.setCapacity(capacity);
+    }
+
+    @Override
+    public FluidTank setValidator(Predicate<FluidStack> validator) {
+        return internalTank.setValidator(validator);
+    }
+
+    @Override
+    public FluidTank readFromNBT(CompoundNBT nbt) {
+        return internalTank.readFromNBT(nbt);
+    }
+
+    @Override
+    public CompoundNBT writeToNBT(CompoundNBT nbt) {
+        return internalTank.writeToNBT(nbt);
+    }
+
 
     @Nonnull
     @Override
@@ -82,4 +104,15 @@ public class FluidTankWrapper<T extends IFluidHandler & IFluidTank> extends Flui
     public FluidStack drain(int maxDrain, FluidAction action) {
         return internalTank.drain(maxDrain, action);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return internalTank.isEmpty();
+    }
+
+    @Override
+    public int getSpace() {
+        return internalTank.getSpace();
+    }
+
 }
