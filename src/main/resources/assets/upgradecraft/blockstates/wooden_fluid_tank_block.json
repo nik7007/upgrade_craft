@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
+    "type=single": {
       "model": "upgradecraft:block/wooden_fluid_tank"
+    },
+    "type=top": {
+      "model": "upgradecraft:block/wooden_double_top_fluid_tank"
+    },
+    "type=bottom": {
+      "model": "upgradecraft:block/wooden_double_bottom_fluid_tank"
     }
   }
 }
