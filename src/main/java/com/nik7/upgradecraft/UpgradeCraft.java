@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(UpgradeCraft.MOD_ID)
 public class UpgradeCraft {
     public final static String MOD_ID = "upgradecraft";
-    private static final Logger LOGGER = LogManager.getLogger();
+    public final static Logger LOGGER = LogManager.getLogger();
 
     public UpgradeCraft() {
 
