@@ -20,7 +20,7 @@ import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 import static com.nik7.upgradecraft.init.RegisterTileEntity.WOODEN_FLUID_TANK_TILE_ENTITY_TYPE;
 
 public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITickableTileEntity {
-    private static final int BASE_CAPACITY = 2;
+    private static final int BASE_CAPACITY = 27;
     WoodenFluidTankTileEntity otherTank = null;
     private boolean firstTick = true;
 
