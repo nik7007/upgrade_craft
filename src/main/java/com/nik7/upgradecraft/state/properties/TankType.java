@@ -3,9 +3,24 @@ package com.nik7.upgradecraft.state.properties;
 import net.minecraft.util.IStringSerializable;
 
 public enum TankType implements IStringSerializable {
-    SINGLE("single"),
-    TOP("top"),
-    BOTTOM("bottom");
+    SINGLE("single") {
+        @Override
+        public TankType getOpposite() {
+            return SINGLE;
+        }
+    },
+    TOP("top") {
+        @Override
+        public TankType getOpposite() {
+            return BOTTOM;
+        }
+    },
+    BOTTOM("bottom") {
+        @Override
+        public TankType getOpposite() {
+            return TOP;
+        }
+    };
 
     private final String name;
 
@@ -17,4 +32,7 @@ public enum TankType implements IStringSerializable {
     public String getName() {
         return this.name;
     }
+
+    public abstract TankType getOpposite();
+
 }
