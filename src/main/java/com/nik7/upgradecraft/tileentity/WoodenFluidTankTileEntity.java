@@ -1,6 +1,7 @@
 package com.nik7.upgradecraft.tileentity;
 
 import com.nik7.upgradecraft.fluids.tanks.FluidTankWrapper;
+import com.nik7.upgradecraft.init.Config;
 import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -20,13 +21,12 @@ import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 import static com.nik7.upgradecraft.init.RegisterTileEntity.WOODEN_FLUID_TANK_TILE_ENTITY_TYPE;
 
 public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITickableTileEntity {
-    private static final int BASE_CAPACITY = 27;
     WoodenFluidTankTileEntity otherTank = null;
     private boolean firstTick = true;
 
     public WoodenFluidTankTileEntity() {
         super(WOODEN_FLUID_TANK_TILE_ENTITY_TYPE.get());
-        this.tank = new FluidTankWrapper<>(new FluidTank(BASE_CAPACITY * FluidAttributes.BUCKET_VOLUME));
+        this.tank = new FluidTankWrapper<>(new FluidTank(Config.TANK_CAPACITY.get() * FluidAttributes.BUCKET_VOLUME));
     }
 
     private static void otherSeparateTank(WoodenFluidTankTileEntity otherTank) {
@@ -36,7 +36,7 @@ public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITick
         TankType tankType = otherTank.getBlockState().get(TYPE);
         if (tankType != TankType.SINGLE) {
             boolean imBottom = tankType == TankType.BOTTOM;
-            FluidTank singleTank = new FluidTank(BASE_CAPACITY * FluidAttributes.BUCKET_VOLUME);
+            FluidTank singleTank = new FluidTank(Config.TANK_CAPACITY.get() * FluidAttributes.BUCKET_VOLUME);
             FluidStack fluidStack = otherTank.tank.getFluid().copy();
 
             if (fluidStack.getAmount() > 0) {
@@ -87,7 +87,7 @@ public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITick
             TankType validType = isBottom ? TankType.TOP : TankType.BOTTOM;
             WoodenFluidTankTileEntity otherTank = getTank(pos, validType);
             if (otherTank != null) {
-                FluidTank doubleTank = new FluidTank(2 * BASE_CAPACITY * FluidAttributes.BUCKET_VOLUME);
+                FluidTank doubleTank = new FluidTank(2 * Config.TANK_CAPACITY.get() * FluidAttributes.BUCKET_VOLUME);
                 doubleTank.fill(this.tank.getFluid().copy(), IFluidHandler.FluidAction.EXECUTE);
                 this.setTank(doubleTank);
                 otherTank.setTank(doubleTank);
@@ -119,7 +119,7 @@ public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITick
             }
             if (otherTank != null) {
 
-                FluidTank doubleTank = new FluidTank(2 * BASE_CAPACITY * FluidAttributes.BUCKET_VOLUME);
+                FluidTank doubleTank = new FluidTank(2 * Config.TANK_CAPACITY.get() * FluidAttributes.BUCKET_VOLUME);
                 int amount = doubleTank.fill(this.tank.getFluid().copy(), IFluidHandler.FluidAction.EXECUTE);
                 FluidStack otherFluid = otherTank.tank.getFluid().copy();
                 int newAmount = doubleTank.fill(otherFluid, IFluidHandler.FluidAction.EXECUTE);
