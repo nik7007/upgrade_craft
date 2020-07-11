@@ -59,7 +59,7 @@ public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITick
             singleTank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
 
             otherTank.setTank(singleTank);
-            if (otherTank.getBlockState().has(TYPE)) {
+            if (otherTank.getBlockState().func_235901_b_(TYPE)) {
                 otherTank.world.setBlockState(otherTank.getPos(), otherTank.getBlockState().with(TYPE, TankType.SINGLE),
                         Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
             }
@@ -77,7 +77,7 @@ public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITick
     }
 
     private void initTank() {
-        if (this.getBlockState().has(TYPE) && this.otherTank == null) {
+        if (this.getBlockState().func_235901_b_(TYPE) && this.otherTank == null) {
             TankType tankType = this.getBlockState().get(TYPE);
             if (tankType == TankType.SINGLE) {
                 return;
@@ -156,7 +156,7 @@ public class WoodenFluidTankTileEntity extends TileFluidHandler implements ITick
             TankType tankType = this.getBlockState().get(TYPE);
             if (tankType == validType.getOpposite()) {
                 BlockState blockState = this.world.getBlockState(pos);
-                if (blockState.has(TYPE) && blockState.get(TYPE) == validType) {
+                if (blockState.func_235901_b_(TYPE) && blockState.get(TYPE) == validType) {
                     TileEntity tileEntity = this.world.getTileEntity(pos);
                     if (tileEntity instanceof WoodenFluidTankTileEntity) {
                         return (WoodenFluidTankTileEntity) tileEntity;

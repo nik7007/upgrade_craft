@@ -7,8 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.loot.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,8 +31,8 @@ public class LootTableProviderUpgC extends LootTableProvider {
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationresults) {
-        map.forEach((name, table) -> LootTableManager.func_227508_a_(validationresults, name, table));
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker) {
+        map.forEach((name, table) -> LootTableManager.func_227508_a_(validationtracker, name, table));
     }
 
     private static class BlockLootTablesUpgC extends BlockLootTables {
