@@ -38,13 +38,18 @@ public class LootTableProviderUpgC extends LootTableProvider {
     private static class BlockLootTablesUpgC extends BlockLootTables {
         @Override
         protected void addTables() {
-            this.registerDropSelfLootTable(RegisterBlocks.SLIMY_PLANKS_BLOCK.get());
-            this.registerDropSelfLootTable(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get());
+            for (Block block : this.getKnownBlocks()) {
+                this.registerDropSelfLootTable(block);
+            }
         }
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return Arrays.asList(RegisterBlocks.SLIMY_PLANKS_BLOCK.get(), RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get());
+            return Arrays.asList(
+                    RegisterBlocks.SLIMY_PLANKS_BLOCK.get(),
+                    RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get(),
+                    RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()
+            );
         }
     }
 

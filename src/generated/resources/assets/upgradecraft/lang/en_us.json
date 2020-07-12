@@ -1,5 +1,7 @@
 {
   "block.upgradecraft.slimy_planks_block": "Slimy Planks",
   "block.upgradecraft.wooden_fluid_tank_block": "Wooden Fluid Tank",
-  "itemGroup.upgrade_craft": "UpgradeCraft"
+  "block.upgradecraft.wooden_fluid_tank_glassed_block": "Wooden Fluid Tank",
+  "itemGroup.upgrade_craft": "UpgradeCraft",
+  "tooltip.upgradecraft.tank.glassed": "Transparent"
 }

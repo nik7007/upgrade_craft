@@ -44,5 +44,9 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                     .modelFile(model)
                     .build();
         }, WoodenFluidTankBlock.WATERLOGGED);
+
+        simpleBlock(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get(),
+                models().withExistingParent("wooden_fluid_tank_glassed", modLoc("block/fluid_tank"))
+                        .texture("all", modLoc("block/wooden_fluid_tank_glassed")));
     }
 }

@@ -33,5 +33,14 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .patternLine("lll")
                 .addCriterion("has_slimy_planks_block", hasItem(RegisterBlocks.SLIMY_PLANKS_BLOCK.get()))
                 .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get())
+                .key('l', RegisterBlocks.SLIMY_PLANKS_BLOCK.get())
+                .key('g', Tags.Items.GLASS)
+                .patternLine("lll")
+                .patternLine("lgl")
+                .patternLine("lll")
+                .addCriterion("has_slimy_planks_block", hasItem(RegisterBlocks.SLIMY_PLANKS_BLOCK.get()))
+                .build(consumer);
     }
 }
