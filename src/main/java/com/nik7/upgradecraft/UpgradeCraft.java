@@ -1,12 +1,10 @@
 package com.nik7.upgradecraft;
 
-import com.nik7.upgradecraft.init.Config;
-import com.nik7.upgradecraft.init.RegisterBlocks;
-import com.nik7.upgradecraft.init.RegisterItems;
-import com.nik7.upgradecraft.init.RegisterTileEntity;
+import com.nik7.upgradecraft.init.*;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,8 +23,8 @@ public class UpgradeCraft {
         RegisterItems.init();
         RegisterTileEntity.init();
 
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
         LOGGER.info("Hello from UpgradeCraft!");
-
     }
 
 }
