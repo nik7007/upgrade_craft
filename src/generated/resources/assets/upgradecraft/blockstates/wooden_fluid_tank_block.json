@@ -4,10 +4,10 @@
       "model": "upgradecraft:block/wooden_fluid_tank"
     },
     "type=top": {
-      "model": "upgradecraft:block/wooden_double_top_fluid_tank"
+      "model": "upgradecraft:block/double_wooden_fluid_tank_top"
     },
     "type=bottom": {
-      "model": "upgradecraft:block/wooden_double_bottom_fluid_tank"
+      "model": "upgradecraft:block/double_wooden_fluid_tank_bottom"
     }
   }
 }
