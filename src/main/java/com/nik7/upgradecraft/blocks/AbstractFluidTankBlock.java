@@ -52,7 +52,7 @@ public abstract class AbstractFluidTankBlock extends Block {
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if (state.get(TYPE) == TankType.SINGLE) {
+        if (state.get(TYPE) == TankType.SINGLE && !worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof AbstractFluidTankTileEntity) {
                 ((AbstractFluidTankTileEntity) tileEntity).mergeTank();
@@ -62,7 +62,7 @@ public abstract class AbstractFluidTankBlock extends Block {
 
     @Deprecated
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
+        if (state.getBlock() != newState.getBlock() && !worldIn.isRemote) {
             TankType tankType = state.get(TYPE);
             if (tankType != TankType.SINGLE) {
                 TileEntity tileEntity = worldIn.getTileEntity(pos);
