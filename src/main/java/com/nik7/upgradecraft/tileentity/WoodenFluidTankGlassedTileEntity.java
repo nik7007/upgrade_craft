@@ -2,11 +2,15 @@ package com.nik7.upgradecraft.tileentity;
 
 import com.nik7.upgradecraft.init.Config;
 import com.nik7.upgradecraft.state.properties.TankType;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketDirection;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -28,7 +32,29 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
         if (world == null || world.isRemote) {
             return;
         }
-        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+        TankType tankType = getTankType();
+        if (tankType != TankType.BOTTOM) {
+            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+        }
+    }
+
+    @Nullable
+    public TankType getTankType() {
+        BlockState blockState = getBlockState();
+        if (blockState.func_235901_b_(TYPE)) {
+            return blockState.get(TYPE);
+        }
+
+        return null;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+        TankType tankType = getTankType();
+        if (tankType == TankType.BOTTOM) {
+            return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
+        }
+        return super.getRenderBoundingBox();
     }
 
     @Nullable
