@@ -7,6 +7,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketDirection;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
@@ -20,6 +21,14 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
 
     public WoodenFluidTankGlassedTileEntity() {
         super(WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE.get(), Config.TANK_CAPACITY.get());
+    }
+
+    @Override
+    protected void onFluidChange(Void aVoid) {
+        if (world == null || world.isRemote) {
+            return;
+        }
+        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
     }
 
     @Nullable
