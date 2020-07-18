@@ -28,7 +28,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
                                        int initialCapacity) {
         super(tileEntityTypeIn);
         this.initialCapacity = initialCapacity * FluidAttributes.BUCKET_VOLUME;
-        this.tank = new FluidTankWrapper<>(new FluidTank(initialCapacity));
+        this.tank = new FluidTankWrapper<>(new FluidTank(this.initialCapacity));
     }
 
     private void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
