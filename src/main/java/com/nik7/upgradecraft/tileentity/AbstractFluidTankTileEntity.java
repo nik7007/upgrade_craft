@@ -33,7 +33,9 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     }
 
     protected void onFluidChange(Void aVoid) {
-
+        if (world != null) {
+            world.updateComparatorOutputLevel(pos, getBlockState().getBlock());
+        }
     }
 
     private void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
@@ -80,6 +82,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         if (this.firstTick) {
             this.firstTick = false;
             this.initTank();
+            onFluidChange(null);
         }
     }
 

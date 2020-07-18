@@ -26,6 +26,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 
@@ -112,4 +113,26 @@ public abstract class AbstractFluidTankBlock extends Block {
     @Nullable
     @Override
     public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
+
+    @Override
+    public boolean hasComparatorInputOverride(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof AbstractFluidTankTileEntity) {
+            FluidStack fluid = ((AbstractFluidTankTileEntity) tileEntity).getFluid();
+            int capacity = ((AbstractFluidTankTileEntity) tileEntity).getCapacity();
+
+            float compareRaw = 15 * fluid.getAmount() / (float) capacity;
+            if (compareRaw > 0 && compareRaw < 1) {
+                compareRaw = 1;
+            }
+
+            return (int) compareRaw;
+        }
+        return 0;
+    }
 }
