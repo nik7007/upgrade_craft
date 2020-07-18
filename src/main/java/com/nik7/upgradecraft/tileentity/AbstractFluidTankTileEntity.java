@@ -22,13 +22,13 @@ import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 public abstract class AbstractFluidTankTileEntity extends TileFluidHandler implements ITickableTileEntity {
     private boolean firstTick = true;
     protected AbstractFluidTankTileEntity otherTank = null;
-    private final int initialCapacity;
+    protected final int initialCapacity;
 
     public AbstractFluidTankTileEntity(TileEntityType<? extends AbstractFluidTankTileEntity> tileEntityTypeIn,
                                        int initialCapacity) {
         super(tileEntityTypeIn);
-        this.initialCapacity = initialCapacity;
-        this.tank = new FluidTankWrapper<>(new FluidTank(initialCapacity * FluidAttributes.BUCKET_VOLUME));
+        this.initialCapacity = initialCapacity * FluidAttributes.BUCKET_VOLUME;
+        this.tank = new FluidTankWrapper<>(new FluidTank(initialCapacity));
     }
 
     private void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
@@ -38,7 +38,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         TankType tankType = otherTank.getBlockState().get(TYPE);
         if (tankType != TankType.SINGLE) {
             boolean imBottom = tankType == TankType.BOTTOM;
-            FluidTank singleTank = new FluidTank(initialCapacity * FluidAttributes.BUCKET_VOLUME);
+            FluidTank singleTank = new FluidTank(initialCapacity);
             FluidStack fluidStack = otherTank.tank.getFluid().copy();
 
             if (fluidStack.getAmount() > 0) {
@@ -89,7 +89,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             TankType validType = isBottom ? TankType.TOP : TankType.BOTTOM;
             AbstractFluidTankTileEntity otherTank = getTank(pos, validType);
             if (otherTank != null) {
-                FluidTank doubleTank = new FluidTank(2 * initialCapacity * FluidAttributes.BUCKET_VOLUME);
+                FluidTank doubleTank = new FluidTank(2 * initialCapacity);
                 doubleTank.fill(this.tank.getFluid().copy(), IFluidHandler.FluidAction.EXECUTE);
                 this.setTank(doubleTank);
                 otherTank.setTank(doubleTank);
@@ -121,7 +121,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             }
             if (otherTank != null) {
 
-                FluidTank doubleTank = new FluidTank(2 * initialCapacity * FluidAttributes.BUCKET_VOLUME);
+                FluidTank doubleTank = new FluidTank(2 * initialCapacity);
                 int amount = doubleTank.fill(this.tank.getFluid().copy(), IFluidHandler.FluidAction.EXECUTE);
                 FluidStack otherFluid = otherTank.tank.getFluid().copy();
                 int newAmount = doubleTank.fill(otherFluid, IFluidHandler.FluidAction.EXECUTE);
