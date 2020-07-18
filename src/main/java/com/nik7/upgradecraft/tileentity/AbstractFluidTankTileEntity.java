@@ -182,4 +182,30 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             this.otherTank = null;
         }
     }
+
+    @Nullable
+    public TankType getTankType() {
+        BlockState blockState = getBlockState();
+        if (blockState.func_235901_b_(TYPE)) {
+            return blockState.get(TYPE);
+        }
+
+        return null;
+    }
+
+    public FluidStack getFluid() {
+        return this.tank.getFluid().copy();
+    }
+
+    public int getCapacity() {
+        if (this.getBlockState().func_235901_b_(TYPE)) {
+            TankType tankType = this.getBlockState().get(TYPE);
+            if (tankType == TankType.SINGLE) {
+                return initialCapacity;
+            } else {
+                return 2 * initialCapacity;
+            }
+        }
+        return this.tank.getCapacity();
+    }
 }
