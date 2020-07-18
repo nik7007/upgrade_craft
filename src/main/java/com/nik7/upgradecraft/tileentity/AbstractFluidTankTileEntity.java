@@ -35,6 +35,16 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     protected void onFluidChange(Void aVoid) {
         if (world != null) {
             world.updateComparatorOutputLevel(pos, getBlockState().getBlock());
+            TankType tankType = getTankType();
+            BlockPos blockPos = null;
+            if (tankType == TankType.BOTTOM) {
+                blockPos = pos.up();
+            } else if (tankType == TankType.TOP) {
+                blockPos = pos.down();
+            }
+            if (blockPos != null) {
+                world.updateComparatorOutputLevel(blockPos, world.getBlockState(blockPos).getBlock());
+            }
         }
     }
 
