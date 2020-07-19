@@ -68,7 +68,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             if (blockPos != null) {
                 world.updateComparatorOutputLevel(blockPos, world.getBlockState(blockPos).getBlock());
             }
-            if (isTankMixed()) {
+            if (!isTankMixed()) {
                 notifyBlockUpdate();
             }
         }

@@ -23,8 +23,7 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
         if (world == null || world.isRemote) {
             return;
         }
-        TankType tankType = getTankType();
-        if (tankType != TankType.BOTTOM && !isTankMixed()) {
+        if (isTankMixed()) {
             notifyBlockUpdate();
         }
     }
