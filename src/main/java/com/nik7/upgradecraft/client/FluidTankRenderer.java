@@ -36,6 +36,7 @@ public class FluidTankRenderer extends TileEntityRenderer<WoodenFluidTankGlassed
     private static final int V_MAX = 3;
 
     private static final Vector3f VEC_ZERO = new Vector3f(0, 0, 0);
+    private static final float DOUBLE_HEIGHT = 2.25f;
 
     public FluidTankRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
@@ -44,11 +45,17 @@ public class FluidTankRenderer extends TileEntityRenderer<WoodenFluidTankGlassed
     @Override
     public void render(WoodenFluidTankGlassedTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         float height = 1;
+        int yTranslate = 0;
         TankType tankType = tileEntityIn.getTankType();
+        boolean mixed = tileEntityIn.isTankMixed();
         if (tankType == TankType.TOP) {
-            return;
+            if (!mixed) {
+                return;
+            }
+            height = DOUBLE_HEIGHT;
+            yTranslate = -1;
         } else if (tankType == TankType.BOTTOM) {
-            height = 2.25f;
+            height = DOUBLE_HEIGHT;
         }
 
         FluidStack fluidStack = tileEntityIn.getFluid();
@@ -74,7 +81,7 @@ public class FluidTankRenderer extends TileEntityRenderer<WoodenFluidTankGlassed
             Vector3d size = new Vector3d(0.70, 0.80 * fluidScale * height, 0.70);
 
             matrixStackIn.push();
-            matrixStackIn.translate(0.15, 0.10, 0.15); // min x, y, z
+            matrixStackIn.translate(0.15, 0.10 + yTranslate, 0.15); // min x, y, z
             Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
 
             for (Direction face : Direction.values()) {

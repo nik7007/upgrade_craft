@@ -4,6 +4,10 @@ import com.nik7.upgradecraft.fluids.tanks.EventFluidTank;
 import com.nik7.upgradecraft.fluids.tanks.FluidTankWrapper;
 import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.PacketDirection;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -18,6 +22,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nullable;
 
 import static com.nik7.upgradecraft.UpgradeCraft.LOGGER;
+import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
 import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 
 public abstract class AbstractFluidTankTileEntity extends TileFluidHandler implements ITickableTileEntity {
@@ -30,6 +35,24 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         super(tileEntityTypeIn);
         this.initialCapacity = initialCapacity * FluidAttributes.BUCKET_VOLUME;
         this.tank = new FluidTankWrapper<>(new EventFluidTank(this.initialCapacity, this::onFluidChange));
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 0, getUpdateTag());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag() {
+        return write(new CompoundNBT());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        if (world != null && world.isRemote() && net.getDirection() == PacketDirection.CLIENTBOUND) {
+            handleUpdateTag(getBlockState(), pkt.getNbtCompound());
+        }
     }
 
     protected void onFluidChange(Void aVoid) {
@@ -45,6 +68,15 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             if (blockPos != null) {
                 world.updateComparatorOutputLevel(blockPos, world.getBlockState(blockPos).getBlock());
             }
+            if (isTankMixed()) {
+                notifyBlockUpdate();
+            }
+        }
+    }
+
+    protected void notifyBlockUpdate() {
+        if (world != null) {
+            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
         }
     }
 
@@ -79,7 +111,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
 
             otherTank.setTank(singleTank);
             if (otherTank.getBlockState().func_235901_b_(TYPE)) {
-                otherTank.world.setBlockState(otherTank.getPos(), otherTank.getBlockState().with(TYPE, TankType.SINGLE),
+                otherTank.world.setBlockState(otherTank.getPos(), otherTank.getBlockState().with(TYPE, TankType.SINGLE).with(MIXED, false),
                         Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
             }
             otherTank.markDirty();
@@ -152,9 +184,12 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
                     TankType otherNewType = myNewType == TankType.BOTTOM ? TankType.TOP : TankType.BOTTOM;
                     BlockState otherBlockState = otherTank.getBlockState();
 
-                    this.world.setBlockState(getPos(), this.getBlockState().with(TYPE, myNewType),
+
+                    boolean mixed = !(otherBlockState.getBlock().getClass().equals(this.getBlockState().getBlock().getClass()));
+
+                    this.world.setBlockState(getPos(), this.getBlockState().with(TYPE, myNewType).with(MIXED, mixed),
                             Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
-                    this.world.setBlockState(otherTank.getPos(), otherBlockState.with(TYPE, otherNewType),
+                    this.world.setBlockState(otherTank.getPos(), otherBlockState.with(TYPE, otherNewType).with(MIXED, mixed),
                             Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
                     this.otherTank = otherTank;
                     otherTank.otherTank = this;
@@ -204,6 +239,14 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         }
 
         return null;
+    }
+
+    public boolean isTankMixed() {
+        BlockState blockState = getBlockState();
+        if (blockState.func_235901_b_(MIXED)) {
+            return blockState.get(MIXED);
+        }
+        return false;
     }
 
     public FluidStack getFluid() {

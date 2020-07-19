@@ -35,12 +35,13 @@ import static com.nik7.upgradecraft.utils.UpgCFluidHelper.fillDrainWithItem;
 public abstract class AbstractFluidTankBlock extends Block {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<TankType> TYPE = EnumProperty.create("type", TankType.class);
+    public static final BooleanProperty MIXED = BooleanProperty.create("mixed");
 
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 
     protected AbstractFluidTankBlock(AbstractBlock.Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(TYPE, TankType.SINGLE).with(WATERLOGGED, false));
+        this.setDefaultState(this.getDefaultState().with(TYPE, TankType.SINGLE).with(WATERLOGGED, false).with(MIXED, false));
     }
 
     @Override
@@ -83,7 +84,7 @@ public abstract class AbstractFluidTankBlock extends Block {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED, TYPE);
+        builder.add(WATERLOGGED, TYPE, MIXED);
     }
 
     @Override

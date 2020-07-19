@@ -31,8 +31,8 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
             return;
         }
         TankType tankType = getTankType();
-        if (tankType != TankType.BOTTOM) {
-            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+        if (tankType != TankType.BOTTOM && !isTankMixed()) {
+            notifyBlockUpdate();
         }
     }
 
@@ -40,32 +40,18 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
     public AxisAlignedBB getRenderBoundingBox() {
         TankType tankType = getTankType();
         if (tankType == TankType.BOTTOM) {
-            return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
+            return new AxisAlignedBB(getPos(), getPos().up());
+        }
+        if (isTankMixed() && tankType == TankType.TOP) {
+            return new AxisAlignedBB(getPos(), getPos().down());
         }
         return super.getRenderBoundingBox();
     }
 
-    @Nullable
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), 0, getUpdateTag());
-    }
-
-    @Override
-    public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        if (world != null && world.isRemote() && net.getDirection() == PacketDirection.CLIENTBOUND) {
-            handleUpdateTag(getBlockState(), pkt.getNbtCompound());
-        }
-    }
 
     @Override
     protected boolean tileIsCorrectInstance(TileEntity tileEntity) {
-        return tileEntity instanceof WoodenFluidTankGlassedTileEntity;
+        return tileEntity instanceof WoodenFluidTankGlassedTileEntity || tileEntity instanceof WoodenFluidTankTileEntity;
     }
 
 }
