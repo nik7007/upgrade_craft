@@ -3,11 +3,17 @@
     "type=single": {
       "model": "upgradecraft:block/wooden_fluid_tank_glassed"
     },
-    "type=top": {
+    "mixed=false,type=top": {
       "model": "upgradecraft:block/double_wooden_fluid_tank_glassed_up"
     },
-    "type=bottom": {
+    "mixed=true,type=top": {
+      "model": "upgradecraft:block/double_wooden_fluid_tank_glassed_mixed_top"
+    },
+    "mixed=false,type=bottom": {
       "model": "upgradecraft:block/double_wooden_fluid_tank_glassed_down"
+    },
+    "mixed=true,type=bottom": {
+      "model": "upgradecraft:block/double_wooden_fluid_tank_glassed_mixed_bottom"
     }
   }
 }

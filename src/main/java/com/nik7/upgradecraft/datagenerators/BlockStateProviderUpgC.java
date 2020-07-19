@@ -6,13 +6,16 @@ import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 import net.minecraftforge.fml.RegistryObject;
 
+import javax.annotation.Nullable;
+
+import java.time.Year;
+
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
+import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
 import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 
 public class BlockStateProviderUpgC extends BlockStateProvider {
@@ -32,7 +35,9 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
         createTankModel(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get(),
                 "wooden_fluid_tank_glassed",
                 "double_wooden_fluid_tank_glassed_up",
-                "double_wooden_fluid_tank_glassed_down"
+                "double_wooden_fluid_tank_glassed_down",
+                "double_wooden_fluid_tank_glassed_mixed"
+
         );
 
     }
@@ -40,13 +45,14 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
     private void createTankModel(Block block,
                                  String singleTexture,
                                  String doubleTexture) {
-        createTankModel(block, singleTexture, doubleTexture, doubleTexture);
+        createTankModel(block, singleTexture, doubleTexture, doubleTexture, null);
     }
 
     private void createTankModel(Block block,
                                  String singleTexture,
                                  String doubleTopTexture,
-                                 String doubleBottomTexture) {
+                                 String doubleBottomTexture,
+                                 @Nullable String doubleMixedTexture) {
 
         String topName;
         String bottomName;
@@ -59,27 +65,44 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
             bottomName = doubleBottomTexture;
         }
 
-        getVariantBuilder(block).forAllStatesExcept(state -> {
-            TankType tankType = state.get(TYPE);
-            ModelFile model = null;
-            switch (tankType) {
-                case SINGLE:
-                    model = models().withExistingParent(singleTexture, modLoc("block/fluid_tank"))
-                            .texture("all", modLoc("block/" + singleTexture));
-                    break;
-                case TOP:
-                    model = models().withExistingParent(topName, modLoc("block/double_fluid_tank_up"))
-                            .texture("all", modLoc("block/" + doubleTopTexture));
-                    break;
-                case BOTTOM:
-                    model = models().withExistingParent(bottomName, modLoc("block/double_fluid_tank_down"))
-                            .texture("all", modLoc("block/" + doubleBottomTexture));
-                    break;
-            }
-            return ConfiguredModel.builder()
-                    .modelFile(model)
-                    .build();
-        }, WoodenFluidTankBlock.WATERLOGGED);
+        PartialBlockstate partialBlockstate = getVariantBuilder(block)
+                .partialState().with(TYPE, TankType.SINGLE).addModels(ConfiguredModel.builder().modelFile(
+                        models().withExistingParent(singleTexture, modLoc("block/fluid_tank"))
+                                .texture("all", modLoc("block/" + singleTexture))
+                ).build())
+                .partialState().with(TYPE, TankType.BOTTOM);
+        if (doubleMixedTexture != null) {
+            partialBlockstate = partialBlockstate.with(MIXED, false);
+        }
+        partialBlockstate = partialBlockstate.addModels(
+                ConfiguredModel.builder().modelFile(
+                        models().withExistingParent(bottomName, modLoc("block/double_fluid_tank_down"))
+                                .texture("all", modLoc("block/" + doubleBottomTexture))
+                ).build())
+                .partialState().with(TYPE, TankType.TOP);
+        if (doubleMixedTexture != null) {
+            partialBlockstate = partialBlockstate.with(MIXED, false);
+        }
+        partialBlockstate = partialBlockstate.addModels(
+                ConfiguredModel.builder().modelFile(
+                        models().withExistingParent(topName, modLoc("block/double_fluid_tank_up"))
+                                .texture("all", modLoc("block/" + doubleTopTexture))
+                ).build());
+
+        if (doubleMixedTexture != null) {
+            partialBlockstate
+                    .partialState().with(TYPE, TankType.BOTTOM).with(MIXED, true).addModels(
+                    ConfiguredModel.builder().modelFile(
+                            models().withExistingParent(doubleMixedTexture + "_bottom", modLoc("block/double_fluid_tank_down"))
+                                    .texture("all", modLoc("block/" + doubleMixedTexture))
+                    ).build())
+                    .partialState().with(TYPE, TankType.TOP).with(MIXED, true).addModels(
+                    ConfiguredModel.builder().modelFile(
+                            models().withExistingParent(doubleMixedTexture + "_top", modLoc("block/double_fluid_tank_up"))
+                                    .texture("all", modLoc("block/" + doubleMixedTexture))
+                    ).build());
+        }
+
     }
 
 }
