@@ -1,18 +1,16 @@
 package com.nik7.upgradecraft.datagenerators;
 
-import com.nik7.upgradecraft.blocks.WoodenFluidTankBlock;
 import com.nik7.upgradecraft.init.RegisterBlocks;
 import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
-import net.minecraftforge.fml.RegistryObject;
 
 import javax.annotation.Nullable;
-
-import java.time.Year;
 
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
 import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
@@ -37,7 +35,6 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                 "double_wooden_fluid_tank_glassed_up",
                 "double_wooden_fluid_tank_glassed_down",
                 "double_wooden_fluid_tank_glassed_mixed"
-
         );
 
     }
