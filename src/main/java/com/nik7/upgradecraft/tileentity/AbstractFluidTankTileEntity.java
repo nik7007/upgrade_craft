@@ -56,7 +56,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     }
 
     protected void onFluidChange(Void aVoid) {
-        if (world != null) {
+        if (world != null && !world.isRemote()) {
             world.updateComparatorOutputLevel(pos, getBlockState().getBlock());
             TankType tankType = getTankType();
             BlockPos blockPos = null;
@@ -68,16 +68,27 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             if (blockPos != null) {
                 world.updateComparatorOutputLevel(blockPos, world.getBlockState(blockPos).getBlock());
             }
-            if (!isTankMixed()) {
+            if (isTankMixed()) {
                 notifyBlockUpdate();
             }
+            markDirty();
         }
     }
 
     protected void notifyBlockUpdate() {
         if (world != null) {
-            world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+            notifyBlockUpdate(this);
+            if (otherTank != null) {
+                notifyBlockUpdate(otherTank);
+            }
         }
+    }
+
+    private void notifyBlockUpdate(AbstractFluidTankTileEntity fluidTank) {
+        if (world == null) {
+            return;
+        }
+        world.notifyBlockUpdate(fluidTank.pos, fluidTank.getBlockState(), fluidTank.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
     }
 
     private void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
@@ -87,7 +98,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         TankType tankType = otherTank.getBlockState().get(TYPE);
         if (tankType != TankType.SINGLE) {
             boolean imBottom = tankType == TankType.BOTTOM;
-            FluidTank singleTank = new EventFluidTank(initialCapacity, this::onFluidChange);
+            FluidTank singleTank = new EventFluidTank(initialCapacity, otherTank::onFluidChange);
             FluidStack fluidStack = otherTank.tank.getFluid().copy();
 
             if (fluidStack.getAmount() > 0) {

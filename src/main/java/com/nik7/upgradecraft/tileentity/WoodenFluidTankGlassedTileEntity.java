@@ -20,10 +20,10 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
     @Override
     protected void onFluidChange(Void aVoid) {
         super.onFluidChange(aVoid);
-        if (world == null || world.isRemote) {
+        if (world == null || world.isRemote()) {
             return;
         }
-        if (isTankMixed()) {
+        if (!isTankMixed()) {
             notifyBlockUpdate();
         }
     }
