@@ -9,6 +9,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -35,6 +36,15 @@ public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock {
 
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof WoodenFluidTankGlassedTileEntity) {
+            return ((WoodenFluidTankGlassedTileEntity) tileEntity).getLuminosity();
+        }
+        return 0;
     }
 
     @Nullable

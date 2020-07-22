@@ -6,12 +6,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
 
 import static com.nik7.upgradecraft.init.RegisterTileEntity.WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE;
 
 
 public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntity {
 
+    private int oldLuminosity = 0;
 
     public WoodenFluidTankGlassedTileEntity() {
         super(WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE.get(), Config.TANK_CAPACITY.get());
@@ -45,6 +47,18 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
     @Override
     protected boolean tileIsCorrectInstance(TileEntity tileEntity) {
         return tileEntity instanceof WoodenFluidTankGlassedTileEntity || tileEntity instanceof WoodenFluidTankTileEntity;
+    }
+
+    public int getLuminosity() {
+        FluidStack fluid = getFluid();
+        int luminosity = fluid.getFluid().getAttributes().getLuminosity(fluid);
+        if (world != null && world.isRemote()) {
+            if (oldLuminosity != luminosity) {
+                oldLuminosity = luminosity;
+                world.getLightManager().checkBlock(getPos());
+            }
+        }
+        return luminosity;
     }
 
 }
