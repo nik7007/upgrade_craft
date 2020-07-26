@@ -14,13 +14,15 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
-public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock {
+public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implements BasicWooFluidTank {
     public WoodenFluidTankGlassedBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.GREEN)
                 .notSolid()
@@ -33,6 +35,13 @@ public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add((new TranslationTextComponent("tooltip.upgradecraft.tank.glassed")).func_240699_a_(TextFormatting.ITALIC));
     }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        spanParticles(worldIn, pos, rand);
+    }
+
 
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;

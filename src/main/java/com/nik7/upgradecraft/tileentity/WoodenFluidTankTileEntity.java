@@ -15,6 +15,17 @@ public class WoodenFluidTankTileEntity extends AbstractFluidTankTileEntity {
     }
 
     @Override
+    protected void onFluidChange(Void aVoid) {
+        super.onFluidChange(aVoid);
+        if (world == null || world.isRemote()) {
+            return;
+        }
+        if (!isTankMixed() && isFluidHot()) {
+            notifyBlockUpdate();
+        }
+    }
+
+    @Override
     protected boolean tileIsCorrectInstance(TileEntity tileEntity) {
         return tileEntity instanceof WoodenFluidTankTileEntity || tileEntity instanceof WoodenFluidTankGlassedTileEntity;
     }

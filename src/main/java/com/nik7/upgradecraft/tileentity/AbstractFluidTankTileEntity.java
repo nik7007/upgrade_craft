@@ -3,6 +3,7 @@ package com.nik7.upgradecraft.tileentity;
 import com.nik7.upgradecraft.fluids.tanks.EventFluidTank;
 import com.nik7.upgradecraft.fluids.tanks.FluidTankWrapper;
 import com.nik7.upgradecraft.state.properties.TankType;
+import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -11,7 +12,9 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
@@ -20,6 +23,7 @@ import net.minecraftforge.fluids.capability.TileFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 import static com.nik7.upgradecraft.UpgradeCraft.LOGGER;
 import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
@@ -29,6 +33,8 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     private boolean firstTick = true;
     protected AbstractFluidTankTileEntity otherTank = null;
     protected final int initialCapacity;
+    protected final Random random = new Random();
+    private int tickNumber;
 
     public AbstractFluidTankTileEntity(TileEntityType<? extends AbstractFluidTankTileEntity> tileEntityTypeIn,
                                        int initialCapacity) {
@@ -136,6 +142,27 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             this.firstTick = false;
             this.initTank();
             onFluidChange(null);
+        }
+
+        if (world != null && !world.isRemote()) {
+            tickNumber++;
+            tickNumber %= 400 * random.nextFloat();
+            setBlockInFire(tickNumber);
+        }
+    }
+
+    private void setBlockInFire(int tickNumber) {
+        if (tickNumber < 6 && isFluidHot()) {
+            if (random.nextFloat() < 0.25f) {
+                setInFire(world, pos.offset(Direction.values()[tickNumber]));
+            }
+        }
+    }
+
+    private void setInFire(World world, BlockPos pos) {
+        if (AbstractFireBlock.canLightBlock(world, pos)) {
+            BlockState fireBlockState = AbstractFireBlock.getFireForPlacement(world, pos);
+            world.setBlockState(pos, fireBlockState);
         }
     }
 
@@ -262,6 +289,11 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
 
     public FluidStack getFluid() {
         return this.tank.getFluid().copy();
+    }
+
+    public boolean isFluidHot() {
+        FluidStack fluid = getFluid();
+        return fluid.getFluid().getAttributes().getTemperature(fluid) > 250 + 273;
     }
 
     public int getCapacity() {
