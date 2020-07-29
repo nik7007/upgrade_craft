@@ -17,19 +17,14 @@ public class SlimyPlanksBlock extends Block {
                 .slipperiness(1.05F)
                 .sound(SoundType.WOOD));
     }
-
-    @Override
-    public boolean isFlammable(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-        return true;
-    }
-
+    
     @Override
     public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-        return (int) (300 * 0.60);
+        return (int) (300 * 0.25);
     }
 
     @Override
     public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-        return 10;
+        return 60;
     }
 }

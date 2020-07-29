@@ -9,6 +9,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -33,7 +34,7 @@ public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implemen
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add((new TranslationTextComponent("tooltip.upgradecraft.tank.glassed")).func_240699_a_(TextFormatting.ITALIC));
+        tooltip.add((new TranslationTextComponent("tooltip.upgradecraft.tank.glassed")).mergeStyle(TextFormatting.ITALIC));
     }
 
     @Override
@@ -54,6 +55,16 @@ public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implemen
             return ((WoodenFluidTankGlassedTileEntity) tileEntity).getLuminosity();
         }
         return 0;
+    }
+
+    @Override
+    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+        return (int) (300 * 0.20);
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+        return 60;
     }
 
     @Nullable

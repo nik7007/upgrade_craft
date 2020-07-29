@@ -127,7 +127,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             singleTank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
 
             otherTank.setTank(singleTank);
-            if (otherTank.getBlockState().func_235901_b_(TYPE)) {
+            if (otherTank.getBlockState().hasProperty(TYPE)) {
                 otherTank.world.setBlockState(otherTank.getPos(), otherTank.getBlockState().with(TYPE, TankType.SINGLE).with(MIXED, false),
                         Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
             }
@@ -167,7 +167,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     }
 
     private void initTank() {
-        if (this.getBlockState().func_235901_b_(TYPE) && this.otherTank == null) {
+        if (this.getBlockState().hasProperty(TYPE) && this.otherTank == null) {
             TankType tankType = this.getBlockState().get(TYPE);
             if (tankType == TankType.SINGLE) {
                 return;
@@ -251,7 +251,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
             TankType tankType = this.getBlockState().get(TYPE);
             if (tankType == validType.getOpposite()) {
                 BlockState blockState = this.world.getBlockState(pos);
-                if (blockState.func_235901_b_(TYPE) && blockState.get(TYPE) == validType) {
+                if (blockState.hasProperty(TYPE) && blockState.get(TYPE) == validType) {
                     TileEntity tileEntity = this.world.getTileEntity(pos);
                     if (tileIsCorrectInstance(tileEntity)) {
                         return (AbstractFluidTankTileEntity) tileEntity;
@@ -272,7 +272,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     @Nullable
     public TankType getTankType() {
         BlockState blockState = getBlockState();
-        if (blockState.func_235901_b_(TYPE)) {
+        if (blockState.hasProperty(TYPE)) {
             return blockState.get(TYPE);
         }
 
@@ -281,7 +281,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
 
     public boolean isTankMixed() {
         BlockState blockState = getBlockState();
-        if (blockState.func_235901_b_(MIXED)) {
+        if (blockState.hasProperty(MIXED)) {
             return blockState.get(MIXED);
         }
         return false;
@@ -297,7 +297,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     }
 
     public int getCapacity() {
-        if (this.getBlockState().func_235901_b_(TYPE)) {
+        if (this.getBlockState().hasProperty(TYPE)) {
             TankType tankType = this.getBlockState().get(TYPE);
             if (tankType == TankType.SINGLE) {
                 return initialCapacity;
