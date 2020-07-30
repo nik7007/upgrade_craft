@@ -27,6 +27,7 @@ import java.util.Random;
 
 import static com.nik7.upgradecraft.UpgradeCraft.LOGGER;
 import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
+import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.WATERLOGGED;
 import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 
 public abstract class AbstractFluidTankTileEntity extends TileFluidHandler implements ITickableTileEntity {
@@ -152,8 +153,9 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     }
 
     private void setBlockInFire(int tickNumber) {
-        if (tickNumber < 6 && isFluidHot()) {
-            if (random.nextFloat() < 0.25f) {
+        boolean waterlogged = getBlockState().get(WATERLOGGED);
+        if (!waterlogged && tickNumber < 6 && isFluidHot()) {
+            if (random.nextFloat() < 0.025f) {
                 setInFire(world, pos.offset(Direction.values()[tickNumber]));
             }
         }

@@ -1,6 +1,7 @@
 package com.nik7.upgradecraft.blocks;
 
 import com.nik7.upgradecraft.tileentity.AbstractFluidTankTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
@@ -12,7 +13,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public interface BasicWooFluidTank {
+import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.WATERLOGGED;
+
+public interface BasicWoodFluidTank {
 
     @OnlyIn(Dist.CLIENT)
     default void spanParticles(World worldIn, BlockPos pos, Random rand) {
@@ -31,6 +34,22 @@ public interface BasicWooFluidTank {
                 }
 
             }
+        }
+    }
+
+    default int getFlammability(BlockState state) {
+        if (state.get(WATERLOGGED)) {
+            return 0;
+        } else {
+            return (int) (300 * 0.10);
+        }
+    }
+
+    default int getFireSpreadSpeed(BlockState state) {
+        if (state.get(WATERLOGGED)) {
+            return 0;
+        } else {
+            return 60;
         }
     }
 }

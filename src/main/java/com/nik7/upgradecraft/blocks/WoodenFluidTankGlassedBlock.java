@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implements BasicWooFluidTank {
+public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implements BasicWoodFluidTank {
     public WoodenFluidTankGlassedBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.GREEN)
                 .notSolid()
@@ -59,12 +59,12 @@ public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implemen
 
     @Override
     public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-        return (int) (300 * 0.20);
+        return getFlammability(state);
     }
 
     @Override
     public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-        return 60;
+        return getFireSpreadSpeed(state);
     }
 
     @Nullable

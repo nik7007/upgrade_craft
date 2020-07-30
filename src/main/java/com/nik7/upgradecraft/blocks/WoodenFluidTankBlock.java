@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class WoodenFluidTankBlock extends AbstractFluidTankBlock implements BasicWooFluidTank {
+public class WoodenFluidTankBlock extends AbstractFluidTankBlock implements BasicWoodFluidTank {
 
     public WoodenFluidTankBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.GREEN)
@@ -33,12 +33,12 @@ public class WoodenFluidTankBlock extends AbstractFluidTankBlock implements Basi
 
     @Override
     public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-        return (int) (300 * 0.20);
+        return getFlammability(state);
     }
 
     @Override
     public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-        return 60;
+        return getFireSpreadSpeed(state);
     }
 
     @Nullable
