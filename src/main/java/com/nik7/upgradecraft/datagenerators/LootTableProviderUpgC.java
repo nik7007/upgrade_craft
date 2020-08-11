@@ -48,7 +48,8 @@ public class LootTableProviderUpgC extends LootTableProvider {
             return Arrays.asList(
                     RegisterBlocks.SLIMY_PLANKS_BLOCK.get(),
                     RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get(),
-                    RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()
+                    RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get(),
+                    RegisterBlocks.FUNNEL_BLOCK.get()
             );
         }
     }
