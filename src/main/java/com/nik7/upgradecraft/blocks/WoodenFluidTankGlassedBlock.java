@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implements BasicWooFluidTank {
+public class WoodenFluidTankGlassedBlock extends AbstractFluidTankBlock implements BasicWoodenFluidTank {
     public WoodenFluidTankGlassedBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.GREEN)
                 .notSolid()

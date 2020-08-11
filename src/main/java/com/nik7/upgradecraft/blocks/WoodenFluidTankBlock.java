@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class WoodenFluidTankBlock extends AbstractFluidTankBlock implements BasicWooFluidTank {
+public class WoodenFluidTankBlock extends AbstractFluidTankBlock implements BasicWoodenFluidTank {
 
     public WoodenFluidTankBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.GREEN)

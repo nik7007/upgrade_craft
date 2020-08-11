@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public interface BasicWooFluidTank {
+public interface BasicWoodenFluidTank {
 
     @OnlyIn(Dist.CLIENT)
     default void spanParticles(World worldIn, BlockPos pos, Random rand) {
