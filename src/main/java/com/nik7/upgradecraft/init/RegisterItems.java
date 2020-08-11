@@ -26,4 +26,7 @@ public class RegisterItems {
     public static final RegistryObject<Item> WOODEN_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("wooden_fluid_tank_glassed_block",
             () -> new BlockItem(WOODEN_FLUID_TANK_GLASSED_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
 
+    public static final RegistryObject<Item> FUNNEL_ITEM_BLOCK = REGISTER.register("funnel_block",
+            () -> new BlockItem(FUNNEL_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+
 }
