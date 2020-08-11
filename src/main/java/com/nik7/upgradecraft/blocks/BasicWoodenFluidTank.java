@@ -15,7 +15,7 @@ import java.util.Random;
 
 import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.WATERLOGGED;
 
-public interface BasicWoodFluidTank {
+public interface BasicWoodenFluidTank {
 
     @OnlyIn(Dist.CLIENT)
     default void spanParticles(World worldIn, BlockPos pos, Random rand) {
