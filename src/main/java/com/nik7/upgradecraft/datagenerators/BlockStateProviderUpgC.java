@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
 
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
 import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
+import static com.nik7.upgradecraft.blocks.FunnelBlock.ENABLED;
 import static com.nik7.upgradecraft.blocks.FunnelBlock.FACING;
 import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 
@@ -45,7 +46,7 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
     }
 
     private void createFunnel(Block block, String texture) {
-        getVariantBuilder(block).forAllStates(state -> {
+        getVariantBuilder(block).forAllStatesExcept(state -> {
             Direction facing = state.get(FACING);
             String modelName;
             int rotationY;
@@ -66,7 +67,7 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                     .modelFile(model)
                     .rotationY(rotationY)
                     .build();
-        });
+        }, ENABLED);
     }
 
     private void createTankModel(Block block,

@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.init;
 
+import com.nik7.upgradecraft.tileentity.FunnelTileEntity;
 import com.nik7.upgradecraft.tileentity.WoodenFluidTankGlassedTileEntity;
 import com.nik7.upgradecraft.tileentity.WoodenFluidTankTileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -21,5 +22,8 @@ public class RegisterTileEntity {
             () -> TileEntityType.Builder.create(WoodenFluidTankTileEntity::new, RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get()).build(null));
     public static final RegistryObject<TileEntityType<WoodenFluidTankGlassedTileEntity>> WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE = REGISTER.register("wooden_fluid_tank_glassed_block",
             () -> TileEntityType.Builder.create(WoodenFluidTankGlassedTileEntity::new, RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<FunnelTileEntity>> FUNNEL_TILE_ENTITY_TYPE = REGISTER.register("funnel_block",
+            () -> TileEntityType.Builder.create(FunnelTileEntity::new, RegisterBlocks.FUNNEL_BLOCK.get()).build(null));
 
 }
