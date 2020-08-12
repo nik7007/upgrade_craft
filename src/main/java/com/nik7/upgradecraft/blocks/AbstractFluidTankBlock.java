@@ -5,6 +5,7 @@ import com.nik7.upgradecraft.tileentity.AbstractFluidTankTileEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -32,7 +33,7 @@ import javax.annotation.Nullable;
 
 import static com.nik7.upgradecraft.utils.UpgCFluidHelper.fillDrainWithItem;
 
-public abstract class AbstractFluidTankBlock extends Block {
+public abstract class AbstractFluidTankBlock extends Block implements IWaterLoggable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<TankType> TYPE = EnumProperty.create("type", TankType.class);
     public static final BooleanProperty MIXED = BooleanProperty.create("mixed");
