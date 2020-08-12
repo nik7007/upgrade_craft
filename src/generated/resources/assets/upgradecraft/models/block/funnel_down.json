@@ -1,0 +1,6 @@
+{
+  "parent": "upgradecraft:block/funnel",
+  "textures": {
+    "all": "upgradecraft:block/funnel"
+  }
+}

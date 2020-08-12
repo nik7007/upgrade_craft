@@ -4,16 +4,19 @@ import com.nik7.upgradecraft.init.RegisterBlocks;
 import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 
 import javax.annotation.Nullable;
 
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
 import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
+import static com.nik7.upgradecraft.blocks.FunnelBlock.FACING;
 import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 
 public class BlockStateProviderUpgC extends BlockStateProvider {
@@ -37,6 +40,33 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                 "double_wooden_fluid_tank_glassed_mixed"
         );
 
+        createFunnel(RegisterBlocks.FUNNEL_BLOCK.get(), "funnel");
+
+    }
+
+    private void createFunnel(Block block, String texture) {
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction facing = state.get(FACING);
+            String modelName;
+            int rotationY;
+
+            if (facing == Direction.DOWN) {
+                modelName = "funnel";
+                rotationY = 0;
+            } else {
+                modelName = "funnel_side";
+                rotationY = (int) (facing.getHorizontalAngle() + 180) % 360;
+
+            }
+
+            ModelFile model = models()
+                    .withExistingParent(texture + "_" + facing.name().toLowerCase(), modLoc("block/" + modelName))
+                    .texture("all", modLoc("block/" + texture));
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(rotationY)
+                    .build();
+        });
     }
 
     private void createTankModel(Block block,

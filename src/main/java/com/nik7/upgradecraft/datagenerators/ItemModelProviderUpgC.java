@@ -25,5 +25,8 @@ public class ItemModelProviderUpgC extends ItemModelProvider {
 
         withExistingParent(Objects.requireNonNull(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get().getRegistryName()).getPath(),
                 new ResourceLocation(MOD_ID, "block/wooden_fluid_tank_glassed"));
+
+        singleTexture(Objects.requireNonNull(RegisterBlocks.FUNNEL_BLOCK.get().getRegistryName()).getPath(), new ResourceLocation("item/handheld"),
+                "layer0", new ResourceLocation(MOD_ID, "item/funnel"));
     }
 }
