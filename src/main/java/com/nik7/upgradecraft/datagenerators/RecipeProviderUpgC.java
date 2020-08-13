@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.datagenerators;
 
+import com.nik7.upgradecraft.crafting.TagUpgC;
 import com.nik7.upgradecraft.init.RegisterBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -41,6 +42,16 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .patternLine("lgl")
                 .patternLine("lll")
                 .addCriterion("has_slimy_planks_block", hasItem(RegisterBlocks.SLIMY_PLANKS_BLOCK.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.FUNNEL_BLOCK.get())
+                .key('t', TagUpgC.Items.WOODEN_TANK)
+                .key('i', Tags.Items.INGOTS_IRON)
+                .patternLine("i i")
+                .patternLine("iti")
+                .patternLine(" i ")
+                .addCriterion("has_wooden_tank", hasItem(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get()))
+                .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
                 .build(consumer);
     }
 }
