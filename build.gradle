@@ -68,6 +68,10 @@ minecraft {
 }
 repositories {
     maven {
+        url 'https://www.dogforce-games.com/maven/'
+    }
+
+    maven {
         // JEI
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
