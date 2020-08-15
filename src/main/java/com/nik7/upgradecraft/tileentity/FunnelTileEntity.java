@@ -22,7 +22,7 @@ import static com.nik7.upgradecraft.init.RegisterTileEntity.FUNNEL_TILE_ENTITY_T
 import static com.nik7.upgradecraft.utils.LazyOptionalHelper.getHandler;
 
 public class FunnelTileEntity extends TileFluidHandler implements ITickableTileEntity {
-    private static final int FLUID_TRANSFER_QUANTITY = 10;
+    private static final int FLUID_TRANSFER_QUANTITY = 5;
 
 
     public FunnelTileEntity() {
