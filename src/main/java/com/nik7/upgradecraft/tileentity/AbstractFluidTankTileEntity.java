@@ -162,7 +162,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     }
 
     private void setInFire(World world, BlockPos pos) {
-        if (AbstractFireBlock.canLightBlock(world, pos)) {
+        if (AbstractFireBlock.canLightBlock(world, pos, Direction.DOWN)) {
             BlockState fireBlockState = AbstractFireBlock.getFireForPlacement(world, pos);
             world.setBlockState(pos, fireBlockState);
         }
