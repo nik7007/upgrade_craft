@@ -25,7 +25,7 @@ public class WoodenFluidTankTileEntity extends AbstractFluidTankTileEntity imple
     protected void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
         super.otherSeparateTank(otherTank);
         if (otherTank.getWorld() != null) {
-            updateBurningState(otherTank.getWorld(), otherTank.getPos(), otherTank.getBlockState(), isFluidHot());
+            updateBurningState(otherTank.getWorld(), otherTank.getPos(), otherTank.getBlockState(), otherTank.isFluidHot());
         }
     }
 
