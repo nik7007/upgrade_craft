@@ -98,7 +98,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         world.notifyBlockUpdate(fluidTank.pos, fluidTank.getBlockState(), fluidTank.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
     }
 
-    private void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
+    protected void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
         if (otherTank.world == null) {
             return;
         }
@@ -155,7 +155,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
     private void setBlockInFire(int tickNumber) {
         boolean waterlogged = getBlockState().get(WATERLOGGED);
         if (!waterlogged && tickNumber < 6 && isFluidHot()) {
-            if (random.nextFloat() < 0.025f) {
+            if (random.nextFloat() < 0.015f) {
                 setInFire(world, pos.offset(Direction.values()[tickNumber]));
             }
         }

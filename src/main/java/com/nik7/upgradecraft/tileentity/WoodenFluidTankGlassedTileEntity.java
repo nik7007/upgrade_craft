@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 import static com.nik7.upgradecraft.init.RegisterTileEntity.WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE;
 
 
-public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntity {
+public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntity implements BaseWoodenFluidTankTileEntity {
 
     private int oldLuminosity = 0;
 
@@ -28,6 +28,7 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
         if (!isTankMixed()) {
             notifyBlockUpdate();
         }
+        updateBurningState(world, getPos(), getBlockState(), isFluidHot());
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -43,6 +44,13 @@ public class WoodenFluidTankGlassedTileEntity extends AbstractFluidTankTileEntit
         return super.getRenderBoundingBox();
     }
 
+    @Override
+    protected void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
+        super.otherSeparateTank(otherTank);
+        if (otherTank.getWorld() != null) {
+            updateBurningState(otherTank.getWorld(), otherTank.getPos(), otherTank.getBlockState(), otherTank.isFluidHot());
+        }
+    }
 
     @Override
     protected boolean tileIsCorrectInstance(TileEntity tileEntity) {
