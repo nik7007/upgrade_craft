@@ -9,6 +9,7 @@ public class ClientSetup {
 
     public static void init(final FMLClientSetupEvent event) {
         RenderTypeLookup.setRenderLayer(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get(), RenderType.getCutoutMipped());
+        RenderTypeLookup.setRenderLayer(RegisterBlocks.FLUID_FURNACE_BLOCK.get(), RenderType.getCutoutMipped());
         FluidTankRenderer.register();
     }
 }

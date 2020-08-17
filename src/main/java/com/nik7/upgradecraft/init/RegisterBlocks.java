@@ -1,9 +1,6 @@
 package com.nik7.upgradecraft.init;
 
-import com.nik7.upgradecraft.blocks.FunnelBlock;
-import com.nik7.upgradecraft.blocks.SlimyPlanksBlock;
-import com.nik7.upgradecraft.blocks.WoodenFluidTankBlock;
-import com.nik7.upgradecraft.blocks.WoodenFluidTankGlassedBlock;
+import com.nik7.upgradecraft.blocks.*;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -23,5 +20,6 @@ public class RegisterBlocks {
     public static final RegistryObject<WoodenFluidTankBlock> WOODEN_FLUID_TANK_BLOCK = REGISTER.register("wooden_fluid_tank_block", WoodenFluidTankBlock::new);
     public static final RegistryObject<WoodenFluidTankGlassedBlock> WOODEN_FLUID_TANK_GLASSED_BLOCK = REGISTER.register("wooden_fluid_tank_glassed_block", WoodenFluidTankGlassedBlock::new);
     public static final RegistryObject<FunnelBlock> FUNNEL_BLOCK = REGISTER.register("funnel_block", FunnelBlock::new);
+    public static final RegistryObject<FluidFurnaceBlock> FLUID_FURNACE_BLOCK = REGISTER.register("fluid_furnace_block", FluidFurnaceBlock::new);
 
 }

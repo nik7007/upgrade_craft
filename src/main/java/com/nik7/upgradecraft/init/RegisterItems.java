@@ -29,4 +29,7 @@ public class RegisterItems {
     public static final RegistryObject<Item> FUNNEL_ITEM_BLOCK = REGISTER.register("funnel_block",
             () -> new BlockItem(FUNNEL_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
 
+    public static final RegistryObject<Item> FLUID_FURNACE_ITEM_BLOCK = REGISTER.register("fluid_furnace_block",
+            () -> new BlockItem(FLUID_FURNACE_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+
 }
