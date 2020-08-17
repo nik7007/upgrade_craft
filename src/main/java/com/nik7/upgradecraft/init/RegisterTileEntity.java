@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.init;
 
+import com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity;
 import com.nik7.upgradecraft.tileentity.FunnelTileEntity;
 import com.nik7.upgradecraft.tileentity.WoodenFluidTankGlassedTileEntity;
 import com.nik7.upgradecraft.tileentity.WoodenFluidTankTileEntity;
@@ -25,5 +26,8 @@ public class RegisterTileEntity {
 
     public static final RegistryObject<TileEntityType<FunnelTileEntity>> FUNNEL_TILE_ENTITY_TYPE = REGISTER.register("funnel_block",
             () -> TileEntityType.Builder.create(FunnelTileEntity::new, RegisterBlocks.FUNNEL_BLOCK.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<FluidFurnaceTileEntity>> FLUID_FURNACE_TILE_ENTITY_TYPE = REGISTER.register("fluid_furnace_block",
+            () -> TileEntityType.Builder.create(FluidFurnaceTileEntity::new, RegisterBlocks.FLUID_FURNACE_BLOCK.get()).build(null));
 
 }
