@@ -24,6 +24,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static com.nik7.upgradecraft.init.RegisterTileEntity.WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE;
 import static net.minecraft.util.ColorHelper.PackedColor.*;
@@ -36,10 +38,91 @@ public class FluidTankRenderer extends TileEntityRenderer<WoodenFluidTankGlassed
     private static final int V_MAX = 3;
 
     private static final Vector3f VEC_ZERO = new Vector3f(0, 0, 0);
-    private static final float DOUBLE_HEIGHT = 2.25f;
+    private static final float DOUBLE_HEIGHT = 2.15f;
 
     public FluidTankRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
+    }
+
+    private static void renderCuboid(Cuboid cuboid, MatrixStack matrixStackIn, IVertexBuilder buffer, int light, int argb, Function<Direction, TextureAtlasSprite> getSprite, Consumer<MatrixStack> preRenderOperation) {
+        float red = getRed(argb) / 255f;
+        float green = getGreen(argb) / 255f;
+        float blue = getBlue(argb) / 255f;
+        float alpha = getAlpha(argb) / 255f;
+
+        Vector3d size = new Vector3d(cuboid.getX(), cuboid.getY(), cuboid.getZ());
+
+        matrixStackIn.push();
+        matrixStackIn.translate(cuboid.getMinX(), cuboid.getMinY(), cuboid.getMinZ());
+        preRenderOperation.accept(matrixStackIn);
+
+        Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
+
+        for (Direction face : Direction.values()) {
+            if (face == Direction.DOWN) {
+                continue;
+            }
+            TextureAtlasSprite sprite = getSprite.apply(face);
+
+            Axis u = face.getAxis() == Axis.X ? Axis.Z : Axis.X;
+            Axis v = face.getAxis() == Axis.Y ? Axis.Z : Axis.Y;
+            float other = (face.getAxisDirection() == AxisDirection.POSITIVE) ? (float) getValue(size, face.getAxis()) : 0;
+
+            //Swap the face if this is positive: the renderer returns indexes that ALWAYS are for the negative face, so light it properly this way
+            face = face.getAxisDirection() == AxisDirection.NEGATIVE ? face : face.getOpposite();
+            Direction opposite = face.getOpposite();
+
+            float minU = sprite.getMinU();
+            float maxU = sprite.getMaxU();
+            //Flip the v
+            float minV = sprite.getMaxV();
+            float maxV = sprite.getMinV();
+            double sizeU = getValue(size, u);
+            double sizeV = getValue(size, v);
+
+
+            for (int uIndex = 0; uIndex < sizeU; uIndex++) {
+                float[] baseUV = new float[]{minU, maxU, minV, maxV};
+                double addU = 1;
+                // If the size of the texture is greater than the cuboid goes on for then make sure the texture positions are lowered
+                if (uIndex + addU > sizeU) {
+                    addU = sizeU - uIndex;
+                    baseUV[U_MAX] = baseUV[U_MIN] + (baseUV[U_MAX] - baseUV[U_MIN]) * (float) addU;
+                }
+                for (int vIndex = 0; vIndex < sizeV; vIndex++) {
+                    float[] uv = Arrays.copyOf(baseUV, 4);
+                    double addV = 1;
+                    if (vIndex + addV > sizeV) {
+                        addV = sizeV - vIndex;
+                        uv[V_MAX] = uv[V_MIN] + (uv[V_MAX] - uv[V_MIN]) * (float) addV;
+                    }
+                    float[] xyz = new float[]{uIndex, (float) (uIndex + addU), vIndex, (float) (vIndex + addV)};
+
+                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
+
+                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
+                }
+            }
+
+
+        }
+        matrixStackIn.pop();
+    }
+
+    private static void renderPoint(Matrix4f matrix4f, IVertexBuilder buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV,
+                                    float red, float green, float blue, float alpha, int light) {
+        int U_ARRAY = minU ? U_MIN : U_MAX;
+        int V_ARRAY = minV ? V_MIN : V_MAX;
+        Vector3f vertex = withValue(VEC_ZERO, u, xyz[U_ARRAY]);
+        vertex = withValue(vertex, v, xyz[V_ARRAY]);
+        vertex = withValue(vertex, face.getAxis(), other);
+        buffer.pos(matrix4f, vertex.getX(), vertex.getY(), vertex.getZ()).color(red, green, blue, alpha).tex(uv[U_ARRAY], uv[V_ARRAY]).lightmap(light).endVertex();
     }
 
     @Override
@@ -64,92 +147,27 @@ public class FluidTankRenderer extends TileEntityRenderer<WoodenFluidTankGlassed
 
             Fluid fluid = fluidStack.getFluid();
             float fluidScale = fluidStack.getAmount() / (float) tileEntityIn.getCapacity();
+
             ResourceLocation stillTexture = fluid.getAttributes().getStillTexture(fluidStack);
-            TextureAtlasSprite stillSprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(stillTexture);
+            TextureAtlasSprite stillSprite = locationToSprite(stillTexture);
 
             ResourceLocation flowingTexture = fluid.getAttributes().getFlowingTexture(fluidStack);
-            TextureAtlasSprite flowingSprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(flowingTexture);
+            TextureAtlasSprite flowingSprite = locationToSprite(flowingTexture);
 
             int light = calculateGlowLight(combinedLightIn, fluidStack);
             int argb = getColorARGB(fluidStack, fluidScale);
+            int translateY = yTranslate;
 
-            float red = getRed(argb) / 255f;
-            float green = getGreen(argb) / 255f;
-            float blue = getBlue(argb) / 255f;
-            float alpha = getAlpha(argb) / 255f;
+            Cuboid cuboid = new Cuboid(0.15, 0.10, 0.15, 0.85, 0.90 * height * fluidScale, 0.85);
 
-            Vector3d size = new Vector3d(0.70, 0.80 * fluidScale * height, 0.70);
-
-            matrixStackIn.push();
-            matrixStackIn.translate(0.15, 0.10 + yTranslate, 0.15); // min x, y, z
-            Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
-
-            for (Direction face : Direction.values()) {
-                if (face == Direction.DOWN) {
-                    continue;
-                }
-                TextureAtlasSprite sprite = face == Direction.UP ? stillSprite : flowingSprite;
-
-                Axis u = face.getAxis() == Axis.X ? Axis.Z : Axis.X;
-                Axis v = face.getAxis() == Axis.Y ? Axis.Z : Axis.Y;
-                float other = (face.getAxisDirection() == AxisDirection.POSITIVE) ? (float) getValue(size, face.getAxis()) : 0;
-
-                //Swap the face if this is positive: the renderer returns indexes that ALWAYS are for the negative face, so light it properly this way
-                face = face.getAxisDirection() == AxisDirection.NEGATIVE ? face : face.getOpposite();
-                Direction opposite = face.getOpposite();
-
-                float minU = sprite.getMinU();
-                float maxU = sprite.getMaxU();
-                //Flip the v
-                float minV = sprite.getMaxV();
-                float maxV = sprite.getMinV();
-                double sizeU = getValue(size, u);
-                double sizeV = getValue(size, v);
-
-
-                for (int uIndex = 0; uIndex < sizeU; uIndex++) {
-                    float[] baseUV = new float[]{minU, maxU, minV, maxV};
-                    double addU = 1;
-                    // If the size of the texture is greater than the cuboid goes on for then make sure the texture positions are lowered
-                    if (uIndex + addU > sizeU) {
-                        addU = sizeU - uIndex;
-                        baseUV[U_MAX] = baseUV[U_MIN] + (baseUV[U_MAX] - baseUV[U_MIN]) * (float) addU;
-                    }
-                    for (int vIndex = 0; vIndex < sizeV; vIndex++) {
-                        float[] uv = Arrays.copyOf(baseUV, 4);
-                        double addV = 1;
-                        if (vIndex + addV > sizeV) {
-                            addV = sizeV - vIndex;
-                            uv[V_MAX] = uv[V_MIN] + (uv[V_MAX] - uv[V_MIN]) * (float) addV;
-                        }
-                        float[] xyz = new float[]{uIndex, (float) (uIndex + addU), vIndex, (float) (vIndex + addV)};
-
-                        renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
-                        renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
-                        renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
-                        renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
-
-                        renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
-                        renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
-                        renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
-                        renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
-                    }
-                }
-
-
-            }
-            matrixStackIn.pop();
+            renderCuboid(cuboid, matrixStackIn, buffer, light, argb,
+                    face -> face == Direction.UP ? stillSprite : flowingSprite,
+                    matrix -> matrix.translate(0, translateY, 0));
         }
     }
 
-    private void renderPoint(Matrix4f matrix4f, IVertexBuilder buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV,
-                             float red, float green, float blue, float alpha, int light) {
-        int U_ARRAY = minU ? U_MIN : U_MAX;
-        int V_ARRAY = minV ? V_MIN : V_MAX;
-        Vector3f vertex = withValue(VEC_ZERO, u, xyz[U_ARRAY]);
-        vertex = withValue(vertex, v, xyz[V_ARRAY]);
-        vertex = withValue(vertex, face.getAxis(), other);
-        buffer.pos(matrix4f, vertex.getX(), vertex.getY(), vertex.getZ()).color(red, green, blue, alpha).tex(uv[U_ARRAY], uv[V_ARRAY]).lightmap(light).endVertex();
+    private TextureAtlasSprite locationToSprite(ResourceLocation textureLocation) {
+        return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLocation);
     }
 
     private static Vector3f withValue(Vector3f vector, Axis axis, float value) {
