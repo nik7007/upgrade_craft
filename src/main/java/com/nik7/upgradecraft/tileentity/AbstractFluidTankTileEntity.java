@@ -19,7 +19,6 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.TileFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
@@ -30,7 +29,7 @@ import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.MIXED;
 import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.WATERLOGGED;
 import static com.nik7.upgradecraft.blocks.WoodenFluidTankBlock.TYPE;
 
-public abstract class AbstractFluidTankTileEntity extends TileFluidHandler implements ITickableTileEntity {
+public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEntity implements ITickableTileEntity {
     private boolean firstTick = true;
     protected AbstractFluidTankTileEntity otherTank = null;
     protected final int initialCapacity;
@@ -82,6 +81,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         }
     }
 
+    @Override
     protected void notifyBlockUpdate() {
         if (world != null) {
             notifyBlockUpdate(this);
@@ -91,11 +91,12 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         }
     }
 
-    private void notifyBlockUpdate(AbstractFluidTankTileEntity fluidTank) {
+    @Override
+    protected void notifyBlockUpdate(TileEntity fluidTank) {
         if (world == null) {
             return;
         }
-        world.notifyBlockUpdate(fluidTank.pos, fluidTank.getBlockState(), fluidTank.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+        world.notifyBlockUpdate(fluidTank.getPos(), fluidTank.getBlockState(), fluidTank.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
     }
 
     protected void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
@@ -289,15 +290,7 @@ public abstract class AbstractFluidTankTileEntity extends TileFluidHandler imple
         return false;
     }
 
-    public FluidStack getFluid() {
-        return this.tank.getFluid().copy();
-    }
-
-    public boolean isFluidHot() {
-        FluidStack fluid = getFluid();
-        return fluid.getFluid().getAttributes().getTemperature(fluid) > 250 + 273;
-    }
-
+    @Override
     public int getCapacity() {
         if (this.getBlockState().hasProperty(TYPE)) {
             TankType tankType = this.getBlockState().get(TYPE);
