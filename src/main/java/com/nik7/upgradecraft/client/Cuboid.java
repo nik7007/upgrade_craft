@@ -6,7 +6,7 @@ public class Cuboid {
     private final double minZ;
 
     private final double x;
-    private final double y;
+    private double y;
     private final double z;
 
     public Cuboid(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
@@ -40,5 +40,9 @@ public class Cuboid {
 
     public double getZ() {
         return z;
+    }
+
+    public void scaleY(double scale) {
+        this.y *= scale;
     }
 }
