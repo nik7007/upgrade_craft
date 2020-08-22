@@ -14,6 +14,9 @@ import net.minecraftforge.fluids.capability.TileFluidHandler;
 import javax.annotation.Nullable;
 
 public abstract class BaseFluidHandlerTileEntity extends TileFluidHandler {
+
+    private int oldLuminosity = 0;
+
     public BaseFluidHandlerTileEntity(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
     }
@@ -61,6 +64,18 @@ public abstract class BaseFluidHandlerTileEntity extends TileFluidHandler {
 
     public int getCapacity() {
         return this.tank.getCapacity();
+    }
+
+    public int getLuminosity() {
+        FluidStack fluid = getFluid();
+        int luminosity = fluid.getFluid().getAttributes().getLuminosity(fluid);
+        if (world != null && world.isRemote()) {
+            if (oldLuminosity != luminosity) {
+                oldLuminosity = luminosity;
+                world.getLightManager().checkBlock(getPos());
+            }
+        }
+        return luminosity;
     }
 
 }

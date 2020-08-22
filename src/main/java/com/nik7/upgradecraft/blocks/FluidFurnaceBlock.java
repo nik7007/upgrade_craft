@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
@@ -58,6 +59,15 @@ public class FluidFurnaceBlock extends Block {
     @Override
     public boolean hasTileEntity(BlockState state) {
         return true;
+    }
+
+    @Override
+    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof FluidFurnaceTileEntity) {
+            return ((FluidFurnaceTileEntity) tileEntity).getLuminosity();
+        }
+        return 0;
     }
 
     @Nullable
