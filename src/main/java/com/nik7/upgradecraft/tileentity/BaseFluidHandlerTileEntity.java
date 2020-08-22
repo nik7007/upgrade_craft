@@ -59,7 +59,11 @@ public abstract class BaseFluidHandlerTileEntity extends TileFluidHandler {
 
     public boolean isFluidHot() {
         FluidStack fluid = getFluid();
-        return fluid.getFluid().getAttributes().getTemperature(fluid) > 250 + 273;
+        return isFluidHot(fluid);
+    }
+
+    protected boolean isFluidHot(FluidStack fluidStack) {
+        return fluidStack.getFluid().getAttributes().getTemperature(fluidStack) > 250 + 273;
     }
 
     public int getCapacity() {
