@@ -57,6 +57,10 @@ public abstract class BaseFluidHandlerTileEntity extends TileFluidHandler {
         return this.tank.getFluid().copy();
     }
 
+    public int getFluidAmount() {
+        return this.tank.getFluidAmount();
+    }
+
     public boolean isFluidHot() {
         FluidStack fluid = getFluid();
         return isFluidHot(fluid);

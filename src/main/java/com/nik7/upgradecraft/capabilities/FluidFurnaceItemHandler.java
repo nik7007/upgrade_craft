@@ -35,6 +35,16 @@ public class FluidFurnaceItemHandler extends ItemStackHandler {
         return stacks;
     }
 
+    @Nonnull
+    public ItemStack getInputItemStack() {
+        return stacks.get(INPUT);
+    }
+
+    @Nonnull
+    public ItemStack getOutputItemStack() {
+        return stacks.get(OUTPUT);
+    }
+
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return slot == INPUT && (validator == null || validator.test(slot, stack));
