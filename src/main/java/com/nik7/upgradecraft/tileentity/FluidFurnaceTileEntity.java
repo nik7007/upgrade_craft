@@ -198,7 +198,6 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
     }
 
     private void onFluidChange(Void aVoid) {
-        notifyBlockUpdate();
         if (this.getFluidAmount() > 0) {
             if (!this.tank.getFluid().isFluidEqual(previousFluidStack)) {
                 previousFluidStack = this.getFluid();
@@ -207,10 +206,11 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
                 int lavaTemperature = Fluids.LAVA.getStillFluid().getAttributes().getTemperature();
                 cookTimeScale = lavaTemperature / (float) tankFluidTemp;
             }
-        } else if (previousFluidStack != FluidStack.EMPTY) {
+        } else if (!previousFluidStack.isEmpty()) {
             previousFluidStack = FluidStack.EMPTY;
             cookTimeScale = 1;
         }
+        notifyBlockUpdate();
     }
 
     @Nonnull
