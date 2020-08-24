@@ -112,6 +112,9 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
         cookTimeScale = tag.getFloat("cookTimeScale");
 
         furnaceItemHandler.deserializeNBT(inventory);
+
+        CompoundNBT compoundPreviousFS = tag.getCompound("previousFluidStack");
+        previousFluidStack = FluidStack.loadFluidStackFromNBT(compoundPreviousFS);
     }
 
     @Override
@@ -123,6 +126,8 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
         tag.putInt("burnTime", burnTime);
         tag.putInt("cookTime", cookTime);
         tag.putFloat("cookTimeScale", cookTimeScale);
+
+        tag.put("previousFluidStack", previousFluidStack.writeToNBT(new CompoundNBT()));
         return tag;
     }
 
