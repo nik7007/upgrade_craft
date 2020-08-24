@@ -177,7 +177,7 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
 
     protected boolean canSmelt(@Nullable FurnaceRecipe recipeIn) {
         ItemStack outputStack = this.furnaceItemHandler.getOutputItemStack();
-        if (!outputStack.isEmpty() && recipeIn != null) {
+        if (recipeIn != null) {
             ItemStack recipeOutput = recipeIn.getRecipeOutput();
             if (recipeOutput.isEmpty()) {
                 return false;
