@@ -220,4 +220,11 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
             return inventory.cast();
         return super.getCapability(capability, facing);
     }
+
+    @Override
+    public void remove() {
+        inventory.invalidate();
+        super.remove();
+    }
+
 }
