@@ -22,6 +22,7 @@ public class UpgradeCraft {
         RegisterBlocks.init();
         RegisterItems.init();
         RegisterTileEntity.init();
+        RegisterContainers.init();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
         LOGGER.info("Hello from UpgradeCraft!");
