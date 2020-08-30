@@ -31,7 +31,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
@@ -247,7 +247,7 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
 
     @Override
     public ITextComponent getDisplayName() {
-        return new StringTextComponent("block.upgradecraft.fluid_furnace_block");
+        return new TranslationTextComponent("block.upgradecraft.fluid_furnace_block");
     }
 
     @Nullable
