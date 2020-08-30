@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 import static com.nik7.upgradecraft.capabilities.FluidFurnaceItemHandler.INPUT;
@@ -27,6 +28,7 @@ public class FluidFurnaceContainer extends Container {
 
     private final IIntArray data;
     private final PlayerInventory playerInventory;
+    @Nullable
     private final FluidFurnaceTileEntity tileEntity;
 
     public FluidFurnaceContainer(int windowId, PlayerInventory inv, PacketBuffer data) {
@@ -71,6 +73,10 @@ public class FluidFurnaceContainer extends Container {
         return this.data.get(2);
     }
 
+    @Nullable
+    public FluidFurnaceTileEntity getTileEntity() {
+        return tileEntity;
+    }
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {

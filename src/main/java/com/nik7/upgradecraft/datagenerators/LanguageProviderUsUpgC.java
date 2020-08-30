@@ -19,6 +19,7 @@ public class LanguageProviderUsUpgC extends LanguageProviderUpgC {
         addBlock(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK, "Wooden Fluid Tank");
         addBlock(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK, "Wooden Fluid Tank");
         addBlock(RegisterBlocks.FUNNEL_BLOCK, "Funnel");
+        addBlock(RegisterBlocks.FLUID_FURNACE_BLOCK, "Fluid Furnace");
 
         //tooltip
         add("tooltip.upgradecraft.tank.glassed", "Transparent");
