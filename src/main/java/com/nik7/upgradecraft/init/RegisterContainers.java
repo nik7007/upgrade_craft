@@ -1,6 +1,9 @@
 package com.nik7.upgradecraft.init;
 
+import com.nik7.upgradecraft.container.FluidFurnaceContainer;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -15,5 +18,6 @@ public class RegisterContainers {
         REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
+    public static final RegistryObject<ContainerType<FluidFurnaceContainer>> FLUID_FURNACE_CONTAINER_TYPE = REGISTER.register("fluid_furnace_container", () -> IForgeContainerType.create(FluidFurnaceContainer::new));
 
 }
