@@ -148,7 +148,7 @@ public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEnt
         throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
     }
 
-    protected static int getColorARGB(@Nonnull FluidStack fluidStack, float fluidScale) {
+    public static int getColorARGB(@Nonnull FluidStack fluidStack, float fluidScale) {
         if (fluidStack.isEmpty()) {
             return -1;
         }
@@ -209,7 +209,7 @@ public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEnt
         return fluidStack.getAmount() / (float) tileEntityIn.getCapacity();
     }
 
-    protected TextureAtlasSprite locationToSprite(ResourceLocation textureLocation) {
+    public static TextureAtlasSprite locationToSprite(ResourceLocation textureLocation) {
         return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLocation);
     }
 
