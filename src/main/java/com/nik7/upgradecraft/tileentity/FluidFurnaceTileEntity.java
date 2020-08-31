@@ -27,6 +27,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -247,6 +248,10 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
             world.setBlockState(pos, getBlockState().with(FluidFurnaceBlock.LIT, isBurning),
                     Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
         }
+    }
+
+    public NonNullList<ItemStack> getItems() {
+        return furnaceItemHandler.getItemStack();
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.nik7.upgradecraft.capabilities;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
@@ -31,7 +31,7 @@ public class FluidFurnaceItemHandler extends ItemStackHandler {
     }
 
     @Nonnull
-    public List<ItemStack> getItemStack() {
+    public NonNullList<ItemStack> getItemStack() {
         return stacks;
     }
 
