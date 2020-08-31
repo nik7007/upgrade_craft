@@ -141,13 +141,13 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
     @Override
     public void read(BlockState state, CompoundNBT tag) {
         super.read(state, tag);
+
         CompoundNBT inventory = tag.getCompound("inventory");
+        furnaceItemHandler.deserializeNBT(inventory);
 
         burnTime = tag.getInt("burnTime");
         cookTime = tag.getInt("cookTime");
         cookTimeScale = tag.getFloat("cookTimeScale");
-
-        furnaceItemHandler.deserializeNBT(inventory);
 
         CompoundNBT compoundPreviousFS = tag.getCompound("previousFluidStack");
         previousFluidStack = FluidStack.loadFluidStackFromNBT(compoundPreviousFS);
@@ -237,7 +237,11 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
                 setRecipeUsed(furnaceRecipe);
             }
             markDirty();
+        } else if (cookTime != 0) {
+            cookTime = 0;
+            markDirty();
         }
+
         Boolean lit = getBlockState().get(FluidFurnaceBlock.LIT);
         if (lit != isBurning) {
             world.setBlockState(pos, getBlockState().with(FluidFurnaceBlock.LIT, isBurning),
