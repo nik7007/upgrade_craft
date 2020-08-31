@@ -59,6 +59,11 @@ public class FluidFurnaceItemHandler extends ItemStackHandler {
         return super.extractItem(slot, amount, simulate);
     }
 
+    @Nonnull
+    public ItemStack extractItemForSlot(int slot, int amount, boolean simulate) {
+        return super.extractItem(slot, amount, simulate);
+    }
+
     @Override
     protected void onContentsChanged(int slot) {
         if (onSlotChanged != null) {

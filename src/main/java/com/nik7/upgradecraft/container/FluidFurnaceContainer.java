@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.container;
 
+import com.nik7.upgradecraft.capabilities.FluidFurnaceItemHandler;
 import com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,8 +14,6 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -32,16 +31,16 @@ public class FluidFurnaceContainer extends Container {
     private final FluidFurnaceTileEntity tileEntity;
 
     public FluidFurnaceContainer(int windowId, PlayerInventory inv, PacketBuffer data) {
-        this(windowId, new IntArray(3), inv, (FluidFurnaceTileEntity) inv.player.world.getTileEntity(data.readBlockPos()), new ItemStackHandler(2));
+        this(windowId, new IntArray(3), inv, (FluidFurnaceTileEntity) inv.player.world.getTileEntity(data.readBlockPos()), new FluidFurnaceItemHandler(null));
     }
 
-    public FluidFurnaceContainer(int id, IIntArray data, PlayerInventory playerInventory, FluidFurnaceTileEntity tileEntity, ItemStackHandler handler) {
+    public FluidFurnaceContainer(int id, IIntArray data, PlayerInventory playerInventory, FluidFurnaceTileEntity tileEntity, FluidFurnaceItemHandler handler) {
         super(FLUID_FURNACE_CONTAINER_TYPE.get(), id);
         this.data = data;
         this.playerInventory = playerInventory;
         this.tileEntity = tileEntity;
 
-        this.addSlot(new SlotItemHandler(handler, INPUT, 56, 17));
+        this.addSlot(new FluidFurnaceInputSlot(handler, INPUT, 56, 17));
         this.addSlot(new FluidFurnaceResultSlot(playerInventory.player, tileEntity, handler, OUTPUT, 116, 35));
 
         addPlayerSlots(playerInventory, 8, 84);
