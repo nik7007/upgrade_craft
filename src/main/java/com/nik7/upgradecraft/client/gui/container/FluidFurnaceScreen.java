@@ -22,7 +22,7 @@ import static com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity.FLUID_TICK
 import static net.minecraft.util.ColorHelper.PackedColor.*;
 
 public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
-    private final static ResourceLocation GUI = new ResourceLocation(MOD_ID, "textures/gui/container/fluid_furnace_gui.png");
+    public final static ResourceLocation GUI = new ResourceLocation(MOD_ID, "textures/gui/container/fluid_furnace_gui.png");
     private final RenderFluidTankSlot fluidTankSlot;
 
     public FluidFurnaceScreen(FluidFurnaceContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
