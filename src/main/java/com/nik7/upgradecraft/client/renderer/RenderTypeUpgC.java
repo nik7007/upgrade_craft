@@ -1,4 +1,4 @@
-package com.nik7.upgradecraft.client;
+package com.nik7.upgradecraft.client.renderer;
 
 import net.minecraft.client.renderer.RenderState;
 import net.minecraft.client.renderer.RenderType;

@@ -1,8 +1,8 @@
 package com.nik7.upgradecraft.init;
 
-import com.nik7.upgradecraft.client.FluidFurnaceRenderer;
-import com.nik7.upgradecraft.client.FluidTankRenderer;
 import com.nik7.upgradecraft.client.gui.container.FluidFurnaceScreen;
+import com.nik7.upgradecraft.client.renderer.tileentity.FluidFurnaceRenderer;
+import com.nik7.upgradecraft.client.renderer.tileentity.FluidTankRenderer;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;

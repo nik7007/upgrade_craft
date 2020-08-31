@@ -2,7 +2,7 @@ package com.nik7.upgradecraft.client.gui.container;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.nik7.upgradecraft.client.BaseFluidHandlerRenderer;
+import com.nik7.upgradecraft.client.utils.RenderHelper;
 import com.nik7.upgradecraft.container.FluidFurnaceContainer;
 import com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -49,12 +49,12 @@ public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
 
     private void renderFluid(MatrixStack matrixStack, FluidStack fluidStack, int capacity, int x, int y) {
         float scale = fluidStack.getAmount() / (float) capacity;
-        int argb = BaseFluidHandlerRenderer.getColorARGB(fluidStack, scale);
+        int argb = RenderHelper.getColorARGB(fluidStack, scale);
 
         if (fluidStack.getFluid().getAttributes().isGaseous(fluidStack)) {
             scale = 1;
         }
-        TextureAtlasSprite fluidSprite = BaseFluidHandlerRenderer.locationToSprite(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
+        TextureAtlasSprite fluidSprite = RenderHelper.locationToSprite(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
 
         final float red = getRed(argb) / 255f;
         final float green = getGreen(argb) / 255f;

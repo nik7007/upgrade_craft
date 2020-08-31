@@ -1,4 +1,4 @@
-package com.nik7.upgradecraft.client;
+package com.nik7.upgradecraft.client.renderer;
 
 public class Cuboid {
     private final double minX;

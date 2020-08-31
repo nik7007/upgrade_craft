@@ -1,6 +1,7 @@
-package com.nik7.upgradecraft.client;
+package com.nik7.upgradecraft.client.renderer.tileentity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.nik7.upgradecraft.client.renderer.Cuboid;
 import com.nik7.upgradecraft.state.properties.TankType;
 import com.nik7.upgradecraft.tileentity.WoodenFluidTankGlassedTileEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

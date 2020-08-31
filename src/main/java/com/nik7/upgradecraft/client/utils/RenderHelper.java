@@ -1,16 +1,12 @@
-package com.nik7.upgradecraft.client;
+package com.nik7.upgradecraft.client.utils;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.nik7.upgradecraft.tileentity.BaseFluidHandlerTileEntity;
+import com.nik7.upgradecraft.client.renderer.Cuboid;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
@@ -25,7 +21,8 @@ import java.util.function.Function;
 
 import static net.minecraft.util.ColorHelper.PackedColor.*;
 
-public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEntity> extends TileEntityRenderer<T> {
+public final class RenderHelper {
+
     private static final int U_MIN = 0;
     private static final int U_MAX = 1;
     private static final int V_MIN = 2;
@@ -33,17 +30,38 @@ public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEnt
 
     private static final Vector3f VEC_ZERO = new Vector3f(0, 0, 0);
 
-    public BaseFluidHandlerRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+    private RenderHelper() {
     }
 
-    protected static void renderCuboid(Cuboid cuboid,
-                                       MatrixStack matrixStackIn,
-                                       IVertexBuilder buffer,
-                                       int light,
-                                       int argb,
-                                       Function<Direction, TextureAtlasSprite> getSprite,
-                                       Consumer<MatrixStack> preRenderOperation) {
+
+    public static int getColorARGB(@Nonnull FluidStack fluidStack, float fluidScale) {
+        if (fluidStack.isEmpty()) {
+            return -1;
+        }
+        int color = fluidStack.getFluid().getAttributes().getColor(fluidStack);
+        if (fluidStack.getFluid().getAttributes().isGaseous(fluidStack)) {
+            float alpha = Math.min(1, fluidScale + 0.2F);
+            if (alpha < 0) {
+                alpha = 0;
+            } else if (alpha > 1) {
+                alpha = 1;
+            }
+            return packColor((int) alpha, getRed(color), getGreen(color), getBlue(color));
+        }
+        return color;
+    }
+
+    public static TextureAtlasSprite locationToSprite(ResourceLocation textureLocation) {
+        return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLocation);
+    }
+
+    public static void renderCuboid(Cuboid cuboid,
+                                    MatrixStack matrixStackIn,
+                                    IVertexBuilder buffer,
+                                    int light,
+                                    int argb,
+                                    Function<Direction, TextureAtlasSprite> getSprite,
+                                    Consumer<MatrixStack> preRenderOperation) {
         float red = getRed(argb) / 255f;
         float green = getGreen(argb) / 255f;
         float blue = getBlue(argb) / 255f;
@@ -137,7 +155,7 @@ public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEnt
         throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
     }
 
-    public static double getValue(Vector3d vector, Direction.Axis axis) {
+    private static double getValue(Vector3d vector, Direction.Axis axis) {
         if (axis == Direction.Axis.X) {
             return vector.x;
         } else if (axis == Direction.Axis.Y) {
@@ -148,28 +166,7 @@ public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEnt
         throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
     }
 
-    public static int getColorARGB(@Nonnull FluidStack fluidStack, float fluidScale) {
-        if (fluidStack.isEmpty()) {
-            return -1;
-        }
-        int color = fluidStack.getFluid().getAttributes().getColor(fluidStack);
-        if (fluidStack.getFluid().getAttributes().isGaseous(fluidStack)) {
-            float alpha = Math.min(1, fluidScale + 0.2F);
-            if (alpha < 0) {
-                alpha = 0;
-            } else if (alpha > 1) {
-                alpha = 1;
-            }
-            return packColor((int) alpha, getRed(color), getGreen(color), getBlue(color));
-        }
-        return color;
-    }
-
-    protected static int calculateGlowLight(int light, @Nonnull FluidStack fluid) {
-        return fluid.isEmpty() ? light : calculateGlowLight(light, fluid.getFluid().getAttributes().getLuminosity(fluid));
-    }
-
-    private static int calculateGlowLight(int light, int glow) {
+    public static int calculateGlowLight(int light, int glow) {
         if (glow >= 15) {
             return 0xF000F0;
         }
@@ -178,39 +175,7 @@ public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEnt
         return LightTexture.packLight(Math.max(blockLight, glow), Math.max(skyLight, glow));
     }
 
-    protected void renderFluidCuboid(FluidStack fluidStack,
-                                     float fluidScale,
-                                     Cuboid cuboid,
-                                     MatrixStack matrixStackIn,
-                                     IRenderTypeBuffer bufferIn,
-                                     int combinedLightIn,
-                                     Consumer<MatrixStack> preRenderOperation) {
-        if (!fluidStack.isEmpty()) {
-            Fluid fluid = fluidStack.getFluid();
-
-            ResourceLocation stillTexture = fluid.getAttributes().getStillTexture(fluidStack);
-            TextureAtlasSprite stillSprite = locationToSprite(stillTexture);
-
-            ResourceLocation flowingTexture = fluid.getAttributes().getFlowingTexture(fluidStack);
-            TextureAtlasSprite flowingSprite = locationToSprite(flowingTexture);
-
-            int light = calculateGlowLight(combinedLightIn, fluidStack);
-            int argb = getColorARGB(fluidStack, fluidScale);
-
-            cuboid.scaleY(fluidScale);
-            IVertexBuilder buffer = bufferIn.getBuffer(RenderTypeUpgC.resizableCuboid());
-            renderCuboid(cuboid, matrixStackIn, buffer, light, argb,
-                    face -> face == Direction.UP ? stillSprite : flowingSprite,
-                    preRenderOperation);
-        }
+    public static int calculateFluidGlowLight(int light, @Nonnull FluidStack fluid) {
+        return fluid.isEmpty() ? light : calculateGlowLight(light, fluid.getFluid().getAttributes().getLuminosity(fluid));
     }
-
-    protected float getFluidScale(T tileEntityIn, FluidStack fluidStack) {
-        return fluidStack.getAmount() / (float) tileEntityIn.getCapacity();
-    }
-
-    public static TextureAtlasSprite locationToSprite(ResourceLocation textureLocation) {
-        return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLocation);
-    }
-
 }
