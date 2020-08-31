@@ -11,7 +11,11 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
 import static com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity.FLUID_TICK_DURATION;
@@ -38,23 +42,47 @@ public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
         FluidFurnaceTileEntity tileEntity = container.getTileEntity();
         if (tileEntity != null) {
             FluidStack fluid = tileEntity.getFluid();
+            int capacity = tileEntity.getCapacity();
+            renderFluid(matrixStack, fluid, capacity, x, y);
+        }
+    }
 
-            float scale = fluid.getAmount() / (float) tileEntity.getCapacity();
-            int argb = BaseFluidHandlerRenderer.getColorARGB(fluid, scale);
+    private void renderFluid(MatrixStack matrixStack, FluidStack fluidStack, int capacity, int x, int y) {
+        float scale = fluidStack.getAmount() / (float) capacity;
+        int argb = BaseFluidHandlerRenderer.getColorARGB(fluidStack, scale);
 
-            if (fluid.getFluid().getAttributes().isGaseous(fluid)) {
-                scale = 1;
-            }
-            TextureAtlasSprite fluidSprite = BaseFluidHandlerRenderer.locationToSprite(fluid.getFluid().getAttributes().getStillTexture(fluid));
+        if (fluidStack.getFluid().getAttributes().isGaseous(fluidStack)) {
+            scale = 1;
+        }
+        TextureAtlasSprite fluidSprite = BaseFluidHandlerRenderer.locationToSprite(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
 
-            float red = getRed(argb) / 255f;
-            float green = getGreen(argb) / 255f;
-            float blue = getBlue(argb) / 255f;
-            float alpha = getAlpha(argb) / 255f;
+        final float red = getRed(argb) / 255f;
+        final float green = getGreen(argb) / 255f;
+        final float blue = getBlue(argb) / 255f;
+        final float alpha = getAlpha(argb) / 255f;
 
-            this.minecraft.getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-            RenderSystem.color4f(red, green, blue, alpha);
-            blit(matrixStack, 15, 58 - (int) (32 * scale), 0, 16, (int) (32 * scale), fluidSprite);
+        final int baseTankX = 15;
+        final int tankWidth = 16;
+        final int baseTankY = 58;
+        final int tankHeight = 32;
+
+        this.minecraft.getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        RenderSystem.color4f(red, green, blue, alpha);
+        blit(matrixStack, baseTankX, baseTankY - (int) (tankHeight * scale), 0, tankWidth, (int) (tankHeight * scale), fluidSprite);
+
+        RenderSystem.color4f(1f, 1f, 1f, 1f);
+
+        int xOffset = (this.width - this.xSize) / 2;
+        int yOffset = (this.height - this.ySize) / 2;
+
+        if (x > baseTankX + xOffset && x < baseTankX + tankWidth + xOffset && y > baseTankY - tankHeight + yOffset && y < baseTankY + yOffset) {
+
+            ITextComponent fluidName = fluidStack.getDisplayName();
+            int amount = fluidStack.getAmount();
+            String fluidAmount = amount + "/" + capacity + "mB";
+            List<ITextComponent> tooltip = Arrays.asList(fluidName, new StringTextComponent(fluidAmount));
+
+            this.func_243308_b(matrixStack, tooltip, x - xOffset, y - yOffset);
         }
     }
 
