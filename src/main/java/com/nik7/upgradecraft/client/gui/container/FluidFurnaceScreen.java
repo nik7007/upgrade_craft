@@ -28,14 +28,10 @@ public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
     public FluidFurnaceScreen(FluidFurnaceContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         FluidFurnaceTileEntity tileEntity = screenContainer.getTileEntity();
-        int capacity = tileEntity != null ? tileEntity.getCapacity() : 0;
-
-        fluidTankSlot = new RenderFluidTankSlot(
-                () -> {
-                    FluidFurnaceTileEntity te = screenContainer.getTileEntity();
-                    return te != null ? te.getFluid() : FluidStack.EMPTY;
-                },
-                capacity, 15, 16, 58, 32);
+        this.fluidTankSlot = new RenderFluidTankSlot(
+                () -> tileEntity != null ? tileEntity.getFluid() : FluidStack.EMPTY,
+                () -> tileEntity != null ? tileEntity.getCapacity() : 0,
+                15, 16, 58, 32);
     }
 
     @Override

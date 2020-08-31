@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public class RenderFluidTankSlot {
     private final Supplier<FluidStack> fluidStack;
-    private final int capacity;
+    private final Supplier<Integer> capacity;
 
     private final int baseTankX;
     private final int tankWidth;
@@ -14,7 +14,7 @@ public class RenderFluidTankSlot {
     private final int tankHeight;
 
     public RenderFluidTankSlot(Supplier<FluidStack> fluidStack,
-                               int capacity,
+                               Supplier<Integer> capacity,
                                int baseTankX,
                                int tankWidth,
                                int baseTankY,
@@ -32,7 +32,7 @@ public class RenderFluidTankSlot {
     }
 
     public int getCapacity() {
-        return capacity;
+        return capacity.get();
     }
 
     public int getBaseTankX() {
@@ -58,7 +58,7 @@ public class RenderFluidTankSlot {
     }
 
     public float getFluidScale() {
-        return fluidStack.get().getAmount() / (float) capacity;
+        return fluidStack.get().getAmount() / (float) getCapacity();
     }
 
 }
