@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import java.util.Objects;
 
 import static net.minecraftforge.fluids.FluidAttributes.BUCKET_VOLUME;
 
@@ -155,6 +156,17 @@ public final class RecipeUtils {
         return ingredient;
     }
 
+    public static JsonElement serializeIngredient(Ingredient ingredient, int amount) {
+        if (amount == 1) {
+            return ingredient.serialize();
+        } else {
+            JsonObject result = new JsonObject();
+            result.addProperty(AMOUNT, amount);
+            result.add(VALUE, ingredient.serialize());
+            return result;
+        }
+    }
+
     public static FluidStack parseFluidStack(JsonElement element) {
 
         if (element == null || element.isJsonNull()) {
@@ -193,6 +205,17 @@ public final class RecipeUtils {
             }
         }
         return stack;
+    }
+
+    public static JsonElement serializeFluidStack(FluidStack fluidStack) {
+        JsonObject element = new JsonObject();
+        element.addProperty(AMOUNT, fluidStack.getAmount());
+        element.addProperty(FLUID, Objects.requireNonNull(fluidStack.getRawFluid().getRegistryName()).toString());
+        if (fluidStack.hasTag()) {
+            CompoundNBT tag = fluidStack.getTag();
+            element.addProperty(NBT, tag.toString());
+        }
+        return element;
     }
 
     public static ItemStack parseItemStack(JsonElement element) {
