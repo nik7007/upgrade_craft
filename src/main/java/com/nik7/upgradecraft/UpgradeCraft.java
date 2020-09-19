@@ -18,11 +18,13 @@ public class UpgradeCraft {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
-
         RegisterBlocks.init();
         RegisterItems.init();
         RegisterTileEntity.init();
         RegisterContainers.init();
+
+        RegisterRecipeSerializer.init();
+        RecipeTypesUpgC.init();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
         LOGGER.info("Hello from UpgradeCraft!");
