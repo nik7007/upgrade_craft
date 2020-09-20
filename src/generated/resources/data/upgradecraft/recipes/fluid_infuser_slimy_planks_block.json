@@ -1,0 +1,32 @@
+{
+  "type": "upgradecraft:fluid_infuser",
+  "ingredients": [
+    {
+      "amount": 2,
+      "value": {
+        "tag": "forge:slimeballs"
+      }
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "amount": 10,
+      "fluid": "minecraft:lava"
+    }
+  ],
+  "phases": [
+    {
+      "time": 5
+    },
+    {
+      "time": 10
+    }
+  ],
+  "result": {
+    "amount": 1,
+    "item": "upgradecraft:slimy_planks_block",
+    "chance": 1.0
+  },
+  "experience": 0.4
+}

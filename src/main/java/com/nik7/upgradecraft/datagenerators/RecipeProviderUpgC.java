@@ -6,8 +6,10 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
@@ -52,6 +54,16 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .patternLine(" i ")
                 .addCriterion("has_wooden_tank", hasItem(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get()))
                 .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
+                .build(consumer);
+
+        MachineUpgCRecipeBuilder.fluidInfuserRecipe("slimy_planks_block")
+                .ingredient(new FluidStack(Fluids.LAVA, 10))
+                .ingredient(Tags.Items.SLIMEBALLS, 2)
+                .ingredient(ItemTags.PLANKS)
+                .phase(5)
+                .phase(10)
+                .result(RegisterBlocks.SLIMY_PLANKS_BLOCK.get())
+                .experienceRecipe(0.4f)
                 .build(consumer);
     }
 }
