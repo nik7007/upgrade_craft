@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,8 @@ public class RecipeSerializerUpgc<T extends MachineRecipe> extends ForgeRegistry
     }
 
     @Override
-    public T read(ResourceLocation recipeId, JsonObject json) {
+    @Nonnull
+    public T read(@Nonnull ResourceLocation recipeId, JsonObject json) {
         List<Ingredient> inputItems = new ArrayList<>();
         List<FluidStack> inputFluids = new ArrayList<>();
         List<Integer> minTicks = new ArrayList<>();
@@ -78,7 +80,7 @@ public class RecipeSerializerUpgc<T extends MachineRecipe> extends ForgeRegistry
 
     @Nullable
     @Override
-    public T read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public T read(@Nonnull ResourceLocation recipeId, PacketBuffer buffer) {
         float experience = buffer.readFloat();
 
         int numInputItems = buffer.readVarInt();

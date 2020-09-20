@@ -1,9 +1,6 @@
 package com.nik7.upgradecraft.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -104,6 +101,20 @@ public final class RecipeUtils {
 
         }
         return BASE_PHASE_TIME;
+    }
+
+    public static JsonElement serializePhases(List<Integer> times) {
+        if (times.size() == 1) {
+            return new JsonPrimitive(times.get(0));
+        } else {
+            JsonArray jsonArray = new JsonArray();
+            for (int time : times) {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty(TIME, time);
+                jsonArray.add(jsonObject);
+            }
+            return jsonArray;
+        }
     }
 
     public static float parseItemChance(JsonElement element) {
@@ -266,6 +277,20 @@ public final class RecipeUtils {
             }
         }
         return stack;
+    }
+
+    public static JsonElement serializeItemStack(ItemStack itemStack, float chance) {
+        JsonObject jsonObject = new JsonObject();
+
+        jsonObject.addProperty(AMOUNT, itemStack.getCount());
+        jsonObject.addProperty(ITEM, Objects.requireNonNull(itemStack.getItem().getRegistryName()).toString());
+        if (itemStack.hasTag()) {
+            CompoundNBT tag = itemStack.getTag();
+            jsonObject.addProperty(NBT, tag.toString());
+        }
+        jsonObject.addProperty(CHANCE, chance);
+
+        return jsonObject;
     }
 
 }
