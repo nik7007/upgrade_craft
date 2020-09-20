@@ -19,6 +19,30 @@ public class FluidInfuserRecipe extends MachineRecipe {
         super(recipeId, inputItems, inputFluids, minTicks, outputItems, outputFluids, outputItemChances);
     }
 
+    public FluidStack getFluidStack() {
+        return this.getInputFluids().get(0);
+    }
+
+    public Ingredient getDissolve() {
+        return this.getInputItems().get(0);
+    }
+
+    public Ingredient getInfuse() {
+        return this.getInputItems().get(1);
+    }
+
+    public ItemStack getResult() {
+        return this.getOutputItems().get(0);
+    }
+
+    public int getDissolveTick() {
+        return this.getMinTicks().get(0);
+    }
+
+    public int getInfuseTick() {
+        return this.getMinTicks().get(1);
+    }
+
     @Override
     public IRecipeSerializer<?> getSerializer() {
         return RegisterRecipeSerializer.FLUID_INFUSER_SERIALIZER.get();
