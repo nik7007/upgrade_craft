@@ -6,13 +6,17 @@ import com.nik7.upgradecraft.client.utils.RenderHelper;
 import com.nik7.upgradecraft.container.FluidFurnaceContainer;
 import com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fluids.FluidStack;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,38 +54,84 @@ public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
         this.fluidTooltip(matrixStack, fluidTankSlot, mouseX, mouseY);
     }
 
+    protected static void drawTiledTexture(int x, int y, int width, int height, TextureAtlasSprite icon) {
+
+        for (int w = 0; w < width; w += 16) {
+            for (int h = 0; h < height; h += 16) {
+                int drawWidth = Math.min(width - w, 16);
+                int drawHeight = Math.min(height - h, 16);
+                drawScaledTexturedModalRectFromSprite(x + w, y + h, drawWidth, drawHeight, icon);
+            }
+        }
+
+    }
+
+    protected static void drawScaledTexturedModalRectFromSprite(int x, int y, int width, int height, TextureAtlasSprite icon) {
+
+        if (icon == null) {
+            return;
+        }
+        float minU = icon.getMinU();
+        float maxU = icon.getMaxU();
+        float minV = icon.getMinV();
+        float maxV = icon.getMaxV();
+
+        float u = minU + (maxU - minU) * width / 16F;
+        float v = minV + (maxV - minV) * height / 16F;
+
+        BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        buffer.pos(x, y + height, 0).tex(minU, v).endVertex();
+        buffer.pos(x + width, y + height, 0).tex(u, v).endVertex();
+        buffer.pos(x + width, y, 0).tex(u, minV).endVertex();
+        buffer.pos(x, y, 0).tex(minU, minV).endVertex();
+        Tessellator.getInstance().draw();
+    }
+
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
         super.drawGuiContainerForegroundLayer(matrixStack, x, y);
-        renderFluid(matrixStack, fluidTankSlot);
+        renderFluid(fluidTankSlot);
     }
 
-    private void renderFluid(MatrixStack matrixStack, RenderFluidTankSlot fluidTankSlot) {
-        FluidStack fluidStack = fluidTankSlot.getFluidStack();
-        float scale = fluidTankSlot.getFluidScale();
-        int argb = RenderHelper.getColorARGB(fluidTankSlot.getFluidStack(), scale);
+    private void renderFluid(RenderFluidTankSlot fluidTankSlot) {
+        if (this.minecraft != null) {
+            FluidStack fluidStack = fluidTankSlot.getFluidStack();
+            float scale = fluidTankSlot.getFluidScale();
+            int argb = RenderHelper.getColorARGB(fluidTankSlot.getFluidStack(), scale);
 
-        if (fluidStack.getFluid().getAttributes().isGaseous(fluidStack)) {
-            scale = 1;
+            if (fluidStack.getFluid().getAttributes().isGaseous(fluidStack)) {
+                scale = 1;
+            }
+            TextureAtlasSprite fluidSprite = RenderHelper.locationToSprite(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
+
+
+            final float red = getRed(argb) / 255f;
+            final float green = getGreen(argb) / 255f;
+            final float blue = getBlue(argb) / 255f;
+            final float alpha = getAlpha(argb) / 255f;
+
+            final int baseTankX = fluidTankSlot.getBaseTankX();
+            final int tankWidth = fluidTankSlot.getTankWidth();
+            final int baseTankY = fluidTankSlot.getBaseTankY();
+            final int tankHeight = fluidTankSlot.getTankHeight();
+
+
+            this.minecraft.getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+            GL11.glPushMatrix();
+            RenderSystem.color4f(red, green, blue, alpha);
+
+            RenderSystem.enableBlend();
+            RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+            int fluidHeight = scale == 0 ? 0 : Math.max((int) (tankHeight * scale), 1);
+            drawTiledTexture(baseTankX, baseTankY - fluidHeight, tankWidth, fluidHeight, fluidSprite);
+
+            RenderSystem.color4f(1f, 1f, 1f, 1f);
+            GL11.glPopMatrix();
         }
-        TextureAtlasSprite fluidSprite = RenderHelper.locationToSprite(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
-
-        final float red = getRed(argb) / 255f;
-        final float green = getGreen(argb) / 255f;
-        final float blue = getBlue(argb) / 255f;
-        final float alpha = getAlpha(argb) / 255f;
-
-        final int baseTankX = fluidTankSlot.getBaseTankX();
-        final int tankWidth = fluidTankSlot.getTankWidth();
-        final int baseTankY = fluidTankSlot.getBaseTankY();
-        final int tankHeight = fluidTankSlot.getTankHeight();
-
-        this.minecraft.getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-        RenderSystem.color4f(red, green, blue, alpha);
-        blit(matrixStack, baseTankX, baseTankY - (int) (tankHeight * scale), 0, tankWidth, (int) (tankHeight * scale), fluidSprite);
-
-        RenderSystem.color4f(1f, 1f, 1f, 1f);
     }
+
 
     private void fluidTooltip(MatrixStack matrixStack, RenderFluidTankSlot fluidTankSlot, int mouseX, int mouseY) {
         if (fluidTankSlot.isHovered(mouseX, mouseY, guiLeft, guiTop)) {
