@@ -27,7 +27,7 @@ public class FluidFurnaceCategory implements IRecipeCategory<FurnaceRecipe> {
     private final IDrawable icon;
 
     public FluidFurnaceCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createDrawable(FluidFurnaceScreen.GUI, 55, 16, 82, 54);
+        this.background = guiHelper.createDrawable(FluidFurnaceScreen.GUI, 54, 16, 82, 54);
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterBlocks.FLUID_FURNACE_BLOCK.get()));
         this.flame = guiHelper.drawableBuilder(FluidFurnaceScreen.GUI, 176, 0, 14, 14).buildAnimated(300, StartDirection.TOP, true);
         this.arrow = guiHelper.drawableBuilder(FluidFurnaceScreen.GUI, 176, 14, 24, 17).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
@@ -35,8 +35,8 @@ public class FluidFurnaceCategory implements IRecipeCategory<FurnaceRecipe> {
 
     @Override
     public void draw(FurnaceRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-        flame.draw(matrixStack, 2, 20);
-        arrow.draw(matrixStack, 24, 18);
+        flame.draw(matrixStack, 3, 20);
+        arrow.draw(matrixStack, 25, 18);
 
         float experience = recipe.getExperience();
         if (experience > 0.0F) {
@@ -82,8 +82,8 @@ public class FluidFurnaceCategory implements IRecipeCategory<FurnaceRecipe> {
     @Override
     public void setRecipe(IRecipeLayout iRecipeLayout, FurnaceRecipe furnaceRecipe, IIngredients iIngredients) {
         IGuiItemStackGroup guiItemStacks = iRecipeLayout.getItemStacks();
-        guiItemStacks.init(0, true, 0, 0);
-        guiItemStacks.init(1, false, 60, 18);
+        guiItemStacks.init(0, true, 1, 0);
+        guiItemStacks.init(1, false, 61, 18);
         guiItemStacks.set(iIngredients);
     }
 }
