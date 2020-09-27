@@ -54,19 +54,19 @@ public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
         this.fluidTooltip(matrixStack, fluidTankSlot, mouseX, mouseY);
     }
 
-    protected static void drawTiledTexture(int x, int y, int width, int height, TextureAtlasSprite icon) {
+    protected static void drawTiledTexture(float x, float y, float width, float height, TextureAtlasSprite icon) {
 
         for (int w = 0; w < width; w += 16) {
             for (int h = 0; h < height; h += 16) {
-                int drawWidth = Math.min(width - w, 16);
-                int drawHeight = Math.min(height - h, 16);
+                float drawWidth = Math.min(width - w, 16);
+                float drawHeight = Math.min(height - h, 16);
                 drawScaledTexturedModalRectFromSprite(x + w, y + h, drawWidth, drawHeight, icon);
             }
         }
 
     }
 
-    protected static void drawScaledTexturedModalRectFromSprite(int x, int y, int width, int height, TextureAtlasSprite icon) {
+    protected static void drawScaledTexturedModalRectFromSprite(float x, float y, float width, float height, TextureAtlasSprite icon) {
 
         if (icon == null) {
             return;
@@ -124,7 +124,7 @@ public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-            int fluidHeight = scale == 0 ? 0 : Math.max((int) (tankHeight * scale), 1);
+            float fluidHeight = tankHeight * scale;
             drawTiledTexture(baseTankX, baseTankY - fluidHeight, tankWidth, fluidHeight, fluidSprite);
 
             RenderSystem.color4f(1f, 1f, 1f, 1f);
