@@ -27,7 +27,7 @@ public class FluidFurnaceCategory implements IRecipeCategory<FurnaceRecipe> {
     private final IDrawable icon;
 
     public FluidFurnaceCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createDrawable(FluidFurnaceScreen.GUI, 54, 16, 82, 54);
+        this.background = guiHelper.createDrawable(FluidFurnaceScreen.GUI, 54, 16, 83, 54);
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterBlocks.FLUID_FURNACE_BLOCK.get()));
         this.flame = guiHelper.drawableBuilder(FluidFurnaceScreen.GUI, 176, 0, 14, 14).buildAnimated(300, StartDirection.TOP, true);
         this.arrow = guiHelper.drawableBuilder(FluidFurnaceScreen.GUI, 176, 14, 24, 17).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
