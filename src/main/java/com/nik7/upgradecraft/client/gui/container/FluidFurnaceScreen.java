@@ -43,7 +43,7 @@ public class FluidFurnaceScreen extends ContainerScreen<FluidFurnaceContainer> {
         super.init();
 
         assert this.minecraft != null;
-        this.titleX = (this.xSize - this.font.func_238414_a_(this.title)) / 2;
+        this.titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
     }
 
     @Override

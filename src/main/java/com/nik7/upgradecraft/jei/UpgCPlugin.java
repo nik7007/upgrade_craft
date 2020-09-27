@@ -41,7 +41,7 @@ public class UpgCPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         assert Minecraft.getInstance().world != null;
         RecipeManager recipeManager = Minecraft.getInstance().world.getRecipeManager();
-        List<FurnaceRecipe> furnaceRecipes = recipeManager.func_241447_a_(IRecipeType.SMELTING);
+        List<FurnaceRecipe> furnaceRecipes = recipeManager.getRecipesForType(IRecipeType.SMELTING);
         registration.addRecipes(furnaceRecipes, UpgCRecipeCategoryUid.FLUID_FURNACE);
     }
 
