@@ -21,5 +21,6 @@ public class RegisterBlocks {
     public static final RegistryObject<WoodenFluidTankGlassedBlock> WOODEN_FLUID_TANK_GLASSED_BLOCK = REGISTER.register("wooden_fluid_tank_glassed_block", WoodenFluidTankGlassedBlock::new);
     public static final RegistryObject<FunnelBlock> FUNNEL_BLOCK = REGISTER.register("funnel_block", FunnelBlock::new);
     public static final RegistryObject<FluidFurnaceBlock> FLUID_FURNACE_BLOCK = REGISTER.register("fluid_furnace_block", FluidFurnaceBlock::new);
+    public static final RegistryObject<FluidInfuserBlock> FLUID_INFUSER_BLOCK = REGISTER.register("fluid_infuser_block", FluidInfuserBlock::new);
 
 }

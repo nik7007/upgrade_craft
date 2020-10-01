@@ -1,0 +1,7 @@
+{
+  "parent": "upgradecraft:block/fluid_infuser",
+  "textures": {
+    "all": "upgradecraft:block/fluid_infuser",
+    "in": "upgradecraft:block/fluid_infuser_on"
+  }
+}

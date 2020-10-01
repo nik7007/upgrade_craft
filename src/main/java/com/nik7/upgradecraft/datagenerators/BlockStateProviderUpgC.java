@@ -44,6 +44,7 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
 
         createFunnel(RegisterBlocks.FUNNEL_BLOCK.get(), "funnel");
         createOrientableMachine(RegisterBlocks.FLUID_FURNACE_BLOCK.get(), "furnace_machine", "fluid_furnace");
+        createOrientableMachine(RegisterBlocks.FLUID_INFUSER_BLOCK.get(), "fluid_infuser", "fluid_infuser");
 
     }
 

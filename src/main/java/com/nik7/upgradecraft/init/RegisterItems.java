@@ -32,4 +32,7 @@ public class RegisterItems {
     public static final RegistryObject<Item> FLUID_FURNACE_ITEM_BLOCK = REGISTER.register("fluid_furnace_block",
             () -> new BlockItem(FLUID_FURNACE_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
 
+    public static final RegistryObject<Item> FLUID_INFUSER_ITEM_BLOCK = REGISTER.register("fluid_infuser_block",
+            () -> new BlockItem(FLUID_INFUSER_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+
 }

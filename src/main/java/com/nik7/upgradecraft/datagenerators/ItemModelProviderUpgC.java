@@ -31,5 +31,8 @@ public class ItemModelProviderUpgC extends ItemModelProvider {
 
         withExistingParent(Objects.requireNonNull(RegisterBlocks.FLUID_FURNACE_BLOCK.get().getRegistryName()).getPath(),
                 new ResourceLocation(MOD_ID, "block/fluid_furnace_north_on"));
+
+        withExistingParent(Objects.requireNonNull(RegisterBlocks.FLUID_INFUSER_BLOCK.get().getRegistryName()).getPath(),
+                new ResourceLocation(MOD_ID, "block/fluid_infuser_north_on"));
     }
 }
