@@ -50,7 +50,7 @@ import java.util.List;
 
 import static com.nik7.upgradecraft.init.RegisterTileEntity.FLUID_FURNACE_TILE_ENTITY_TYPE;
 
-public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implements ITickableTileEntity, IRecipeHolder, INamedContainerProvider {
+public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implements ITickableTileEntity, IRecipeHolder, INamedContainerProvider, MachineTileEntity {
     public final static int FLUID_TICK_DURATION;
     private final static int BURN_AMOUNT;
 
@@ -250,6 +250,7 @@ public class FluidFurnaceTileEntity extends BaseFluidHandlerTileEntity implement
         }
     }
 
+    @Override
     public NonNullList<ItemStack> getItems() {
         return furnaceItemHandler.getItemStack();
     }
