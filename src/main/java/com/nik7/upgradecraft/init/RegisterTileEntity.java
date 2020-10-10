@@ -1,9 +1,6 @@
 package com.nik7.upgradecraft.init;
 
-import com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity;
-import com.nik7.upgradecraft.tileentity.FunnelTileEntity;
-import com.nik7.upgradecraft.tileentity.WoodenFluidTankGlassedTileEntity;
-import com.nik7.upgradecraft.tileentity.WoodenFluidTankTileEntity;
+import com.nik7.upgradecraft.tileentity.*;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -29,5 +26,8 @@ public class RegisterTileEntity {
 
     public static final RegistryObject<TileEntityType<FluidFurnaceTileEntity>> FLUID_FURNACE_TILE_ENTITY_TYPE = REGISTER.register("fluid_furnace_block",
             () -> TileEntityType.Builder.create(FluidFurnaceTileEntity::new, RegisterBlocks.FLUID_FURNACE_BLOCK.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<FluidInfuserTileEntity>> FLUID_INFUSER_TILE_ENTITY_TYPE = REGISTER.register("fluid_infuser_block",
+            () -> TileEntityType.Builder.create(FluidInfuserTileEntity::new, RegisterBlocks.FLUID_INFUSER_BLOCK.get()).build(null));
 
 }

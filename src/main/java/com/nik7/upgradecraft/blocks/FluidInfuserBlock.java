@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.blocks;
 
+import com.nik7.upgradecraft.tileentity.FluidInfuserTileEntity;
 import net.minecraft.block.material.Material;
 
 public class FluidInfuserBlock extends AbstractMachineBlock {
@@ -8,6 +9,6 @@ public class FluidInfuserBlock extends AbstractMachineBlock {
                         .notSolid()
                         .setRequiresTool()
                         .hardnessAndResistance(3.5F),
-                (state, world) -> null);
+                (state, world) -> new FluidInfuserTileEntity());
     }
 }
