@@ -5,6 +5,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -12,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FluidInfuserRecipeManager {
+public final class FluidInfuserRecipeManager {
     private final static FluidInfuserRecipeManager INSTANCE = new FluidInfuserRecipeManager();
     private List<FluidInfuserRecipe> recipes = null;
 
@@ -24,6 +25,11 @@ public class FluidInfuserRecipeManager {
             INSTANCE.recipes = world.getRecipeManager().getRecipesForType(RecipeTypesUpgC.RECIPE_FLUID_INFUSER);
         }
         return INSTANCE;
+    }
+
+    @Nullable
+    public FluidInfuserRecipe getRecipe(ResourceLocation id) {
+        return recipes.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Nullable
