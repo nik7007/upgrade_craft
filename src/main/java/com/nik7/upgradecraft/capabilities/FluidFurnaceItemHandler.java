@@ -24,7 +24,8 @@ public class FluidFurnaceItemHandler extends ItemStackHandler {
         this(onSlotChanged, null);
     }
 
-    public FluidFurnaceItemHandler(Consumer<Integer> onSlotChanged, BiPredicate<Integer, ItemStack> validator) {
+    public FluidFurnaceItemHandler(@Nullable Consumer<Integer> onSlotChanged,
+                                   @Nullable BiPredicate<Integer, ItemStack> validator) {
         super(2);
         this.onSlotChanged = onSlotChanged;
         this.validator = validator;
