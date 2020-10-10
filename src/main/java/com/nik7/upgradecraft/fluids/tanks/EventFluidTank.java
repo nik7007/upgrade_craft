@@ -13,7 +13,7 @@ public class EventFluidTank extends FluidTank {
     @Nullable
     private final Consumer<Void> onChange;
 
-    public EventFluidTank(int capacity, Consumer<Void> onChange) {
+    public EventFluidTank(int capacity, @Nullable Consumer<Void> onChange) {
         super(capacity);
         this.onChange = onChange;
     }
