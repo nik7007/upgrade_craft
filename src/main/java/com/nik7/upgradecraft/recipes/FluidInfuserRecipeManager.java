@@ -21,6 +21,9 @@ public final class FluidInfuserRecipeManager {
     }
 
     public static FluidInfuserRecipeManager getManager(World world) {
+        if (world == null) {
+            return null;
+        }
         if (INSTANCE.recipes == null) {
             INSTANCE.recipes = world.getRecipeManager().getRecipesForType(RecipeTypesUpgC.RECIPE_FLUID_INFUSER);
         }
