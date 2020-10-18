@@ -5,59 +5,33 @@ import com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 import static com.nik7.upgradecraft.capabilities.FluidFurnaceItemHandler.INPUT;
 import static com.nik7.upgradecraft.capabilities.FluidFurnaceItemHandler.OUTPUT;
-import static com.nik7.upgradecraft.init.RegisterBlocks.FLUID_FURNACE_BLOCK;
 import static com.nik7.upgradecraft.init.RegisterContainers.FLUID_FURNACE_CONTAINER_TYPE;
 
-public class FluidFurnaceContainer extends Container {
-
-    private final IIntArray data;
-    private final PlayerInventory playerInventory;
-    @Nullable
-    private final FluidFurnaceTileEntity tileEntity;
+public class FluidFurnaceContainer extends BaseMachineContainer<FluidFurnaceTileEntity> {
 
     public FluidFurnaceContainer(int windowId, PlayerInventory inv, PacketBuffer data) {
         this(windowId, new IntArray(3), inv, (FluidFurnaceTileEntity) inv.player.world.getTileEntity(data.readBlockPos()), new FluidFurnaceItemHandler(null));
     }
 
-    public FluidFurnaceContainer(int id, IIntArray data, PlayerInventory playerInventory, FluidFurnaceTileEntity tileEntity, FluidFurnaceItemHandler handler) {
-        super(FLUID_FURNACE_CONTAINER_TYPE.get(), id);
-        this.data = data;
-        this.playerInventory = playerInventory;
-        this.tileEntity = tileEntity;
+    public FluidFurnaceContainer(int id, IIntArray data, PlayerInventory playerInventory, @Nullable FluidFurnaceTileEntity tileEntity, FluidFurnaceItemHandler handler) {
+        super(FLUID_FURNACE_CONTAINER_TYPE.get(), id, data, playerInventory, tileEntity);
 
-        this.addSlot(new FluidFurnaceInputSlot(handler, INPUT, 56, 17));
-        this.addSlot(new FluidFurnaceResultSlot(playerInventory.player, tileEntity, handler, OUTPUT, 116, 35));
+        this.addSlot(new MachineInputSlot(handler, INPUT, 56, 17));
+        this.addSlot(new MachineResultSlot(playerInventory.player, tileEntity, handler, OUTPUT, 116, 35));
 
         addPlayerSlots(playerInventory, 8, 84);
-
-        trackIntArray(data);
-    }
-
-    private void addPlayerSlots(PlayerInventory playerInventory, int x, int y) {
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, x + j * 18, y + i * 18));
-            }
-        }
-
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, x + i * 18, y + 58));
-        }
     }
 
     public int getBurnTime() {
@@ -70,16 +44,6 @@ public class FluidFurnaceContainer extends Container {
 
     public int getCookTimeTotal() {
         return this.data.get(2);
-    }
-
-    @Nullable
-    public FluidFurnaceTileEntity getTileEntity() {
-        return tileEntity;
-    }
-
-    @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(Objects.requireNonNull(tileEntity.getWorld()), tileEntity.getPos()), playerIn, FLUID_FURNACE_BLOCK.get());
     }
 
     @Override
