@@ -44,6 +44,12 @@ public final class FluidInfuserRecipeManager {
         ).findFirst().orElse(null);
     }
 
+    public boolean hasRecipe(FluidStack fluidStack,
+                             IItemProvider dissolve,
+                             IItemProvider infuse) {
+        return !getRecipes(fluidStack, dissolve, infuse).isEmpty();
+    }
+
     public List<FluidInfuserRecipe> getRecipes(FluidStack fluidStack,
                                                IItemProvider dissolve,
                                                IItemProvider infuse) {

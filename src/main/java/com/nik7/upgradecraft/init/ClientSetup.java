@@ -1,6 +1,7 @@
 package com.nik7.upgradecraft.init;
 
 import com.nik7.upgradecraft.client.gui.container.FluidFurnaceScreen;
+import com.nik7.upgradecraft.client.gui.container.FluidInfuserScreen;
 import com.nik7.upgradecraft.client.renderer.tileentity.FluidFurnaceRenderer;
 import com.nik7.upgradecraft.client.renderer.tileentity.FluidTankRenderer;
 import net.minecraft.client.gui.ScreenManager;
@@ -9,6 +10,7 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import static com.nik7.upgradecraft.init.RegisterContainers.FLUID_FURNACE_CONTAINER_TYPE;
+import static com.nik7.upgradecraft.init.RegisterContainers.FLUID_INFUSER_CONTAINER_TYPE;
 
 public class ClientSetup {
 
@@ -21,5 +23,6 @@ public class ClientSetup {
         FluidFurnaceRenderer.register();
 
         ScreenManager.registerFactory(FLUID_FURNACE_CONTAINER_TYPE.get(), FluidFurnaceScreen::new);
+        ScreenManager.registerFactory(FLUID_INFUSER_CONTAINER_TYPE.get(), FluidInfuserScreen::new);
     }
 }
