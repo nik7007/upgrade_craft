@@ -1,17 +1,17 @@
 package com.nik7.upgradecraft.container;
 
-import com.nik7.upgradecraft.capabilities.FluidFurnaceItemHandler;
+import com.nik7.upgradecraft.capabilities.AbstractMachineItemHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class FluidFurnaceInputSlot extends SlotItemHandler {
-    private final FluidFurnaceItemHandler itemHandler;
+public class MachineInputSlot extends SlotItemHandler {
+    private final AbstractMachineItemHandler itemHandler;
     private final int index;
 
-    public FluidFurnaceInputSlot(FluidFurnaceItemHandler itemHandler, int index, int xPosition, int yPosition) {
+    public MachineInputSlot(AbstractMachineItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
         this.itemHandler = itemHandler;
         this.index = index;

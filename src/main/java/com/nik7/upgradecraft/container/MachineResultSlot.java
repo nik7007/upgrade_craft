@@ -1,18 +1,18 @@
 package com.nik7.upgradecraft.container;
 
-import com.nik7.upgradecraft.tileentity.FluidFurnaceTileEntity;
+import com.nik7.upgradecraft.tileentity.AbstractFluidMachineTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.hooks.BasicEventHooks;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class FluidFurnaceResultSlot extends SlotItemHandler {
+public class MachineResultSlot extends SlotItemHandler {
     private final PlayerEntity player;
-    private final FluidFurnaceTileEntity tileEntity;
+    private final AbstractFluidMachineTileEntity<?> tileEntity;
     private int removeCount = 0;
 
-    public FluidFurnaceResultSlot(PlayerEntity player, FluidFurnaceTileEntity tileEntity, IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+    public MachineResultSlot(PlayerEntity player, AbstractFluidMachineTileEntity<?> tileEntity, IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
         this.player = player;
         this.tileEntity = tileEntity;
