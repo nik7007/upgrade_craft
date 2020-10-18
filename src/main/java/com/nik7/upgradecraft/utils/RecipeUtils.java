@@ -46,9 +46,11 @@ public final class RecipeUtils {
                 if (jsonElement.isJsonObject() && jsonElement.getAsJsonObject().has(FLUID)) {
                     fluids.add(parseFluidStack(jsonElement));
                 } else {
-                    ingredients.add(parseIngredient(element));
+                    ingredients.add(parseIngredient(jsonElement));
                 }
             }
+        } else {
+            ingredients.add(parseIngredient(element));
         }
     }
 
