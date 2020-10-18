@@ -12,6 +12,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.hooks.BasicEventHooks;
 
 import javax.annotation.Nullable;
 
@@ -29,7 +30,7 @@ public class FluidFurnaceContainer extends BaseMachineContainer<FluidFurnaceTile
         super(FLUID_FURNACE_CONTAINER_TYPE.get(), id, data, playerInventory, tileEntity);
 
         this.addSlot(new MachineInputSlot(handler, INPUT, 56, 17));
-        this.addSlot(new MachineResultSlot(playerInventory.player, tileEntity, handler, OUTPUT, 116, 35));
+        this.addSlot(new MachineResultSlot(playerInventory.player, tileEntity, handler, OUTPUT, 116, 35, BasicEventHooks::firePlayerSmeltedEvent));
 
         addPlayerSlots(playerInventory, 8, 84);
     }

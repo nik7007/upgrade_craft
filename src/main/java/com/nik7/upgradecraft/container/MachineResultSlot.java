@@ -3,19 +3,36 @@ package com.nik7.upgradecraft.container;
 import com.nik7.upgradecraft.tileentity.AbstractFluidMachineTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.hooks.BasicEventHooks;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+
+import javax.annotation.Nullable;
+import java.util.function.BiConsumer;
 
 public class MachineResultSlot extends SlotItemHandler {
     private final PlayerEntity player;
     private final AbstractFluidMachineTileEntity<?> tileEntity;
     private int removeCount = 0;
 
-    public MachineResultSlot(PlayerEntity player, AbstractFluidMachineTileEntity<?> tileEntity, IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+    @Nullable
+    private final BiConsumer<PlayerEntity, ItemStack> onCrafting;
+
+    public MachineResultSlot(PlayerEntity player,
+                             AbstractFluidMachineTileEntity<?> tileEntity,
+                             IItemHandler itemHandler,
+                             int index, int xPosition, int yPosition) {
+        this(player, tileEntity, itemHandler, index, xPosition, yPosition, null);
+    }
+
+    public MachineResultSlot(PlayerEntity player,
+                             AbstractFluidMachineTileEntity<?> tileEntity,
+                             IItemHandler itemHandler,
+                             int index, int xPosition, int yPosition,
+                             @Nullable BiConsumer<PlayerEntity, ItemStack> onCrafting) {
         super(itemHandler, index, xPosition, yPosition);
         this.player = player;
         this.tileEntity = tileEntity;
+        this.onCrafting = onCrafting;
     }
 
     @Override
@@ -46,6 +63,8 @@ public class MachineResultSlot extends SlotItemHandler {
         }
 
         this.removeCount = 0;
-        BasicEventHooks.firePlayerSmeltedEvent(this.player, stack);
+        if (onCrafting != null) {
+            onCrafting.accept(player, stack);
+        }
     }
 }
