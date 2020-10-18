@@ -3,6 +3,7 @@ package com.nik7.upgradecraft.tileentity;
 import com.google.common.collect.Lists;
 import com.nik7.upgradecraft.capabilities.AbstractMachineItemHandler;
 import com.nik7.upgradecraft.fluids.tanks.EventFluidTank;
+import com.nik7.upgradecraft.recipes.MachineRecipe;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.block.BlockState;
@@ -138,7 +139,11 @@ public abstract class AbstractFluidMachineTileEntity<I extends AbstractMachineIt
         for (Object2IntMap.Entry<ResourceLocation> entry : this.recipes.object2IntEntrySet()) {
             world.getRecipeManager().getRecipe(entry.getKey()).ifPresent((recipe) -> {
                 recipes.add(recipe);
-                splitAndSpawnExperience(world, pos, entry.getIntValue(), ((AbstractCookingRecipe) recipe).getExperience());
+                if (recipe instanceof AbstractCookingRecipe) {
+                    splitAndSpawnExperience(world, pos, entry.getIntValue(), ((AbstractCookingRecipe) recipe).getExperience());
+                } else if (recipe instanceof MachineRecipe) {
+                    splitAndSpawnExperience(world, pos, entry.getIntValue(), ((MachineRecipe) recipe).getExperience());
+                }
             });
         }
 
