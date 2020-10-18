@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.tileentity;
 
+import com.nik7.upgradecraft.blocks.FluidInfuserBlock;
 import com.nik7.upgradecraft.capabilities.FluidInfuserItemHandler;
 import com.nik7.upgradecraft.container.FluidInfuserContainer;
 import com.nik7.upgradecraft.init.Config;
@@ -16,6 +17,7 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -162,7 +164,7 @@ public class FluidInfuserTileEntity extends AbstractFluidMachineTileEntity<Fluid
             return;
         }
         restoreCurrentRecipe();
-
+        boolean isOperating = false;
         if (this.currentInfuserRecipe == null && this.itemStackHandler.hasInputs() && getInfuserRecipeManager() != null) {
 
             FluidInfuserRecipe infuserRecipe = getInfuserRecipeManager().getRecipe(this.getFluid(),
@@ -175,7 +177,14 @@ public class FluidInfuserTileEntity extends AbstractFluidMachineTileEntity<Fluid
         }
         if (this.currentInfuserRecipe != null) {
             operate();
+            isOperating = true;
         }
+        Boolean lit = getBlockState().get(FluidInfuserBlock.LIT);
+        if (lit != isOperating) {
+            getWorld().setBlockState(pos, getBlockState().with(FluidInfuserBlock.LIT, isOperating),
+                    Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
+        }
+
     }
 
     private void operate() {
