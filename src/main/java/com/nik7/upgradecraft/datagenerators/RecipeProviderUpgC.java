@@ -60,8 +60,8 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .ingredient(new FluidStack(Fluids.LAVA, 10))
                 .ingredient(Tags.Items.SLIMEBALLS, 2)
                 .ingredient(ItemTags.PLANKS)
-                .phase(5)
-                .phase(10)
+                .phase(50)
+                .phase(100)
                 .result(RegisterBlocks.SLIMY_PLANKS_BLOCK.get())
                 .experienceRecipe(0.4f)
                 .build(consumer);
