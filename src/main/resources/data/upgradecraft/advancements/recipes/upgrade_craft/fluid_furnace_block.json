@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "upgradecraft:fluid_furnace_block"
+    ]
+  },
+  "criteria": {
+    "has_wooden_glassed_tank": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "upgradecraft:wooden_fluid_tank_glassed_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "upgradecraft:fluid_furnace_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_wooden_glassed_tank",
+      "has_the_recipe"
+    ]
+  ]
+}

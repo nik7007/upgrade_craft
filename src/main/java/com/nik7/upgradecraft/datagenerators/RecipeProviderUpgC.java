@@ -56,6 +56,27 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
                 .build(consumer);
 
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.FLUID_FURNACE_BLOCK.get())
+                .key('c', Tags.Items.COBBLESTONE)
+                .key('i', Tags.Items.INGOTS_IRON)
+                .key('t', RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get())
+                .patternLine("ccc")
+                .patternLine("iti")
+                .patternLine("ici")
+                .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.FLUID_INFUSER_BLOCK.get())
+                .key('s', Tags.Items.STONE)
+                .key('i', Tags.Items.INGOTS_IRON)
+                .key('f', RegisterBlocks.FLUID_FURNACE_BLOCK.get())
+                .patternLine("sss")
+                .patternLine("ifi")
+                .patternLine("isi")
+                .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.FLUID_FURNACE_BLOCK.get()))
+                .build(consumer);
+
+        // fluid infuser recipes
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("slimy_planks_block")
                 .ingredient(new FluidStack(Fluids.LAVA, 10))
                 .ingredient(Tags.Items.SLIMEBALLS, 2)
