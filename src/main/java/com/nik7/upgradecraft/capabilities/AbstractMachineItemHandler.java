@@ -35,6 +35,16 @@ public abstract class AbstractMachineItemHandler extends ItemStackHandler {
 
     protected abstract int[] getOutputSlots();
 
+    public boolean hasInputs() {
+        for (int i = 0; i < inputSlots.length; i++) {
+            ItemStack itemStack = stacks.get(i);
+            if (itemStack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return Arrays.stream(inputSlots).anyMatch(input -> input == slot)
