@@ -3,10 +3,12 @@ package com.nik7.upgradecraft.jei;
 import com.nik7.upgradecraft.client.gui.container.FluidFurnaceScreen;
 import com.nik7.upgradecraft.container.FluidFurnaceContainer;
 import com.nik7.upgradecraft.init.RegisterBlocks;
+import com.nik7.upgradecraft.recipes.FluidInfuserRecipeManager;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,7 +34,8 @@ public class UpgCPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        // assert Minecraft.getInstance().world != null;
+        assert Minecraft.getInstance().world != null;
+        registration.addRecipes(FluidInfuserRecipeManager.getManager(Minecraft.getInstance().world).getRecipes(), UpgCRecipeCategoryUid.FLUID_INFUSER);
         // RecipeManager recipeManager = Minecraft.getInstance().world.getRecipeManager();
         // List<FurnaceRecipe> furnaceRecipes = recipeManager.getRecipesForType(IRecipeType.SMELTING);
         // registration.addRecipes(furnaceRecipes, UpgCRecipeCategoryUid.FLUID_FURNACE);
