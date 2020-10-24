@@ -50,6 +50,10 @@ public final class FluidInfuserRecipeManager {
         return !getRecipes(fluidStack, dissolve, infuse).isEmpty();
     }
 
+    public List<FluidInfuserRecipe> getRecipes() {
+        return this.recipes;
+    }
+
     public List<FluidInfuserRecipe> getRecipes(FluidStack fluidStack,
                                                IItemProvider dissolve,
                                                IItemProvider infuse) {
