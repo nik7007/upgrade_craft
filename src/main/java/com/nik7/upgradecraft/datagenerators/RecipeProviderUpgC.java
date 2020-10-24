@@ -2,6 +2,7 @@ package com.nik7.upgradecraft.datagenerators;
 
 import com.nik7.upgradecraft.crafting.TagUpgC;
 import com.nik7.upgradecraft.init.RegisterBlocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
@@ -57,22 +58,23 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.FLUID_FURNACE_BLOCK.get())
+                .key('f', Blocks.FURNACE)
                 .key('c', Tags.Items.COBBLESTONE)
-                .key('i', Tags.Items.INGOTS_IRON)
                 .key('t', RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get())
-                .patternLine("ccc")
-                .patternLine("iti")
-                .patternLine("ici")
+                .key('i', Tags.Items.INGOTS_IRON)
+                .patternLine("cfc")
+                .patternLine("ctc")
+                .patternLine("iii")
                 .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
                 .build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.FLUID_INFUSER_BLOCK.get())
+                .key('f', RegisterBlocks.FLUID_FURNACE_BLOCK.get())
                 .key('s', Tags.Items.STONE)
                 .key('i', Tags.Items.INGOTS_IRON)
-                .key('f', RegisterBlocks.FLUID_FURNACE_BLOCK.get())
-                .patternLine("sss")
-                .patternLine("ifi")
-                .patternLine("isi")
+                .patternLine("sfs")
+                .patternLine("s s")
+                .patternLine("iii")
                 .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.FLUID_FURNACE_BLOCK.get()))
                 .build(consumer);
 

@@ -1,19 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ccc",
-    "iti",
-    "ici"
+    "cfc",
+    "ctc",
+    "iii"
   ],
   "key": {
+    "f": {
+      "item": "minecraft:furnace"
+    },
     "c": {
       "tag": "forge:cobblestone"
     },
-    "i": {
-      "tag": "forge:ingots/iron"
-    },
     "t": {
       "item": "upgradecraft:wooden_fluid_tank_glassed_block"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
     }
   },
   "result": {

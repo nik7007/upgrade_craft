@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "sss",
-    "ifi",
-    "isi"
+    "sfs",
+    "s s",
+    "iii"
   ],
   "key": {
+    "f": {
+      "item": "upgradecraft:fluid_furnace_block"
+    },
     "s": {
       "tag": "forge:stone"
     },
     "i": {
       "tag": "forge:ingots/iron"
-    },
-    "f": {
-      "item": "upgradecraft:fluid_furnace_block"
     }
   },
   "result": {
