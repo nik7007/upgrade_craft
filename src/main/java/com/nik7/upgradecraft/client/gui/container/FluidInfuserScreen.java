@@ -14,7 +14,6 @@ import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
 public class FluidInfuserScreen extends FluidContainerScreen<FluidInfuserContainer> {
     public final static ResourceLocation GUI = new ResourceLocation(MOD_ID, "textures/gui/container/fluid_infuser_gui.png");
 
-
     public FluidInfuserScreen(FluidInfuserContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         FluidInfuserTileEntity tileEntity = screenContainer.getTileEntity();
