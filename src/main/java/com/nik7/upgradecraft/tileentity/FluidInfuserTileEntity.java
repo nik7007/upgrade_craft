@@ -293,7 +293,7 @@ public class FluidInfuserTileEntity extends AbstractFluidMachineTileEntity<Fluid
         } else {
             ItemStack result = infuserRecipe.getResult().copy();
             return result.isItemEqual(outputItemStack)
-                    && outputItemStack.getMaxStackSize() > outputItemStack.getCount() + result.getCount();
+                    && outputItemStack.getMaxStackSize() >= outputItemStack.getCount() + result.getCount();
         }
     }
 }
