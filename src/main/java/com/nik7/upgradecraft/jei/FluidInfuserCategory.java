@@ -15,9 +15,12 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidAttributes;
 
 import javax.annotation.Nonnull;
@@ -42,6 +45,33 @@ public class FluidInfuserCategory implements IRecipeCategory<FluidInfuserRecipe>
     public void draw(@Nonnull FluidInfuserRecipe recipe, @Nonnull MatrixStack matrixStack, double mouseX, double mouseY) {
         bubbles.draw(matrixStack, 42, 23);
         arrow.draw(matrixStack, 94, 21);
+
+        drawExperience(recipe, matrixStack);
+        drawTime(recipe.getDissolveTick(), matrixStack, 42, 40, 16);
+        drawTime(recipe.getInfuseTick(), matrixStack, 92, 40, 16);
+    }
+
+    private void drawExperience(FluidInfuserRecipe recipe, MatrixStack matrixStack) {
+        float experience = recipe.getExperience();
+        if (experience > 0.0F) {
+            TranslationTextComponent experienceString = new TranslationTextComponent("gui.jei.category.smelting.experience", experience);
+            Minecraft minecraft = Minecraft.getInstance();
+            FontRenderer fontRenderer = minecraft.fontRenderer;
+            int stringWidth = fontRenderer.getStringPropertyWidth(experienceString);
+            fontRenderer.func_243248_b(matrixStack, experienceString, (float) (this.background.getWidth() - stringWidth), 5.0F, -8355712);
+        }
+    }
+
+    protected void drawTime(int operationTime, MatrixStack matrixStack, int x, int y, int width) {
+        if (operationTime > 0) {
+            int cookTimeSeconds = operationTime / 20;
+            TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.smelting.time.seconds", cookTimeSeconds);
+            Minecraft minecraft = Minecraft.getInstance();
+            FontRenderer fontRenderer = minecraft.fontRenderer;
+            int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
+            fontRenderer.func_243248_b(matrixStack, timeString, (float) x + (width - stringWidth) / 2.0f, (float) y, -8355712);
+        }
+
     }
 
     @Override
