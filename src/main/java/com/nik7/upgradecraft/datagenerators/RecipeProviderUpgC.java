@@ -88,5 +88,15 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .result(RegisterBlocks.SLIMY_PLANKS_BLOCK.get())
                 .experienceRecipe(0.4f)
                 .build(consumer);
+
+        MachineUpgCRecipeBuilder.fluidInfuserRecipe("gilded_blackstone_block")
+                .ingredient(new FluidStack(Fluids.LAVA, 100))
+                .ingredient(Tags.Items.INGOTS_GOLD, 1)
+                .ingredient(Blocks.BLACKSTONE)
+                .phase(100)
+                .phase(200)
+                .result(Blocks.GILDED_BLACKSTONE)
+                .experienceRecipe(0.4f)
+                .build(consumer);
     }
 }
