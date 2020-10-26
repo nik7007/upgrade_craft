@@ -14,11 +14,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -89,7 +91,7 @@ public class FluidInfuserTileEntity extends AbstractFluidMachineTileEntity<Fluid
 
     @Override
     protected FluidInfuserItemHandler createInventory() {
-        return new FluidInfuserItemHandler(this::onInventoryChange);
+        return new FluidInfuserItemHandler(this::onInventoryChange, this::isItemValid);
     }
 
     @Override
@@ -136,6 +138,40 @@ public class FluidInfuserTileEntity extends AbstractFluidMachineTileEntity<Fluid
         tag.putInt("infuseTime", infuseTime);
         tag.putInt("totalInfuseTime", totalInfuseTime);
         return tag;
+    }
+
+    @Override
+    protected boolean isFluidValid(FluidStack fluidStack) {
+        FluidInfuserRecipeManager manager = getInfuserRecipeManager();
+        if (manager == null) {
+            return true;
+        }
+
+        return manager.hasRecipe(this.getFluid(),
+                itemStackHandler.getDissolveItemStack().getItem(),
+                itemStackHandler.getInfuseItemStack().getItem());
+    }
+
+    private boolean isItemValid(int slot, ItemStack stack) {
+        FluidInfuserRecipeManager manager = getInfuserRecipeManager();
+        if (manager == null) {
+            return true;
+        }
+
+        IItemProvider dissolve;
+        IItemProvider infuse;
+
+        if (slot == INFUSE) {
+            dissolve = itemStackHandler.getDissolveItemStack().getItem();
+            infuse = stack.getItem();
+        } else if (slot == DISSOLVE) {
+            dissolve = stack.getItem();
+            infuse = itemStackHandler.getInfuseItemStack().getItem();
+        } else {
+            return true;
+        }
+
+        return manager.hasRecipe(this.getFluid(), dissolve, infuse);
     }
 
     @Nullable
