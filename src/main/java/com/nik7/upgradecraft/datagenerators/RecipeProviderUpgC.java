@@ -2,12 +2,14 @@ package com.nik7.upgradecraft.datagenerators;
 
 import com.nik7.upgradecraft.crafting.TagUpgC;
 import com.nik7.upgradecraft.init.RegisterBlocks;
+import com.nik7.upgradecraft.init.RegisterItems;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
@@ -97,6 +99,16 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .phase(200)
                 .result(Blocks.GILDED_BLACKSTONE)
                 .experienceRecipe(0.4f)
+                .build(consumer);
+
+        MachineUpgCRecipeBuilder.fluidInfuserRecipe("clay_ingot_item")
+                .ingredient(new FluidStack(Fluids.WATER, 250))
+                .ingredient(Items.CLAY_BALL)
+                .ingredient(Items.BRICK)
+                .phase(50)
+                .phase(100)
+                .result(RegisterItems.CLAY_INGOT_ITEM.get())
+                .experienceRecipe(0.6f)
                 .build(consumer);
     }
 }

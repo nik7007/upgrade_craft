@@ -1,0 +1,29 @@
+{
+  "type": "upgradecraft:fluid_infuser",
+  "ingredients": [
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:brick"
+    },
+    {
+      "amount": 150,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "phases": [
+    {
+      "time": 50
+    },
+    {
+      "time": 100
+    }
+  ],
+  "result": {
+    "amount": 1,
+    "item": "upgradecraft:clay_ingot_item",
+    "chance": 1.0
+  },
+  "experience": 0.6
+}

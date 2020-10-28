@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.init;
 
+import com.nik7.upgradecraft.items.ClayIngotItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -34,5 +35,7 @@ public class RegisterItems {
 
     public static final RegistryObject<Item> FLUID_INFUSER_ITEM_BLOCK = REGISTER.register("fluid_infuser_block",
             () -> new BlockItem(FLUID_INFUSER_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+
+    public static final RegistryObject<Item> CLAY_INGOT_ITEM = REGISTER.register("clay_ingot_item", ClayIngotItem::new);
 
 }

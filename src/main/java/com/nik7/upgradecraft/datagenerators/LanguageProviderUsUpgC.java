@@ -1,6 +1,7 @@
 package com.nik7.upgradecraft.datagenerators;
 
 import com.nik7.upgradecraft.init.RegisterBlocks;
+import com.nik7.upgradecraft.init.RegisterItems;
 import net.minecraft.data.DataGenerator;
 
 import java.util.Locale;
@@ -21,6 +22,9 @@ public class LanguageProviderUsUpgC extends LanguageProviderUpgC {
         addBlock(RegisterBlocks.FUNNEL_BLOCK, "Funnel");
         addBlock(RegisterBlocks.FLUID_FURNACE_BLOCK, "Fluid Furnace");
         addBlock(RegisterBlocks.FLUID_INFUSER_BLOCK, "Fluid Infuser");
+
+        //items
+        addItem(RegisterItems.CLAY_INGOT_ITEM, "Clay Ingot");
 
         //tooltip
         add("tooltip.upgradecraft.tank.glassed", "Transparent");
