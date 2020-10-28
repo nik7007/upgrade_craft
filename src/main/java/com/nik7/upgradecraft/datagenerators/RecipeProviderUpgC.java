@@ -82,7 +82,7 @@ public class RecipeProviderUpgC extends RecipeProvider {
 
         // fluid infuser recipes
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("slimy_planks_block")
-                .ingredient(new FluidStack(Fluids.LAVA, 10))
+                .ingredient(new FluidStack(Fluids.LAVA, 50))
                 .ingredient(Tags.Items.SLIMEBALLS, 2)
                 .ingredient(ItemTags.PLANKS)
                 .phase(50)
@@ -92,7 +92,7 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .build(consumer);
 
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("gilded_blackstone_block")
-                .ingredient(new FluidStack(Fluids.LAVA, 100))
+                .ingredient(new FluidStack(Fluids.LAVA, 300))
                 .ingredient(Tags.Items.INGOTS_GOLD, 1)
                 .ingredient(Blocks.BLACKSTONE)
                 .phase(100)
