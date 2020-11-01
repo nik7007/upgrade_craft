@@ -30,4 +30,9 @@ public class RegisterTileEntity {
     public static final RegistryObject<TileEntityType<FluidInfuserTileEntity>> FLUID_INFUSER_TILE_ENTITY_TYPE = REGISTER.register("fluid_infuser_block",
             () -> TileEntityType.Builder.create(FluidInfuserTileEntity::new, RegisterBlocks.FLUID_INFUSER_BLOCK.get()).build(null));
 
+    public static final RegistryObject<TileEntityType<ClayFluidTankTileEntity>> CLAY_FLUID_TANK_TILE_ENTITY_TYPE = REGISTER.register("clay_fluid_tank_block",
+            () -> TileEntityType.Builder.create(ClayFluidTankTileEntity::new, RegisterBlocks.CLAY_FLUID_TANK_BLOCK.get()).build(null));
+    public static final RegistryObject<TileEntityType<ClayFluidTankGlassedTileEntity>> CLAY_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE = REGISTER.register("clay_fluid_tank_glassed_block",
+            () -> TileEntityType.Builder.create(ClayFluidTankGlassedTileEntity::new, RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK.get()).build(null));
+
 }

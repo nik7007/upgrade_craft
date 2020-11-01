@@ -1,4 +1,6 @@
 {
+  "block.upgradecraft.clay_fluid_tank_block": "Clay Fluid Tank",
+  "block.upgradecraft.clay_fluid_tank_glassed_block": "Clay Fluid Tank",
   "block.upgradecraft.fluid_furnace_block": "Fluid Furnace",
   "block.upgradecraft.fluid_infuser_block": "Fluid Infuser",
   "block.upgradecraft.funnel_block": "Funnel",

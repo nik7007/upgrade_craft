@@ -80,6 +80,23 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .addCriterion("has_wooden_glassed_tank", hasItem(RegisterBlocks.FLUID_FURNACE_BLOCK.get()))
                 .build(consumer);
 
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.CLAY_FLUID_TANK_BLOCK.get())
+                .key('c', RegisterItems.CLAY_INGOT_ITEM.get())
+                .patternLine("ccc")
+                .patternLine("c c")
+                .patternLine("ccc")
+                .addCriterion("has_clay_ingot_item", hasItem(RegisterItems.CLAY_INGOT_ITEM.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK.get())
+                .key('c', RegisterItems.CLAY_INGOT_ITEM.get())
+                .key('g', Tags.Items.GLASS)
+                .patternLine("ccc")
+                .patternLine("cgc")
+                .patternLine("ccc")
+                .addCriterion("has_clay_ingot_item", hasItem(RegisterItems.CLAY_INGOT_ITEM.get()))
+                .build(consumer);
+
         // fluid infuser recipes
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("slimy_planks_block")
                 .ingredient(new FluidStack(Fluids.LAVA, 50))

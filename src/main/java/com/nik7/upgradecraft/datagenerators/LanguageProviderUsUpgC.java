@@ -22,6 +22,8 @@ public class LanguageProviderUsUpgC extends LanguageProviderUpgC {
         addBlock(RegisterBlocks.FUNNEL_BLOCK, "Funnel");
         addBlock(RegisterBlocks.FLUID_FURNACE_BLOCK, "Fluid Furnace");
         addBlock(RegisterBlocks.FLUID_INFUSER_BLOCK, "Fluid Infuser");
+        addBlock(RegisterBlocks.CLAY_FLUID_TANK_BLOCK, "Clay Fluid Tank");
+        addBlock(RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK, "Clay Fluid Tank");
 
         //items
         addItem(RegisterItems.CLAY_INGOT_ITEM, "Clay Ingot");

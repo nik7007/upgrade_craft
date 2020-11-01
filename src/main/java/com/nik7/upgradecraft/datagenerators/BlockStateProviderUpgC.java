@@ -46,6 +46,17 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
         createOrientableMachine(RegisterBlocks.FLUID_FURNACE_BLOCK.get(), "furnace_machine", "fluid_furnace");
         createOrientableMachine(RegisterBlocks.FLUID_INFUSER_BLOCK.get(), "fluid_infuser", "fluid_infuser");
 
+        createTankModel(RegisterBlocks.CLAY_FLUID_TANK_BLOCK.get(),
+                "clay_fluid_tank",
+                "double_clay_fluid_tank");
+
+        createTankModel(RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK.get(),
+                "clay_fluid_tank_glassed",
+                "double_clay_fluid_tank_glassed_up",
+                "double_clay_fluid_tank_glassed_down",
+                "double_clay_fluid_tank_glassed_mixed"
+        );
+
     }
 
     private void createOrientableMachine(Block block, String modelName, String texture) {
