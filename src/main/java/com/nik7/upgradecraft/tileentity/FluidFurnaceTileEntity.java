@@ -190,8 +190,7 @@ public class FluidFurnaceTileEntity extends AbstractFluidMachineTileEntity<Fluid
 
         Boolean lit = getBlockState().get(FluidFurnaceBlock.LIT);
         if (lit != isBurning) {
-            world.setBlockState(pos, getBlockState().with(FluidFurnaceBlock.LIT, isBurning),
-                    Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
+            world.setBlockState(pos, getBlockState().with(FluidFurnaceBlock.LIT, isBurning), Constants.BlockFlags.DEFAULT_AND_RERENDER);
         }
     }
 

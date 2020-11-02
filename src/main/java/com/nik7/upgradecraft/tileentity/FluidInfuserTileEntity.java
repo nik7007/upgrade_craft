@@ -217,8 +217,7 @@ public class FluidInfuserTileEntity extends AbstractFluidMachineTileEntity<Fluid
         }
         Boolean lit = getBlockState().get(FluidInfuserBlock.LIT);
         if (lit != isOperating) {
-            getWorld().setBlockState(pos, getBlockState().with(FluidInfuserBlock.LIT, isOperating),
-                    Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.RERENDER_MAIN_THREAD);
+            getWorld().setBlockState(pos, getBlockState().with(FluidInfuserBlock.LIT, isOperating), Constants.BlockFlags.DEFAULT_AND_RERENDER);
         }
 
     }

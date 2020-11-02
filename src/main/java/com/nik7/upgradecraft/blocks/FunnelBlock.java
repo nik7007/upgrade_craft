@@ -21,6 +21,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
@@ -64,7 +65,7 @@ public class FunnelBlock extends Block {
     private void updateState(World worldIn, BlockPos pos, BlockState state) {
         boolean flag = !worldIn.isBlockPowered(pos);
         if (flag != state.get(ENABLED)) {
-            worldIn.setBlockState(pos, state.with(ENABLED, Boolean.valueOf(flag)), 4);
+            worldIn.setBlockState(pos, state.with(ENABLED, flag), Constants.BlockFlags.DEFAULT_AND_RERENDER);
         }
     }
 
