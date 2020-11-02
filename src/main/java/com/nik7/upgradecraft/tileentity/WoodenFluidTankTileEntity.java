@@ -12,12 +12,16 @@ public class WoodenFluidTankTileEntity extends AbstractFluidTankTileEntity imple
     }
 
     @Override
+    protected void tankOperation() {
+        setBlockInFire(this, tickNumber);
+    }
+
+    @Override
     protected void onFluidChange(Void aVoid) {
         super.onFluidChange(aVoid);
         if (world == null || world.isRemote()) {
             return;
         }
-
         updateBurningState(world, getPos(), getBlockState(), isFluidHot());
     }
 
