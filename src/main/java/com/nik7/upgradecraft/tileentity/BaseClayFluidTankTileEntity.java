@@ -34,6 +34,7 @@ public interface BaseClayFluidTankTileEntity {
                     tileEntity.getWorld().setBlockState(tileEntity.getPos(), blockState.with(BlockStateProperties.WATERLOGGED, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
                 }
             }
+            waterloggedCheck();
         } else {
             if (tickCount % 5 == 0 && !tank.isEmpty()) {
                 tank.drain(25, IFluidHandler.FluidAction.EXECUTE);
@@ -44,10 +45,11 @@ public interface BaseClayFluidTankTileEntity {
                 isCooking = isHot(tankFluid);
             }
             cookingOperation(isCooking, tickCount, tileEntity);
-
         }
 
     }
+
+    void waterloggedCheck();
 
     default boolean isHot(FluidStack tankFluid) {
         return tankFluid.getFluid().getAttributes().getTemperature(tankFluid) > (600 + 273);
@@ -55,15 +57,9 @@ public interface BaseClayFluidTankTileEntity {
 
     default void cookingOperation(Boolean isCooking, short tickNumber, AbstractFluidTankTileEntity tileEntity) {
         World world = tileEntity.getWorld();
-        BlockState tileBlockState = tileEntity.getBlockState();
         BlockPos tilePos = tileEntity.getPos();
         if (world == null) {
             return;
-        }
-        Boolean blockCooking = tileBlockState.get(ClayFluidTankBlock.COOKING);
-
-        if (blockCooking != isCooking) {
-            world.setBlockState(tilePos, tileBlockState.with(ClayFluidTankBlock.COOKING, isCooking), Constants.BlockFlags.DEFAULT_AND_RERENDER);
         }
         if (isCooking) {
             increaseCooking();
