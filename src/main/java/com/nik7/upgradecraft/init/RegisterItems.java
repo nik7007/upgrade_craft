@@ -44,4 +44,11 @@ public class RegisterItems {
     public static final RegistryObject<Item> CLAY_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("clay_fluid_tank_glassed_block",
             () -> new BlockItem(CLAY_FLUID_TANK_GLASSED_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
 
+
+    public static final RegistryObject<Item> TERRACOTTA_FLUID_TANK_ITEM_BLOCK = REGISTER.register("terracotta_fluid_tank_block",
+            () -> new BlockItem(TERRACOTTA_FLUID_TANK_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+
+    public static final RegistryObject<Item> TERRACOTTA_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("terracotta_fluid_tank_glassed_block",
+            () -> new BlockItem(TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+
 }

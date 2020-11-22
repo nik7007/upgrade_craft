@@ -1,0 +1,6 @@
+{
+  "parent": "upgradecraft:block/double_fluid_tank_up",
+  "textures": {
+    "all": "upgradecraft:block/double_terracotta_fluid_tank_glassed_mixed"
+  }
+}

@@ -35,4 +35,10 @@ public class RegisterTileEntity {
     public static final RegistryObject<TileEntityType<ClayFluidTankGlassedTileEntity>> CLAY_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE = REGISTER.register("clay_fluid_tank_glassed_block",
             () -> TileEntityType.Builder.create(ClayFluidTankGlassedTileEntity::new, RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK.get()).build(null));
 
+    public static final RegistryObject<TileEntityType<TerracottaFluidTankTileEntity>> TERRACOTTA_FLUID_TANK_TILE_ENTITY_TYPE = REGISTER.register("terracotta_fluid_tank_block",
+            () -> TileEntityType.Builder.create(TerracottaFluidTankTileEntity::new, RegisterBlocks.TERRACOTTA_FLUID_TANK_BLOCK.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<TerracottaFluidTankGlassedTileEntity>> TERRACOTTA_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE = REGISTER.register("terracotta_fluid_tank_glassed_block",
+            () -> TileEntityType.Builder.create(TerracottaFluidTankGlassedTileEntity::new, RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get()).build(null));
+
 }

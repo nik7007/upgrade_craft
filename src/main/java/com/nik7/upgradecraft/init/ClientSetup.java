@@ -20,6 +20,7 @@ public class ClientSetup {
         RenderTypeLookup.setRenderLayer(RegisterBlocks.FLUID_FURNACE_BLOCK.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(RegisterBlocks.FLUID_INFUSER_BLOCK.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK.get(), RenderType.getCutoutMipped());
+        RenderTypeLookup.setRenderLayer(RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(), RenderType.getCutoutMipped());
 
         FluidTankRenderer.register();
         FluidFurnaceRenderer.register();

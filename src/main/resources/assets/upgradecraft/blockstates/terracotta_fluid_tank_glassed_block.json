@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "type=single": {
+      "model": "upgradecraft:block/terracotta_fluid_tank_glassed"
+    },
+    "mixed=false,type=top": {
+      "model": "upgradecraft:block/double_terracotta_fluid_tank_glassed_up"
+    },
+    "mixed=true,type=top": {
+      "model": "upgradecraft:block/double_terracotta_fluid_tank_glassed_mixed_top"
+    },
+    "mixed=false,type=bottom": {
+      "model": "upgradecraft:block/double_terracotta_fluid_tank_glassed_down"
+    },
+    "mixed=true,type=bottom": {
+      "model": "upgradecraft:block/double_terracotta_fluid_tank_glassed_mixed_bottom"
+    }
+  }
+}

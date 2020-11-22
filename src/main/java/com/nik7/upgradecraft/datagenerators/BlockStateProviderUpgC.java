@@ -57,6 +57,17 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                 "double_clay_fluid_tank_glassed_mixed"
         );
 
+        createTankModel(RegisterBlocks.TERRACOTTA_FLUID_TANK_BLOCK.get(),
+                "terracotta_fluid_tank",
+                "double_terracotta_fluid_tank");
+
+        createTankModel(RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(),
+                "terracotta_fluid_tank_glassed",
+                "double_terracotta_fluid_tank_glassed_up",
+                "double_terracotta_fluid_tank_glassed_down",
+                "double_terracotta_fluid_tank_glassed_mixed"
+        );
+
     }
 
     private void createOrientableMachine(Block block, String modelName, String texture) {

@@ -24,6 +24,8 @@ public class LanguageProviderUsUpgC extends LanguageProviderUpgC {
         addBlock(RegisterBlocks.FLUID_INFUSER_BLOCK, "Fluid Infuser");
         addBlock(RegisterBlocks.CLAY_FLUID_TANK_BLOCK, "Clay Fluid Tank");
         addBlock(RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK, "Clay Fluid Tank");
+        addBlock(RegisterBlocks.TERRACOTTA_FLUID_TANK_BLOCK, "Terracotta Fluid Tank");
+        addBlock(RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK, "Terracotta Fluid Tank");
 
         //items
         addItem(RegisterItems.CLAY_INGOT_ITEM, "Clay Ingot");

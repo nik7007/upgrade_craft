@@ -30,4 +30,7 @@ public class RegisterBlocks {
     public static final RegistryObject<ClayFluidTankBlock> CLAY_FLUID_TANK_BLOCK = REGISTER.register("clay_fluid_tank_block", ClayFluidTankBlock::new);
     public static final RegistryObject<ClayFluidTankGlassedBlock> CLAY_FLUID_TANK_GLASSED_BLOCK = REGISTER.register("clay_fluid_tank_glassed_block", ClayFluidTankGlassedBlock::new);
 
+    public static final RegistryObject<TerracottaFluidTankBlock> TERRACOTTA_FLUID_TANK_BLOCK = REGISTER.register("terracotta_fluid_tank_block", TerracottaFluidTankBlock::new);
+    public static final RegistryObject<TerracottaFluidTankGlassedBlock> TERRACOTTA_FLUID_TANK_GLASSED_BLOCK = REGISTER.register("terracotta_fluid_tank_glassed_block", TerracottaFluidTankGlassedBlock::new);
+
 }
