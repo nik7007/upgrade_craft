@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-import static com.nik7.upgradecraft.init.RegisterTileEntity.CLAY_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE;
-import static com.nik7.upgradecraft.init.RegisterTileEntity.WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE;
+import static com.nik7.upgradecraft.init.RegisterTileEntity.*;
 
 public class FluidTankRenderer extends BaseFluidHandlerRenderer<AbstractFluidTankTileEntity> {
 
@@ -24,6 +23,7 @@ public class FluidTankRenderer extends BaseFluidHandlerRenderer<AbstractFluidTan
     public static void register() {
         ClientRegistry.bindTileEntityRenderer(WOODEN_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE.get(), FluidTankRenderer::new);
         ClientRegistry.bindTileEntityRenderer(CLAY_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE.get(), FluidTankRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TERRACOTTA_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE.get(), FluidTankRenderer::new);
     }
 
     @Override
