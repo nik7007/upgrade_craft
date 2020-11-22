@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 
+import static com.nik7.upgradecraft.init.RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK;
 import static com.nik7.upgradecraft.init.RegisterTileEntity.CLAY_FLUID_TANK_GLASSED_TILE_ENTITY_TYPE;
 import static com.nik7.upgradecraft.tileentity.ClayFluidTankTileEntity.MAX_COOKING_TICK;
 
@@ -65,11 +66,12 @@ public class ClayFluidTankGlassedTileEntity extends AbstractFluidTankGlassedTile
         checkIsCooking();
         if (cookingTick == MAX_COOKING_TICK) {
             cookingTick = 0;
+            cookTank(this, new TerracottaFluidTankGlassedTileEntity(), TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get());
         }
     }
 
     @SuppressWarnings("DuplicatedCode")
-    protected void checkIsCooking() {
+    private void checkIsCooking() {
         if (tickNumber % 24 == 0) {
             boolean isCooking = cookingTick != oldCookingTick;
 

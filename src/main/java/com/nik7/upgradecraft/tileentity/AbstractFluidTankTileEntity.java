@@ -107,7 +107,7 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
     }
 
     protected void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
-        if (otherTank.world == null) {
+        if (otherTank == null || otherTank.world == null || otherTank.isRemoved()) {
             return;
         }
         TankType tankType = otherTank.getBlockState().get(TYPE);

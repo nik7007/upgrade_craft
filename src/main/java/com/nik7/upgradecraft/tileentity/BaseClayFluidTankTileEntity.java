@@ -1,6 +1,8 @@
 package com.nik7.upgradecraft.tileentity;
 
 import com.nik7.upgradecraft.blocks.ClayFluidTankBlock;
+import com.nik7.upgradecraft.init.Config;
+import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
@@ -16,10 +18,13 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
+import static com.nik7.upgradecraft.blocks.AbstractFluidTankBlock.TYPE;
+
 public interface BaseClayFluidTankTileEntity {
 
     default void operate(AbstractFluidTankTileEntity tileEntity, short tickCount) {
-        if (tileEntity.getWorld() == null) {
+        World world = tileEntity.getWorld();
+        if (world == null || world.isRemote()) {
             return;
         }
         BlockState blockState = tileEntity.getBlockState();
@@ -31,7 +36,7 @@ public interface BaseClayFluidTankTileEntity {
             if (tickCount % 40 == 0) {
                 int fill = tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
                 if (fill > 0) {
-                    tileEntity.getWorld().setBlockState(tileEntity.getPos(), blockState.with(BlockStateProperties.WATERLOGGED, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
+                    world.setBlockState(tileEntity.getPos(), blockState.with(BlockStateProperties.WATERLOGGED, Boolean.FALSE), Constants.BlockFlags.DEFAULT_AND_RERENDER);
                 }
             }
             waterloggedCheck();
@@ -79,4 +84,43 @@ public interface BaseClayFluidTankTileEntity {
     void increaseCooking();
 
     void checkAndCook();
+
+    default void cookTank(AbstractFluidTankTileEntity tileEntity, AbstractFluidTankTileEntity newTank, Block newBlock) {
+        World world = tileEntity.getWorld();
+        if (world != null) {
+
+            TankType tankType = tileEntity.getBlockState().get(TYPE);
+            FluidStack fluid = tileEntity.getFluid();
+            tileEntity.separateTank(tankType);
+
+            BlockPos pos = tileEntity.getPos();
+            // world.removeTileEntity(pos);
+
+            int amountToTransfer = 0;
+            int amount = fluid.getAmount();
+            switch (tankType) {
+                case SINGLE:
+                    amountToTransfer = amount;
+                    break;
+                case TOP:
+                    amountToTransfer = Math.max(amount - Config.TANK_CAPACITY.get(), 0);
+                    break;
+                case BOTTOM:
+                    amountToTransfer = Math.min(amount, Config.TANK_CAPACITY.get());
+                    break;
+            }
+            FluidStack toTransfer = FluidStack.EMPTY;
+            if (amountToTransfer > 0) {
+                toTransfer = new FluidStack(fluid, amountToTransfer);
+            }
+            BlockState tankState = newBlock.getDefaultState();
+
+            newTank.validate();
+            world.setTileEntity(pos, newTank);
+            world.setBlockState(pos, tankState);
+            newTank.getTank().setFluid(toTransfer);
+            newTank.mergeTank();
+        }
+
+    }
 }

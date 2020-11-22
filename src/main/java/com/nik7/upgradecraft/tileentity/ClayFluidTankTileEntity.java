@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 
+import static com.nik7.upgradecraft.init.RegisterBlocks.TERRACOTTA_FLUID_TANK_BLOCK;
 import static com.nik7.upgradecraft.init.RegisterTileEntity.CLAY_FLUID_TANK_TILE_ENTITY_TYPE;
 
 public class ClayFluidTankTileEntity extends AbstractFluidTankTileEntity implements BaseClayFluidTankTileEntity {
@@ -23,15 +24,15 @@ public class ClayFluidTankTileEntity extends AbstractFluidTankTileEntity impleme
     @Override
     public void read(BlockState state, CompoundNBT tag) {
         super.read(state, tag);
-        tag.putShort("cookingTick", cookingTick);
-        tag.putShort("oldCookingTick", oldCookingTick);
+        cookingTick = tag.getShort("cookingTick");
+        oldCookingTick = tag.getShort("oldCookingTick");
     }
 
     @Override
     public CompoundNBT write(CompoundNBT tag) {
         tag = super.write(tag);
-        cookingTick = tag.getShort("cookingTick");
-        oldCookingTick = tag.getShort("oldCookingTick");
+        tag.putShort("cookingTick", cookingTick);
+        tag.putShort("oldCookingTick", oldCookingTick);
         return tag;
     }
 
@@ -66,11 +67,12 @@ public class ClayFluidTankTileEntity extends AbstractFluidTankTileEntity impleme
         checkIsCooking();
         if (cookingTick == MAX_COOKING_TICK) {
             cookingTick = 0;
+            cookTank(this, new TerracottaFluidTankTileEntity(), TERRACOTTA_FLUID_TANK_BLOCK.get());
         }
     }
 
     @SuppressWarnings("DuplicatedCode")
-    protected void checkIsCooking() {
+    private void checkIsCooking() {
         if (tickNumber % 24 == 0) {
             boolean isCooking = cookingTick != oldCookingTick;
 
