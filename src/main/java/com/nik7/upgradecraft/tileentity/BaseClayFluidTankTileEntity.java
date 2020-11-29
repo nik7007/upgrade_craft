@@ -1,6 +1,7 @@
 package com.nik7.upgradecraft.tileentity;
 
 import com.nik7.upgradecraft.blocks.ClayFluidTankBlock;
+import com.nik7.upgradecraft.blocks.TerracottaFluidTankBlock;
 import com.nik7.upgradecraft.init.Config;
 import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.block.Block;
@@ -9,6 +10,7 @@ import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -85,7 +87,7 @@ public interface BaseClayFluidTankTileEntity {
 
     void checkAndCook();
 
-    default void cookTank(AbstractFluidTankTileEntity tileEntity, AbstractFluidTankTileEntity newTank, Block newBlock) {
+    default void cookTank(AbstractFluidTankTileEntity tileEntity, TerracottaFluidTankBlock newBlock) {
         World world = tileEntity.getWorld();
         if (world != null) {
 
@@ -94,7 +96,6 @@ public interface BaseClayFluidTankTileEntity {
             tileEntity.separateTank(tankType);
 
             BlockPos pos = tileEntity.getPos();
-            // world.removeTileEntity(pos);
 
             int amountToTransfer = 0;
             int amount = fluid.getAmount();
@@ -115,11 +116,13 @@ public interface BaseClayFluidTankTileEntity {
             }
             BlockState tankState = newBlock.getDefaultState();
 
-            newTank.validate();
-            world.setTileEntity(pos, newTank);
             world.setBlockState(pos, tankState);
-            newTank.getTank().setFluid(toTransfer);
-            newTank.mergeTank();
+            TileEntity newTile = world.getTileEntity(pos);
+            if (newTile instanceof AbstractFluidTankTileEntity) {
+                AbstractFluidTankTileEntity newTank = (AbstractFluidTankTileEntity) newTile;
+                newTank.getTank().setFluid(toTransfer);
+                newTank.mergeTank();
+            }
         }
 
     }

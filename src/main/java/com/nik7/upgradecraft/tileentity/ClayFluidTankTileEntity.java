@@ -67,7 +67,7 @@ public class ClayFluidTankTileEntity extends AbstractFluidTankTileEntity impleme
         checkIsCooking();
         if (cookingTick == MAX_COOKING_TICK) {
             cookingTick = 0;
-            cookTank(this, new TerracottaFluidTankTileEntity(), TERRACOTTA_FLUID_TANK_BLOCK.get());
+            cookTank(this, TERRACOTTA_FLUID_TANK_BLOCK.get());
         }
     }
 
