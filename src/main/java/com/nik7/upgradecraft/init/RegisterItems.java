@@ -1,7 +1,8 @@
 package com.nik7.upgradecraft.init;
 
 import com.nik7.upgradecraft.items.ClayIngotItem;
-import net.minecraft.item.BlockItem;
+import com.nik7.upgradecraft.items.TerracottaFluidTankBlockItem;
+import com.nik7.upgradecraft.items.UpgCBlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -19,36 +20,36 @@ public class RegisterItems {
     }
 
     public static final RegistryObject<Item> SLIMY_PLANKS_ITEM_BLOCK = REGISTER.register("slimy_planks_block",
-            () -> new BlockItem(SLIMY_PLANKS_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(SLIMY_PLANKS_BLOCK.get()));
 
     public static final RegistryObject<Item> WOODEN_FLUID_TANK_ITEM_BLOCK = REGISTER.register("wooden_fluid_tank_block",
-            () -> new BlockItem(WOODEN_FLUID_TANK_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(WOODEN_FLUID_TANK_BLOCK.get()));
 
     public static final RegistryObject<Item> WOODEN_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("wooden_fluid_tank_glassed_block",
-            () -> new BlockItem(WOODEN_FLUID_TANK_GLASSED_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(WOODEN_FLUID_TANK_GLASSED_BLOCK.get()));
 
     public static final RegistryObject<Item> FUNNEL_ITEM_BLOCK = REGISTER.register("funnel_block",
-            () -> new BlockItem(FUNNEL_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(FUNNEL_BLOCK.get()));
 
     public static final RegistryObject<Item> FLUID_FURNACE_ITEM_BLOCK = REGISTER.register("fluid_furnace_block",
-            () -> new BlockItem(FLUID_FURNACE_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(FLUID_FURNACE_BLOCK.get()));
 
     public static final RegistryObject<Item> FLUID_INFUSER_ITEM_BLOCK = REGISTER.register("fluid_infuser_block",
-            () -> new BlockItem(FLUID_INFUSER_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(FLUID_INFUSER_BLOCK.get()));
 
     public static final RegistryObject<Item> CLAY_INGOT_ITEM = REGISTER.register("clay_ingot_item", ClayIngotItem::new);
 
     public static final RegistryObject<Item> CLAY_FLUID_TANK_ITEM_BLOCK = REGISTER.register("clay_fluid_tank_block",
-            () -> new BlockItem(CLAY_FLUID_TANK_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(CLAY_FLUID_TANK_BLOCK.get()));
 
     public static final RegistryObject<Item> CLAY_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("clay_fluid_tank_glassed_block",
-            () -> new BlockItem(CLAY_FLUID_TANK_GLASSED_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new UpgCBlockItem(CLAY_FLUID_TANK_GLASSED_BLOCK.get()));
 
 
     public static final RegistryObject<Item> TERRACOTTA_FLUID_TANK_ITEM_BLOCK = REGISTER.register("terracotta_fluid_tank_block",
-            () -> new BlockItem(TERRACOTTA_FLUID_TANK_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new TerracottaFluidTankBlockItem(TERRACOTTA_FLUID_TANK_BLOCK.get()));
 
     public static final RegistryObject<Item> TERRACOTTA_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("terracotta_fluid_tank_glassed_block",
-            () -> new BlockItem(TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(), new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP)));
+            () -> new TerracottaFluidTankBlockItem(TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get()));
 
 }
