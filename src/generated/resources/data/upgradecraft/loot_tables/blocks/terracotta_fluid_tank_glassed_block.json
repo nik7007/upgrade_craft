@@ -5,13 +5,68 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "upgradecraft:terracotta_fluid_tank_glassed_block"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:copy_name",
+                  "source": "block_entity"
+                },
+                {
+                  "function": "minecraft:copy_nbt",
+                  "source": "block_entity",
+                  "ops": [
+                    {
+                      "source": "FluidName",
+                      "target": "BlockEntityTag.FluidName",
+                      "op": "replace"
+                    },
+                    {
+                      "source": "Amount",
+                      "target": "BlockEntityTag.Amount",
+                      "op": "replace"
+                    },
+                    {
+                      "source": "Tag",
+                      "target": "BlockEntityTag.Tag",
+                      "op": "replace"
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:set_contents",
+                  "entries": [
+                    {
+                      "type": "minecraft:dynamic",
+                      "name": "minecraft:contents"
+                    }
+                  ]
+                }
+              ],
+              "name": "upgradecraft:terracotta_fluid_tank_glassed_block"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "upgradecraft:terracotta_fluid_tank_glassed_block"
+            }
+          ]
         }
       ]
     }

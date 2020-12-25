@@ -106,36 +106,35 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
         world.notifyBlockUpdate(fluidTank.getPos(), fluidTank.getBlockState(), fluidTank.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
     }
 
+    protected FluidStack calculateFluidFormTank(FluidTank tank, TankType tankType) {
+        FluidStack fluidStack = tank.getFluid().copy();
+        int fluidAmount = fluidStack.getAmount();
+        if (tankType != TankType.SINGLE && fluidAmount > 0) {
+            if (tankType == TankType.BOTTOM) {
+                fluidStack.setAmount(Math.min(initialCapacity, fluidAmount));
+            } else {
+                if (fluidAmount > initialCapacity) {
+                    fluidStack.setAmount(fluidAmount - initialCapacity);
+                } else {
+                    fluidStack = FluidStack.EMPTY;
+                }
+            }
+        }
+        return fluidStack;
+    }
+
     protected void otherSeparateTank(AbstractFluidTankTileEntity otherTank) {
         if (otherTank == null || otherTank.world == null || otherTank.isRemoved()) {
             return;
         }
         TankType tankType = otherTank.getBlockState().get(TYPE);
         if (tankType != TankType.SINGLE) {
-            boolean imBottom = tankType == TankType.BOTTOM;
             FluidTank singleTank = new EventFluidTank(initialCapacity, otherTank::onFluidChange);
-            FluidStack fluidStack = otherTank.tank.getFluid().copy();
-
-            if (fluidStack.getAmount() > 0) {
-                int fluidAmount = fluidStack.getAmount();
-                int tankCapacity = singleTank.getCapacity();
-
-                if (imBottom) {
-                    fluidStack.setAmount(Math.min(tankCapacity, fluidAmount));
-                } else {
-                    if (fluidAmount > tankCapacity) {
-                        fluidStack.setAmount(fluidAmount - tankCapacity);
-                    } else {
-                        fluidStack = FluidStack.EMPTY;
-                    }
-                }
-            } else {
-                fluidStack = FluidStack.EMPTY;
-            }
+            FluidStack fluidStack = calculateFluidFormTank(otherTank.tank, tankType);
 
             singleTank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
-
             otherTank.setTank(singleTank);
+
             if (otherTank.getBlockState().hasProperty(TYPE)) {
                 otherTank.world.setBlockState(otherTank.getPos(), otherTank.getBlockState().with(TYPE, TankType.SINGLE).with(MIXED, false), Constants.BlockFlags.DEFAULT_AND_RERENDER);
             }
@@ -197,6 +196,14 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
         }
     }
 
+    protected boolean fluidsAreCompatible(FluidStack fluidStack1, FluidStack fluidStack2) {
+        if (fluidStack1.isEmpty() || fluidStack2.isEmpty()) {
+            return true;
+        } else {
+            return fluidStack1.getFluid().isEquivalentTo(fluidStack2.getFluid());
+        }
+    }
+
     public void mergeTank() {
         if (this.world != null) {
             AbstractFluidTankTileEntity otherTank = getTank(this.getPos().up());
@@ -209,11 +216,17 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
             if (otherTank != null) {
 
                 FluidTank doubleTank = new EventFluidTank(2 * initialCapacity, this::onFluidChange);
-                int amount = doubleTank.fill(this.tank.getFluid().copy(), IFluidHandler.FluidAction.EXECUTE);
+                FluidStack fluidStack = this.tank.getFluid().copy();
                 FluidStack otherFluid = otherTank.tank.getFluid().copy();
-                int newAmount = doubleTank.fill(otherFluid, IFluidHandler.FluidAction.EXECUTE);
 
-                if (newAmount == amount + otherFluid.getAmount()) {
+                if (!fluidsAreCompatible(fluidStack, otherFluid)) {
+                    return;
+                }
+
+                int amount = doubleTank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                doubleTank.fill(otherFluid, IFluidHandler.FluidAction.EXECUTE);
+
+                if (doubleTank.getFluid().getAmount() == amount + otherFluid.getAmount()) {
                     this.setTank(doubleTank);
                     otherTank.setTank(doubleTank);
 
@@ -265,6 +278,10 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
         if (tankType != TankType.SINGLE) {
             otherSeparateTank(this.otherTank);
             this.otherTank = null;
+
+            FluidStack fluidStack = calculateFluidFormTank(this.tank, getTankType());
+            this.tank = new FluidTank(initialCapacity);
+            this.tank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
         }
     }
 
