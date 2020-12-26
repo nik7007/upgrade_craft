@@ -1,14 +1,18 @@
 package com.nik7.upgradecraft.utils;
 
+import com.nik7.upgradecraft.init.Config;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public final class UpgCFluidHelper {
@@ -72,6 +76,28 @@ public final class UpgCFluidHelper {
 
         }
         return true;
+    }
+
+    public static FluidTank readFluidTankFromItemStack(ItemStack itemStack) {
+        CompoundNBT tag = itemStack.getTag();
+        int capacity = getCapacityFromItemStack(itemStack);
+        FluidTank tank = new FluidTank(capacity);
+        if (tag != null) {
+            tank.readFromNBT(tag.getCompound("BlockEntityTag"));
+        }
+
+        return tank;
+    }
+
+    public static int getCapacityFromItemStack(ItemStack itemStack) {
+        int capacity;
+        CompoundNBT tag = itemStack.getTag();
+        if (tag != null) {
+            capacity = tag.getInt("capacity");
+        } else {
+            capacity = Config.TANK_CAPACITY.get();
+        }
+        return capacity * FluidAttributes.BUCKET_VOLUME;
     }
 
 }
