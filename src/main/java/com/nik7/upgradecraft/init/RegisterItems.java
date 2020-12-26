@@ -51,6 +51,6 @@ public class RegisterItems {
             () -> new TerracottaFluidTankBlockItem(TERRACOTTA_FLUID_TANK_BLOCK.get()));
 
     public static final RegistryObject<Item> TERRACOTTA_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("terracotta_fluid_tank_glassed_block",
-            () -> new TerracottaFluidTankBlockItem(TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(), FluidTankItemStackRender::new));
+            () -> new TerracottaFluidTankBlockItem(TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(), () -> FluidTankItemStackRender::new));
 
 }

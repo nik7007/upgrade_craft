@@ -21,6 +21,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 import static com.nik7.upgradecraft.utils.UpgCFluidHelper.getCapacityFromItemStack;
 import static com.nik7.upgradecraft.utils.UpgCFluidHelper.readFluidTankFromItemStack;
@@ -31,8 +32,8 @@ public class TerracottaFluidTankBlockItem extends UpgCBlockItem {
         super(blockIn);
     }
 
-    public TerracottaFluidTankBlockItem(Block blockIn, Callable<ItemStackTileEntityRenderer> callable) {
-        super(blockIn, callable);
+    public TerracottaFluidTankBlockItem(Block blockIn, Supplier<Callable<ItemStackTileEntityRenderer>> supplier) {
+        super(blockIn, supplier);
     }
 
     @Nullable

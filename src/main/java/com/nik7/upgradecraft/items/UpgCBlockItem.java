@@ -7,13 +7,14 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 
 import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 public class UpgCBlockItem extends BlockItem {
     public UpgCBlockItem(Block blockIn) {
         super(blockIn, new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP));
     }
 
-    public UpgCBlockItem(Block blockIn, Callable<ItemStackTileEntityRenderer> callable) {
-        super(blockIn, new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP).setISTER(() -> callable));
+    public UpgCBlockItem(Block blockIn, Supplier<Callable<ItemStackTileEntityRenderer>> supplier) {
+        super(blockIn, new Item.Properties().group(ItemGroupUpgC.ITEM_GROUP).setISTER(supplier));
     }
 }
