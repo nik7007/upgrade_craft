@@ -42,7 +42,7 @@ public class FluidTankItemStackRender extends ItemStackTileEntityRenderer {
     }
 
     @Override
-    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void func_239207_a_(ItemStack itemStack, ItemCameraTransforms.TransformType type, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         if (renderer == null) {
             renderer = Minecraft.getInstance().getItemRenderer();
         }
@@ -51,16 +51,21 @@ public class FluidTankItemStackRender extends ItemStackTileEntityRenderer {
 
         ResourceLocation resourceLocation = getResourceLocation(itemStack.getItem().getRegistryName());
         BakedModelProxy modelProxy = MODELS.get(resourceLocation);
-        IBakedModel baseModel = modelProxy.getBaseModel();
-        ItemCameraTransforms.TransformType transformType = modelProxy.getTransformType();
+        IBakedModel baseModel = null;
+        ItemCameraTransforms.TransformType transformType = null;
+        if (modelProxy != null) {
+            baseModel = modelProxy.getBaseModel();
+            transformType = modelProxy.getTransformType();
 
-        renderItemModel(itemStack, matrixStack, buffer, combinedLight, combinedOverlay, baseModel, transformType);
+            renderItemModel(itemStack, matrixStack, buffer, combinedLight, combinedOverlay, baseModel, transformType);
+        }
 
         matrixStack.push();
-
-        baseModel.handlePerspective(transformType, matrixStack);
-        if (transformType == ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) {
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
+        if (baseModel != null && transformType != null) {
+            baseModel.handlePerspective(transformType, matrixStack);
+            if (transformType == ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) {
+                matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
+            }
         }
         matrixStack.translate(-.5, -.5, -.5);
 
