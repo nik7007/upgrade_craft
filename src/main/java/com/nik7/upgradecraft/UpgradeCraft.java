@@ -27,6 +27,8 @@ public class UpgradeCraft {
         RecipeTypesUpgC.init();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::onModelBake);
+
         LOGGER.info("Hello from UpgradeCraft!");
     }
 

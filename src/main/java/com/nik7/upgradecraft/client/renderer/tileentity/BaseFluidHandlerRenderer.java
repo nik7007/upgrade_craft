@@ -25,13 +25,13 @@ public abstract class BaseFluidHandlerRenderer<T extends BaseFluidHandlerTileEnt
     }
 
 
-    protected void renderFluidCuboid(FluidStack fluidStack,
-                                     float fluidScale,
-                                     Cuboid cuboid,
-                                     MatrixStack matrixStackIn,
-                                     IRenderTypeBuffer bufferIn,
-                                     int combinedLightIn,
-                                     Consumer<MatrixStack> preRenderOperation) {
+    public static void renderFluidCuboid(FluidStack fluidStack,
+                                         float fluidScale,
+                                         Cuboid cuboid,
+                                         MatrixStack matrixStackIn,
+                                         IRenderTypeBuffer bufferIn,
+                                         int combinedLightIn,
+                                         Consumer<MatrixStack> preRenderOperation) {
         if (!fluidStack.isEmpty()) {
             Fluid fluid = fluidStack.getFluid();
 
