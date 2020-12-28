@@ -83,13 +83,13 @@ public class RecipeSerializerUpgc<T extends MachineRecipe> extends ForgeRegistry
     public T read(@Nonnull ResourceLocation recipeId, PacketBuffer buffer) {
         float experience = buffer.readFloat();
 
-        int numInputItems = buffer.readVarInt();
+        int numInputItems = buffer.readInt();
         List<Ingredient> inputItems = new ArrayList<>(numInputItems);
         for (int i = 0; i < numInputItems; ++i) {
             inputItems.add(Ingredient.read(buffer));
         }
 
-        int numInputFluids = buffer.readVarInt();
+        int numInputFluids = buffer.readInt();
         List<FluidStack> inputFluids = new ArrayList<>(numInputFluids);
         for (int i = 0; i < numInputFluids; ++i) {
             inputFluids.add(buffer.readFluidStack());
@@ -101,7 +101,7 @@ public class RecipeSerializerUpgc<T extends MachineRecipe> extends ForgeRegistry
             minTicks.add(buffer.readInt());
         }
 
-        int numOutputItems = buffer.readVarInt();
+        int numOutputItems = buffer.readInt();
         List<ItemStack> outputItems = new ArrayList<>(numOutputItems);
         List<Float> outputItemChances = new ArrayList<>(numOutputItems);
         for (int i = 0; i < numOutputItems; ++i) {
@@ -109,7 +109,7 @@ public class RecipeSerializerUpgc<T extends MachineRecipe> extends ForgeRegistry
             outputItemChances.add(buffer.readFloat());
         }
 
-        int numOutputFluids = buffer.readVarInt();
+        int numOutputFluids = buffer.readInt();
         List<FluidStack> outputFluids = new ArrayList<>(numOutputFluids);
         for (int i = 0; i < numOutputFluids; ++i) {
             outputFluids.add(buffer.readFluidStack());
