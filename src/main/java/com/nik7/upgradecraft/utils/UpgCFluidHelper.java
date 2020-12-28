@@ -78,6 +78,22 @@ public final class UpgCFluidHelper {
         return true;
     }
 
+    public static void writeFluidInfoIntoItemStack(ItemStack itemStack, FluidStack fluidStack, int capacity) {
+        CompoundNBT tag = itemStack.getTag();
+        if (tag == null) {
+            tag = new CompoundNBT();
+            itemStack.setTag(tag);
+        }
+        tag.putInt("capacity", capacity);
+        if (!fluidStack.isEmpty()) {
+            FluidTank tank = new FluidTank(capacity * FluidAttributes.BUCKET_VOLUME);
+            tank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+            CompoundNBT tankTag = new CompoundNBT();
+            tank.writeToNBT(tankTag);
+            tag.put("BlockEntityTag", tankTag);
+        }
+    }
+
     public static FluidTank readFluidTankFromItemStack(ItemStack itemStack) {
         CompoundNBT tag = itemStack.getTag();
         int capacity = getCapacityFromItemStack(itemStack);

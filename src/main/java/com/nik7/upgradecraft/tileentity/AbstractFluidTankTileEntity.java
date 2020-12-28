@@ -28,11 +28,13 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
     private boolean firstTick = true;
     protected AbstractFluidTankTileEntity otherTank = null;
     protected final int initialCapacity;
+    protected final int rawInitialCapacity;
     protected short tickNumber;
 
     public AbstractFluidTankTileEntity(TileEntityType<? extends AbstractFluidTankTileEntity> tileEntityTypeIn,
                                        int initialCapacity) {
         super(tileEntityTypeIn);
+        this.rawInitialCapacity = initialCapacity;
         this.initialCapacity = initialCapacity * FluidAttributes.BUCKET_VOLUME;
         this.tank = new FluidTankWrapper<>(new EventFluidTank(this.initialCapacity, this::onFluidChange));
     }
@@ -279,10 +281,14 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
             otherSeparateTank(this.otherTank);
             this.otherTank = null;
 
-            FluidStack fluidStack = calculateFluidFormTank(this.tank, getTankType());
+            FluidStack fluidStack = calculateFluidForSeparateTank();
             this.tank = new FluidTank(initialCapacity);
             this.tank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
         }
+    }
+
+    public FluidStack calculateFluidForSeparateTank() {
+        return calculateFluidFormTank(this.tank, getTankType());
     }
 
     @Nullable
@@ -314,6 +320,10 @@ public abstract class AbstractFluidTankTileEntity extends BaseFluidHandlerTileEn
             }
         }
         return this.tank.getCapacity();
+    }
+
+    public int getRawInitialCapacity() {
+        return rawInitialCapacity;
     }
 
     public FluidTank getTank() {
