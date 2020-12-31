@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.tileentity;
 
+import com.nik7.upgradecraft.fluids.tanks.EventFluidTank;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -11,8 +12,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.TileFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
@@ -21,13 +20,17 @@ import static com.nik7.upgradecraft.blocks.FunnelBlock.FACING;
 import static com.nik7.upgradecraft.init.RegisterTileEntity.FUNNEL_TILE_ENTITY_TYPE;
 import static com.nik7.upgradecraft.utils.LazyOptionalHelper.getHandler;
 
-public class FunnelTileEntity extends TileFluidHandler implements ITickableTileEntity {
+public class FunnelTileEntity extends AbstractTileFluidHandler implements ITickableTileEntity {
     private static final int FLUID_TRANSFER_QUANTITY = 5;
 
 
     public FunnelTileEntity() {
         super(FUNNEL_TILE_ENTITY_TYPE.get());
-        this.tank = new FluidTank(5 * FluidAttributes.BUCKET_VOLUME);
+        this.tank = new EventFluidTank(5 * FluidAttributes.BUCKET_VOLUME, this::onFluidChange);
+    }
+
+    protected void onFluidChange(Void aVoid) {
+        updateComparator();
     }
 
 

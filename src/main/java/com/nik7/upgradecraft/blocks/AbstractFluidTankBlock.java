@@ -27,13 +27,12 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 
 import static com.nik7.upgradecraft.utils.UpgCFluidHelper.fillDrainWithItem;
 
-public abstract class AbstractFluidTankBlock extends Block implements IWaterLoggable {
+public abstract class AbstractFluidTankBlock extends AbstractFluidContainerBlock implements IWaterLoggable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<TankType> TYPE = EnumProperty.create("type", TankType.class);
     public static final BooleanProperty MIXED = BooleanProperty.create("mixed");
@@ -116,25 +115,4 @@ public abstract class AbstractFluidTankBlock extends Block implements IWaterLogg
     @Override
     public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
 
-    @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof AbstractFluidTankTileEntity) {
-            FluidStack fluid = ((AbstractFluidTankTileEntity) tileEntity).getFluid();
-            int capacity = ((AbstractFluidTankTileEntity) tileEntity).getCapacity();
-
-            float compareRaw = 15 * fluid.getAmount() / (float) capacity;
-            if (compareRaw > 0 && compareRaw < 1) {
-                compareRaw = 1;
-            }
-
-            return (int) compareRaw;
-        }
-        return 0;
-    }
 }

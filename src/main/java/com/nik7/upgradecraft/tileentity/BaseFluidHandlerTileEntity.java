@@ -9,11 +9,10 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.TileFluidHandler;
 
 import javax.annotation.Nullable;
 
-public abstract class BaseFluidHandlerTileEntity extends TileFluidHandler {
+public abstract class BaseFluidHandlerTileEntity extends AbstractTileFluidHandler {
 
     private int oldLuminosity = 0;
 
@@ -53,14 +52,6 @@ public abstract class BaseFluidHandlerTileEntity extends TileFluidHandler {
         entity.markDirty();
     }
 
-    public FluidStack getFluid() {
-        return this.tank.getFluid().copy();
-    }
-
-    public int getFluidAmount() {
-        return this.tank.getFluidAmount();
-    }
-
     public boolean isFluidHot() {
         FluidStack fluid = getFluid();
         return isFluidHot(fluid);
@@ -68,10 +59,6 @@ public abstract class BaseFluidHandlerTileEntity extends TileFluidHandler {
 
     protected boolean isFluidHot(FluidStack fluidStack) {
         return fluidStack.getFluid().getAttributes().getTemperature(fluidStack) > 250 + 273;
-    }
-
-    public int getCapacity() {
-        return this.tank.getCapacity();
     }
 
     public int getLuminosity() {

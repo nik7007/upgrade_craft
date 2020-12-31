@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 
 import static com.nik7.upgradecraft.utils.UpgCFluidHelper.fillDrainWithItem;
 
-public class FunnelBlock extends Block {
+public class FunnelBlock extends AbstractFluidContainerBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING_EXCEPT_UP;
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
 
