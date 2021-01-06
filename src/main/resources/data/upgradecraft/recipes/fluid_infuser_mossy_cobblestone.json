@@ -1,0 +1,32 @@
+{
+  "type": "upgradecraft:fluid_infuser",
+  "ingredients": [
+    {
+      "amount": 4,
+      "value": {
+        "item": "minecraft:grass"
+      }
+    },
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "amount": 150,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "phases": [
+    {
+      "time": 150
+    },
+    {
+      "time": 100
+    }
+  ],
+  "result": {
+    "amount": 1,
+    "item": "minecraft:mossy_cobblestone",
+    "chance": 1.0
+  },
+  "experience": 0.2
+}

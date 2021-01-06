@@ -99,33 +99,53 @@ public class RecipeProviderUpgC extends RecipeProvider {
 
         // fluid infuser recipes
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("slimy_planks_block")
-                .ingredient(new FluidStack(Fluids.LAVA, 50))
-                .ingredient(Tags.Items.SLIMEBALLS, 2)
-                .ingredient(ItemTags.PLANKS)
-                .phase(50)
-                .phase(100)
+                .ingredient(new FluidStack(Fluids.LAVA, 50)) // input fluid
+                .ingredient(Tags.Items.SLIMEBALLS, 2) // input dissolve
+                .ingredient(ItemTags.PLANKS) // input infuse
+                .phase(50) // dissolve ticks
+                .phase(100) // infuse tickes
                 .result(RegisterBlocks.SLIMY_PLANKS_BLOCK.get())
                 .experienceRecipe(0.4f)
                 .build(consumer);
 
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("gilded_blackstone_block")
-                .ingredient(new FluidStack(Fluids.LAVA, 300))
-                .ingredient(Tags.Items.INGOTS_GOLD, 1)
-                .ingredient(Blocks.BLACKSTONE)
-                .phase(100)
-                .phase(200)
+                .ingredient(new FluidStack(Fluids.LAVA, 300)) // input fluid
+                .ingredient(Tags.Items.INGOTS_GOLD, 1) // input dissolve
+                .ingredient(Blocks.BLACKSTONE) // input infuse
+                .phase(100) // dissolve ticks
+                .phase(200) // infuse tickes
                 .result(Blocks.GILDED_BLACKSTONE)
                 .experienceRecipe(0.4f)
                 .build(consumer);
 
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("clay_ingot_item")
-                .ingredient(new FluidStack(Fluids.WATER, 250))
-                .ingredient(Items.CLAY_BALL)
-                .ingredient(Items.BRICK)
-                .phase(50)
-                .phase(100)
+                .ingredient(new FluidStack(Fluids.WATER, 250))  // input fluid
+                .ingredient(Items.CLAY_BALL)  // input dissolve
+                .ingredient(Items.BRICK)  // input infuse
+                .phase(50)  // dissolve ticks
+                .phase(100)  // infuse tickes
                 .result(RegisterItems.CLAY_INGOT_ITEM.get())
                 .experienceRecipe(0.6f)
+                .build(consumer);
+
+        MachineUpgCRecipeBuilder.fluidInfuserRecipe("mossy_cobblestone")
+                .ingredient(new FluidStack(Fluids.WATER, 150))  // input fluid
+                .ingredient(Blocks.GRASS, 4)  // input dissolve
+                .ingredient(Blocks.COBBLESTONE)  // input infuse
+                .phase(150)  // dissolve ticks
+                .phase(100)  // infuse tickes
+                .result(Blocks.MOSSY_COBBLESTONE)
+                .experienceRecipe(0.2f)
+                .build(consumer);
+
+        MachineUpgCRecipeBuilder.fluidInfuserRecipe("mossy_stone_bricks")
+                .ingredient(new FluidStack(Fluids.WATER, 150))  // input fluid
+                .ingredient(Blocks.GRASS, 4)  // input dissolve
+                .ingredient(Blocks.STONE_BRICKS)  // input infuse
+                .phase(150)  // dissolve ticks
+                .phase(100)  // infuse tickes
+                .result(Blocks.MOSSY_STONE_BRICKS)
+                .experienceRecipe(0.2f)
                 .build(consumer);
     }
 }
