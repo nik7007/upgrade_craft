@@ -12,14 +12,13 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static com.nik7.upgradecraft.utils.UpgCFluidHelper.writeTankInfoIntoTooltip;
 import static net.minecraft.util.ColorHelper.PackedColor.*;
 
 public abstract class FluidContainerScreen<T extends Container> extends ContainerScreen<T> {
@@ -89,11 +88,8 @@ public abstract class FluidContainerScreen<T extends Container> extends Containe
 
     protected void fluidTooltip(MatrixStack matrixStack, RenderFluidTankSlot fluidTankSlot, int mouseX, int mouseY) {
         if (fluidTankSlot.isHovered(mouseX, mouseY, guiLeft, guiTop)) {
-            FluidStack fluidStack = fluidTankSlot.getFluidStack();
-            ITextComponent fluidName = fluidStack.getDisplayName();
-            int amount = fluidStack.getAmount();
-            String fluidAmount = amount + "/" + fluidTankSlot.getCapacity() + "mB";
-            List<ITextComponent> tooltip = Arrays.asList(fluidName, new StringTextComponent(fluidAmount));
+            List<ITextComponent> tooltip = new ArrayList<>();
+            writeTankInfoIntoTooltip(tooltip, fluidTankSlot.getFluidStack(), fluidTankSlot.getCapacity());
 
             this.func_243308_b(matrixStack, tooltip, mouseX, mouseY);
         }

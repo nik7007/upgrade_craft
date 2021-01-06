@@ -6,6 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,6 +18,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import java.util.List;
 
 public final class UpgCFluidHelper {
     private UpgCFluidHelper() {
@@ -114,6 +120,19 @@ public final class UpgCFluidHelper {
             capacity = Config.TANK_CAPACITY.get();
         }
         return capacity * FluidAttributes.BUCKET_VOLUME;
+    }
+
+    public static void writeTankInfoIntoTooltip(List<ITextComponent> tooltip, FluidTank tank) {
+        writeTankInfoIntoTooltip(tooltip, tank.getFluid(), tank.getCapacity());
+    }
+
+    public static void writeTankInfoIntoTooltip(List<ITextComponent> tooltip, FluidStack fluidStack, int tankCapacity) {
+        if (!fluidStack.isEmpty()) {
+            tooltip.add(fluidStack.getDisplayName());
+        } else {
+            tooltip.add((new TranslationTextComponent("tooltip.upgradecraft.fluid.empty").mergeStyle(TextFormatting.ITALIC)));
+        }
+        tooltip.add(new StringTextComponent(fluidStack.getAmount() + "/" + tankCapacity + "mB"));
     }
 
 }

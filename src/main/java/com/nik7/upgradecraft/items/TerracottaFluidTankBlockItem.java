@@ -11,11 +11,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
-import static com.nik7.upgradecraft.utils.UpgCFluidHelper.getCapacityFromItemStack;
 import static com.nik7.upgradecraft.utils.UpgCFluidHelper.readFluidTankFromItemStack;
+import static com.nik7.upgradecraft.utils.UpgCFluidHelper.writeTankInfoIntoTooltip;
 
 public class TerracottaFluidTankBlockItem extends UpgCBlockItem {
 
@@ -58,19 +58,13 @@ public class TerracottaFluidTankBlockItem extends UpgCBlockItem {
         if (sneakPressed) {
             addedFluidInformation(stack, tooltip);
         } else {
-            tooltip.add((new StringTextComponent("<SHIFT>").mergeStyle(TextFormatting.ITALIC)));
+            tooltip.add((new TranslationTextComponent("tooltip.upgradecraft.tank.shift").mergeStyle(TextFormatting.ITALIC)));
         }
     }
 
     private void addedFluidInformation(ItemStack stack, List<ITextComponent> tooltip) {
         FluidTank tank = readFluidTankFromItemStack(stack);
-        int capacity = getCapacityFromItemStack(stack);
-
-        FluidStack fluidStack = tank.getFluid();
-        ITextComponent fluidName = fluidStack.getDisplayName();
-        String fluidAmount = fluidStack.getAmount() + "/" + capacity + "mB";
         tooltip.add(new StringTextComponent(""));
-        tooltip.add(fluidName);
-        tooltip.add(new StringTextComponent(fluidAmount));
+        writeTankInfoIntoTooltip(tooltip, tank);
     }
 }

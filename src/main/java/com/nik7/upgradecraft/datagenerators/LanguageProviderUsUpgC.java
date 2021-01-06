@@ -32,5 +32,7 @@ public class LanguageProviderUsUpgC extends LanguageProviderUpgC {
 
         //tooltip
         add("tooltip.upgradecraft.tank.glassed", "Transparent");
+        add("tooltip.upgradecraft.tank.shift", "<SHIFT>");
+        add("tooltip.upgradecraft.fluid.empty", "Empty");
     }
 }
