@@ -1,7 +1,8 @@
 package com.nik7.upgradecraft.init;
 
 import com.nik7.upgradecraft.blocks.*;
-import net.minecraft.block.Block;
+import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,5 +33,10 @@ public class RegisterBlocks {
 
     public static final RegistryObject<TerracottaFluidTankBlock> TERRACOTTA_FLUID_TANK_BLOCK = REGISTER.register("terracotta_fluid_tank_block", TerracottaFluidTankBlock::new);
     public static final RegistryObject<TerracottaFluidTankGlassedBlock> TERRACOTTA_FLUID_TANK_GLASSED_BLOCK = REGISTER.register("terracotta_fluid_tank_glassed_block", TerracottaFluidTankGlassedBlock::new);
+
+    public static final RegistryObject<Block> CLAY_BRICKS_BLOCK = REGISTER.register("clay_bricks_block", () -> new Block(AbstractBlock.Properties.create(Material.CLAY).hardnessAndResistance(0.8F).sound(SoundType.GROUND)));
+    public static final RegistryObject<SlabBlock> CLAY_BRICKS_SLAB_BLOCK = REGISTER.register("clay_bricks_slab_block", () -> new SlabBlock(AbstractBlock.Properties.from(CLAY_BRICKS_BLOCK.get())));
+    public static final RegistryObject<WallBlock> CLAY_BRICKS_WALL_BLOCK = REGISTER.register("clay_bricks_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(CLAY_BRICKS_BLOCK.get())));
+    public static final RegistryObject<StairsBlock> CLAY_BRICKS_STAIRS_BLOCK = REGISTER.register("clay_bricks_stairs_block", () -> new StairsBlock(() -> CLAY_BRICKS_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(CLAY_BRICKS_BLOCK.get())));
 
 }

@@ -50,6 +50,15 @@ public class ItemModelProviderUpgC extends ItemModelProvider {
 
         withExistingParent(Objects.requireNonNull(RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get().getRegistryName()).getPath(),
                 new ResourceLocation(MOD_ID, "block/terracotta_fluid_tank_glassed"));
+
+        withExistingParent(Objects.requireNonNull(RegisterBlocks.CLAY_BRICKS_BLOCK.get().getRegistryName()).getPath(),
+                new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
+        withExistingParent(Objects.requireNonNull(RegisterBlocks.CLAY_BRICKS_SLAB_BLOCK.get().getRegistryName()).getPath(),
+                new ResourceLocation(MOD_ID, "block/clay_bricks_slab_block"));
+        wallInventory(Objects.requireNonNull(RegisterBlocks.CLAY_BRICKS_WALL_BLOCK.get().getRegistryName()).getPath(),
+                new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
+        withExistingParent(Objects.requireNonNull(RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK.get().getRegistryName()).getPath(),
+                new ResourceLocation(MOD_ID, "block/clay_bricks_stairs_block"));
     }
 
     private void registerSimpleTexture(RegistryObject<?> registryObject, String path) {

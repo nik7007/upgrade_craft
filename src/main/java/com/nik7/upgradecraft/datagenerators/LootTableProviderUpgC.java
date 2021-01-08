@@ -91,7 +91,11 @@ public class LootTableProviderUpgC extends LootTableProvider {
                     RegisterBlocks.CLAY_FLUID_TANK_BLOCK.get(),
                     RegisterBlocks.CLAY_FLUID_TANK_GLASSED_BLOCK.get(),
                     RegisterBlocks.TERRACOTTA_FLUID_TANK_BLOCK.get(),
-                    RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get()
+                    RegisterBlocks.TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(),
+                    RegisterBlocks.CLAY_BRICKS_BLOCK.get(),
+                    RegisterBlocks.CLAY_BRICKS_SLAB_BLOCK.get(),
+                    RegisterBlocks.CLAY_BRICKS_WALL_BLOCK.get(),
+                    RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK.get()
             );
         }
     }

@@ -1,4 +1,8 @@
 {
+  "block.upgradecraft.clay_bricks_block": "Clay Bricks",
+  "block.upgradecraft.clay_bricks_slab_block": "Clay Bricks Slab",
+  "block.upgradecraft.clay_bricks_stairs_block": "Clay Bricks Stairs",
+  "block.upgradecraft.clay_bricks_wall_block": "Clay Bricks Wall",
   "block.upgradecraft.clay_fluid_tank_block": "Clay Fluid Tank",
   "block.upgradecraft.clay_fluid_tank_glassed_block": "Clay Fluid Tank",
   "block.upgradecraft.fluid_furnace_block": "Fluid Furnace",

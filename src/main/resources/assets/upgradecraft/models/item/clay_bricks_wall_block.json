@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "upgradecraft:block/clay_bricks_block"
+  }
+}

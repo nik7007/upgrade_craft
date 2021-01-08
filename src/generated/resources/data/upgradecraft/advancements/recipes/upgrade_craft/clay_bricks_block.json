@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "upgradecraft:clay_bricks_block"
+    ]
+  },
+  "criteria": {
+    "has_clay_ingot_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "upgradecraft:clay_ingot_item"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "upgradecraft:clay_bricks_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_clay_ingot_item",
+      "has_the_recipe"
+    ]
+  ]
+}

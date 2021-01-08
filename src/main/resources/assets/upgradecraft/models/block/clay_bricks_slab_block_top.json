@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "upgradecraft:block/clay_bricks_block",
+    "bottom": "upgradecraft:block/clay_bricks_block",
+    "top": "upgradecraft:block/clay_bricks_block"
+  }
+}

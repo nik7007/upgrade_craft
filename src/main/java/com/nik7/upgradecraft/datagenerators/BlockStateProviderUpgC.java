@@ -68,6 +68,12 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                 "double_terracotta_fluid_tank_glassed_mixed"
         );
 
+        simpleBlock(RegisterBlocks.CLAY_BRICKS_BLOCK.get(),
+                models().cubeAll("clay_bricks_block", new ResourceLocation(MOD_ID, "block/clay_bricks_block")));
+        slabBlock(RegisterBlocks.CLAY_BRICKS_SLAB_BLOCK.get(), new ResourceLocation(MOD_ID, "block/clay_bricks_block"),
+                new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
+        wallBlock(RegisterBlocks.CLAY_BRICKS_WALL_BLOCK.get(), new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
+        stairsBlock(RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK.get(), new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
     }
 
     private void createOrientableMachine(Block block, String modelName, String texture) {

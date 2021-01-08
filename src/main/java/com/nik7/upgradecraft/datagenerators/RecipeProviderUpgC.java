@@ -97,6 +97,34 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .addCriterion("has_clay_ingot_item", hasItem(RegisterItems.CLAY_INGOT_ITEM.get()))
                 .build(consumer);
 
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.CLAY_BRICKS_BLOCK.get())
+                .key('i', RegisterItems.CLAY_INGOT_ITEM.get())
+                .patternLine("ii")
+                .patternLine("ii")
+                .addCriterion("has_clay_ingot_item", hasItem(RegisterItems.CLAY_INGOT_ITEM.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.CLAY_BRICKS_SLAB_BLOCK.get(), 6)
+                .key('b', RegisterBlocks.CLAY_BRICKS_BLOCK.get())
+                .patternLine("bbb")
+                .addCriterion("has_clay_ingot_item", hasItem(RegisterBlocks.CLAY_BRICKS_BLOCK.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.CLAY_BRICKS_WALL_BLOCK.get(), 6)
+                .key('b', RegisterBlocks.CLAY_BRICKS_BLOCK.get())
+                .patternLine("bbb")
+                .patternLine("bbb")
+                .addCriterion("has_clay_ingot_item", hasItem(RegisterBlocks.CLAY_BRICKS_BLOCK.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK.get(), 4)
+                .key('b', RegisterBlocks.CLAY_BRICKS_BLOCK.get())
+                .patternLine("b  ")
+                .patternLine("bb ")
+                .patternLine("bbb")
+                .addCriterion("has_clay_ingot_item", hasItem(RegisterBlocks.CLAY_BRICKS_BLOCK.get()))
+                .build(consumer);
+
         // fluid infuser recipes
         MachineUpgCRecipeBuilder.fluidInfuserRecipe("slimy_planks_block")
                 .ingredient(new FluidStack(Fluids.LAVA, 50)) // input fluid

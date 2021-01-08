@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "side": "upgradecraft:block/clay_bricks_block",
+    "bottom": "upgradecraft:block/clay_bricks_block",
+    "top": "upgradecraft:block/clay_bricks_block"
+  }
+}

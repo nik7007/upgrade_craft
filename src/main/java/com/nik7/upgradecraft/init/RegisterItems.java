@@ -53,4 +53,13 @@ public class RegisterItems {
     public static final RegistryObject<Item> TERRACOTTA_FLUID_TANK_GLASSED_ITEM_BLOCK = REGISTER.register("terracotta_fluid_tank_glassed_block",
             () -> new TerracottaFluidTankBlockItem(TERRACOTTA_FLUID_TANK_GLASSED_BLOCK.get(), () -> FluidTankItemStackRender::new));
 
+    public static final RegistryObject<Item> CLAY_BRICKS_ITEM_BLOCK = REGISTER.register("clay_bricks_block",
+            () -> new UpgCBlockItem(CLAY_BRICKS_BLOCK.get()));
+    public static final RegistryObject<Item> CLAY_BRICKS_SLAB_ITEM_BLOCK = REGISTER.register("clay_bricks_slab_block",
+            () -> new UpgCBlockItem(CLAY_BRICKS_SLAB_BLOCK.get()));
+    public static final RegistryObject<Item> CLAY_BRICKS_WALL_ITEM_BLOCK = REGISTER.register("clay_bricks_wall_block",
+            () -> new UpgCBlockItem(CLAY_BRICKS_WALL_BLOCK.get()));
+    public static final RegistryObject<Item> CLAY_BRICKS_STAIRS_ITEM_BLOCK = REGISTER.register("clay_bricks_stairs_block",
+            () -> new UpgCBlockItem(CLAY_BRICKS_STAIRS_BLOCK.get()));
+
 }

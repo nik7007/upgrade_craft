@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "b  ",
+    "bb ",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "upgradecraft:clay_bricks_block"
+    }
+  },
+  "result": {
+    "item": "upgradecraft:clay_bricks_stairs_block",
+    "count": 4
+  }
+}
