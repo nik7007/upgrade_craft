@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "upgradecraft:block/slimy_planks_block"
+  }
+}
