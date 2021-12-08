@@ -62,4 +62,7 @@ public class RegisterItems {
     public static final RegistryObject<Item> CLAY_BRICKS_STAIRS_ITEM_BLOCK = REGISTER.register("clay_bricks_stairs_block",
             () -> new UpgCBlockItem(CLAY_BRICKS_STAIRS_BLOCK.get()));
 
+    public static final RegistryObject<Item> SLIMY_OBSIDIAN_ITEM_BLOCK = REGISTER.register("slimy_obsidian_block",
+            () -> new UpgCBlockItem(SLIMY_OBSIDIAN_BLOCK.get()));
+
 }

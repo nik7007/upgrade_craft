@@ -175,5 +175,15 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .result(Blocks.MOSSY_STONE_BRICKS)
                 .experienceRecipe(0.2f)
                 .build(consumer);
+
+        MachineUpgCRecipeBuilder.fluidInfuserRecipe("slimy_obsidian_block")
+                .ingredient(new FluidStack(Fluids.LAVA, 50)) // input fluid
+                .ingredient(Tags.Items.SLIMEBALLS, 2) // input dissolve
+                .ingredient(Blocks.OBSIDIAN) // input infuse
+                .phase(50) // dissolve ticks
+                .phase(150) // infuse tickes
+                .result(RegisterBlocks.SLIMY_OBSIDIAN_BLOCK.get())
+                .experienceRecipe(0.8f)
+                .build(consumer);
     }
 }

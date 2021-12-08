@@ -30,6 +30,7 @@ public class LanguageProviderUsUpgC extends LanguageProviderUpgC {
         addBlock(RegisterBlocks.CLAY_BRICKS_SLAB_BLOCK, "Clay Bricks Slab");
         addBlock(RegisterBlocks.CLAY_BRICKS_WALL_BLOCK, "Clay Bricks Wall");
         addBlock(RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK, "Clay Bricks Stairs");
+        addBlock(RegisterBlocks.SLIMY_OBSIDIAN_BLOCK, "Slimy Obsidian");
 
         //items
         addItem(RegisterItems.CLAY_INGOT_ITEM, "Clay Ingot");

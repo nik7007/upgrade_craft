@@ -1,0 +1,32 @@
+{
+  "type": "upgradecraft:fluid_infuser",
+  "ingredients": [
+    {
+      "amount": 2,
+      "value": {
+        "tag": "forge:slimeballs"
+      }
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "amount": 50,
+      "fluid": "minecraft:lava"
+    }
+  ],
+  "phases": [
+    {
+      "time": 50
+    },
+    {
+      "time": 150
+    }
+  ],
+  "result": {
+    "amount": 1,
+    "item": "upgradecraft:slimy_obsidian_block",
+    "chance": 1.0
+  },
+  "experience": 0.8
+}

@@ -95,7 +95,8 @@ public class LootTableProviderUpgC extends LootTableProvider {
                     RegisterBlocks.CLAY_BRICKS_BLOCK.get(),
                     RegisterBlocks.CLAY_BRICKS_SLAB_BLOCK.get(),
                     RegisterBlocks.CLAY_BRICKS_WALL_BLOCK.get(),
-                    RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK.get()
+                    RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK.get(),
+                    RegisterBlocks.SLIMY_OBSIDIAN_BLOCK.get()
             );
         }
     }

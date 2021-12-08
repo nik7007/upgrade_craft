@@ -39,4 +39,6 @@ public class RegisterBlocks {
     public static final RegistryObject<WallBlock> CLAY_BRICKS_WALL_BLOCK = REGISTER.register("clay_bricks_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(CLAY_BRICKS_BLOCK.get())));
     public static final RegistryObject<StairsBlock> CLAY_BRICKS_STAIRS_BLOCK = REGISTER.register("clay_bricks_stairs_block", () -> new StairsBlock(() -> CLAY_BRICKS_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(CLAY_BRICKS_BLOCK.get())));
 
+    public static final RegistryObject<SlimyObsidianBlock> SLIMY_OBSIDIAN_BLOCK = REGISTER.register("slimy_obsidian_block", SlimyObsidianBlock::new);
+
 }

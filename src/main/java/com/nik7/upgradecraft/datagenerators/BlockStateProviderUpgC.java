@@ -74,6 +74,9 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                 new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
         wallBlock(RegisterBlocks.CLAY_BRICKS_WALL_BLOCK.get(), new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
         stairsBlock(RegisterBlocks.CLAY_BRICKS_STAIRS_BLOCK.get(), new ResourceLocation(MOD_ID, "block/clay_bricks_block"));
+
+        simpleBlock(RegisterBlocks.SLIMY_OBSIDIAN_BLOCK.get(),
+                models().cubeAll("slimy_obsidian_block", new ResourceLocation(MOD_ID, "block/slimy_obsidian/slimy_obsidian_block")));
     }
 
     private void createOrientableMachine(Block block, String modelName, String texture) {
