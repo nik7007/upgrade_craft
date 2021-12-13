@@ -9,8 +9,10 @@ import com.mojang.math.Vector3f;
 import com.nik7.upgradecraft.client.render.Cuboid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.fluids.FluidStack;
@@ -96,8 +98,8 @@ public final class RenderHelper {
             float minU = sprite.getU0();
             float maxU = sprite.getU1();
             //Flip the v
-            float minV = sprite.getV0();
-            float maxV = sprite.getV1();
+            float minV = sprite.getV1();
+            float maxV = sprite.getV0();
             double sizeU = getValue(size, u);
             double sizeV = getValue(size, v);
 
@@ -119,15 +121,15 @@ public final class RenderHelper {
                     }
                     float[] xyz = new float[]{uIndex, (float) (uIndex + addU), vIndex, (float) (vIndex + addV)};
 
-                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
-                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
-                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
-                    renderPoint(matrix4f, buffer, face, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, face, poseStack, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, face, poseStack, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, face, poseStack, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, face, poseStack, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
 
-                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
-                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
-                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
-                    renderPoint(matrix4f, buffer, opposite, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, opposite, poseStack, u, v, other, uv, xyz, false, false, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, opposite, poseStack, u, v, other, uv, xyz, false, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, opposite, poseStack, u, v, other, uv, xyz, true, true, red, green, blue, alpha, light);
+                    renderPoint(matrix4f, buffer, opposite, poseStack, u, v, other, uv, xyz, true, false, red, green, blue, alpha, light);
                 }
             }
 
@@ -136,14 +138,22 @@ public final class RenderHelper {
         poseStack.popPose();
     }
 
-    private static void renderPoint(Matrix4f matrix4f, VertexConsumer buffer, Direction face, Direction.Axis u, Direction.Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV,
+    private static void renderPoint(Matrix4f matrix4f, VertexConsumer buffer, Direction face, PoseStack poseStack, Direction.Axis u, Direction.Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV,
                                     float red, float green, float blue, float alpha, int light) {
         int U_ARRAY = minU ? U_MIN : U_MAX;
         int V_ARRAY = minV ? V_MIN : V_MAX;
         Vector3f vertex = withValue(VEC_ZERO, u, xyz[U_ARRAY]);
         vertex = withValue(vertex, v, xyz[V_ARRAY]);
         vertex = withValue(vertex, face.getAxis(), other);
-        buffer.vertex(matrix4f, vertex.x(), vertex.y(), vertex.z()).color(red, green, blue, alpha).uv(uv[U_ARRAY], uv[V_ARRAY]).uv2(light).endVertex();
+        PoseStack.Pose peek = poseStack.last();
+        Vec3i normal = face.getNormal();
+        buffer.vertex(matrix4f, vertex.x(), vertex.y(), vertex.z())
+                .color(red, green, blue, alpha)
+                .uv(uv[U_ARRAY], uv[V_ARRAY])
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(light)
+                .normal(peek.normal(), normal.getX(), normal.getY(), normal.getZ())
+                .endVertex();
     }
 
     private static Vector3f withValue(Vector3f vector, Direction.Axis axis, float value) {
