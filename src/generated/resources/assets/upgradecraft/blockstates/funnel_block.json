@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "upgradecraft:block/funnel_down"
+    },
+    "facing=north": {
+      "model": "upgradecraft:block/funnel_horizontally"
+    },
+    "facing=south": {
+      "model": "upgradecraft:block/funnel_horizontally",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "upgradecraft:block/funnel_horizontally",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "upgradecraft:block/funnel_horizontally",
+      "y": 90
+    }
+  }
+}

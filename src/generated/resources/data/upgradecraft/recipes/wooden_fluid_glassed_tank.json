@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lll",
+    "lgl",
+    "lll"
+  ],
+  "key": {
+    "l": {
+      "item": "upgradecraft:slimy_planks_block"
+    },
+    "g": {
+      "tag": "forge:glass"
+    }
+  },
+  "result": {
+    "item": "upgradecraft:wooden_fluid_glassed_tank"
+  }
+}

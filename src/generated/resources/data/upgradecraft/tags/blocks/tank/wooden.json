@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "upgradecraft:wooden_fluid_tank",
+    "upgradecraft:wooden_fluid_glassed_tank"
+  ]
+}

@@ -1,17 +1,21 @@
 package com.nik7.upgradecraft.datagenerators;
 
 import com.nik7.upgradecraft.block.AbstractFluidTankBlock;
+import com.nik7.upgradecraft.block.FunnelBlock;
 import com.nik7.upgradecraft.init.RegisterBlocks;
 import com.nik7.upgradecraft.state.properties.TankType;
+import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
+import static com.nik7.upgradecraft.block.FunnelBlock.ENABLED;
 
 public class BlockStateProviderUpgC extends BlockStateProvider {
     private final static String BASE_TANK_MODEL_FOLDER = "block/fluid_tank";
@@ -24,8 +28,11 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(RegisterBlocks.SLIMY_PLANKS_BLOCK.get(),
                 models().cubeAll("slimy_planks_block", new ResourceLocation(MOD_ID, "block/slimy_planks_block")));
+
         tankBlock(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get(), "wooden_fluid_tank", false);
         tankBlock(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get(), "wooden_fluid_tank", true);
+
+        createFunnel(RegisterBlocks.FUNNEL_BLOCK.get(), "funnel");
     }
 
     private void tankBlock(Block block, String typeName, boolean glassed) {
@@ -79,5 +86,32 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                                         .texture("all", modLoc(doubleTexture))
                         ).build()
                 );
+    }
+
+    private void createFunnel(Block block, String texture) {
+        getVariantBuilder(block).forAllStatesExcept(state -> {
+            Direction facing = state.getValue(FunnelBlock.FACING);
+            String modelName;
+            String modalName;
+            int rotationY;
+
+            if (facing == Direction.DOWN) {
+                modelName = "funnel";
+                rotationY = 0;
+                modalName = "funnel_down";
+            } else {
+                modelName = "funnel_side";
+                rotationY = (int) (facing.toYRot() + 180) % 360;
+                modalName = "funnel_horizontally";
+            }
+
+            ModelFile model = models()
+                    .withExistingParent(modalName, modLoc("block/" + modelName))
+                    .texture("all", modLoc("block/" + texture));
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(rotationY)
+                    .build();
+        }, ENABLED);
     }
 }

@@ -21,12 +21,20 @@ public class ItemModelProviderUpgC extends ItemModelProvider {
     protected void registerModels() {
         withExistingParent(Objects.requireNonNull(RegisterBlocks.SLIMY_PLANKS_BLOCK.get().getRegistryName()).getPath(),
                 new ResourceLocation(MOD_ID, "block/slimy_planks_block"));
+
         withExistingTankModel(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK, "wooden_fluid_tank", false);
         withExistingTankModel(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK, "wooden_fluid_tank", true);
+
+        registerSimpleTexture(RegisterBlocks.FUNNEL_BLOCK, "item/funnel");
     }
 
     private void withExistingTankModel(RegistryObject<? extends Block> registryObject, String typeName, boolean glassed) {
         withExistingParent(Objects.requireNonNull(registryObject.get().getRegistryName()).getPath(),
                 new ResourceLocation(MOD_ID, "block/" + typeName + (glassed ? "/fluid_tank_glassed" : "/fluid_tank")));
+    }
+
+    private void registerSimpleTexture(RegistryObject<?> registryObject, String path) {
+        singleTexture(Objects.requireNonNull(registryObject.get().getRegistryName()).getPath(), new ResourceLocation("item/handheld"),
+                "layer0", new ResourceLocation(MOD_ID, path));
     }
 }

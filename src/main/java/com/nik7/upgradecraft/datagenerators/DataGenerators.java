@@ -17,9 +17,10 @@ public class DataGenerators {
         if (event.includeServer()) {
             generator.addProvider(new RecipeProviderUpgC(generator));
             generator.addProvider(new LootTableProviderUpgC(generator));
-            // BlockTagsProviderUpgC blockTagsProvider = new BlockTagsProviderUpgC(generator);
-            // generator.addProvider(blockTagsProvider);
-            // generator.addProvider(new ItemTagsProviderUpgC(generator, blockTagsProvider));
+            ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+            BlockTagsProviderUpgC blockTagsProvider = new BlockTagsProviderUpgC(generator, existingFileHelper);
+            generator.addProvider(blockTagsProvider);
+            generator.addProvider(new ItemTagsProviderUpgC(generator, blockTagsProvider, existingFileHelper));
         }
         if (event.includeClient()) {
             ExistingFileHelper helper = event.getExistingFileHelper();

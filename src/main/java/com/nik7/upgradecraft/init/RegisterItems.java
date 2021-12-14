@@ -19,9 +19,11 @@ public class RegisterItems {
     public static final RegistryObject<Item> WOODEN_FLUID_GLASSED_TANK_ITEM_BLOCK = REGISTER.register("wooden_fluid_glassed_tank",
             () -> new UpgCBlockItem(WOODEN_FLUID_TANK_GLASSED_BLOCK.get()));
 
+    public static final RegistryObject<Item> FUNNEL_ITEM_BLOCK = REGISTER.register("funnel_block",
+            () -> new UpgCBlockItem(FUNNEL_BLOCK.get()));
+
     public static void init() {
         REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
-
 
 }

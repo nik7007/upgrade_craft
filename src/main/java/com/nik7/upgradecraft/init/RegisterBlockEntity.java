@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.init;
 
+import com.nik7.upgradecraft.blockentity.FunnelEntity;
 import com.nik7.upgradecraft.blockentity.WoodenFluidGlassTankEntity;
 import com.nik7.upgradecraft.blockentity.WoodenFluidTankEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,7 +21,11 @@ public class RegisterBlockEntity {
     public static final RegistryObject<BlockEntityType<WoodenFluidTankEntity>> WOODEN_FLUID_TANK_ENTITY_TYPE = REGISTER.register("wooden_fluid_tank_block",
             () -> BlockEntityType.Builder.of(WoodenFluidTankEntity::new, RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<WoodenFluidGlassTankEntity>> WOODEN_FLUID_TANK_GLASS_ENTITY_TYPE = REGISTER.register("wooden_fluid_glassed_tank",
+    public static final RegistryObject<BlockEntityType<WoodenFluidGlassTankEntity>> WOODEN_FLUID_TANK_GLASS_ENTITY_TYPE = REGISTER.register("wooden_fluid_glassed_tank_block",
             () -> BlockEntityType.Builder.of(WoodenFluidGlassTankEntity::new, RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()).build(null));
+
+
+    public static final RegistryObject<BlockEntityType<FunnelEntity>> FUNNEL_ENTITY_TYPE = REGISTER.register("funnel_block",
+            () -> BlockEntityType.Builder.of(FunnelEntity::new, RegisterBlocks.FUNNEL_BLOCK.get()).build(null));
 
 }

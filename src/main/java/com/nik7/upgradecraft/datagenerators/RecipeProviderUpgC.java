@@ -1,5 +1,6 @@
 package com.nik7.upgradecraft.datagenerators;
 
+import com.nik7.upgradecraft.crafting.TagUpgC;
 import com.nik7.upgradecraft.init.RegisterBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -24,6 +25,33 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .pattern("sps")
                 .pattern(" s ")
                 .unlockedBy("has_slimeballs", has(Tags.Items.SLIMEBALLS))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get())
+                .define('l', RegisterBlocks.SLIMY_PLANKS_BLOCK.get())
+                .pattern("lll")
+                .pattern("l l")
+                .pattern("lll")
+                .unlockedBy("has_slimy_planks_block", has(RegisterBlocks.SLIMY_PLANKS_BLOCK.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get())
+                .define('l', RegisterBlocks.SLIMY_PLANKS_BLOCK.get())
+                .define('g', Tags.Items.GLASS)
+                .pattern("lll")
+                .pattern("lgl")
+                .pattern("lll")
+                .unlockedBy("has_slimy_planks_block", has(RegisterBlocks.SLIMY_PLANKS_BLOCK.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RegisterBlocks.FUNNEL_BLOCK.get())
+                .define('t', TagUpgC.Items.WOODEN_TANK)
+                .define('i', Tags.Items.INGOTS_IRON)
+                .pattern("i i")
+                .pattern("iti")
+                .pattern(" i ")
+                .unlockedBy("has_wooden_tank", has(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get()))
+                .unlockedBy("has_wooden_glassed_tank", has(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
                 .save(consumer);
     }
 }
