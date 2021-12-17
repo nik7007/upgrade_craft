@@ -2,7 +2,6 @@ package com.nik7.upgradecraft.datagenerators;
 
 import com.nik7.upgradecraft.init.RegisterBlocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -20,7 +19,7 @@ public class ItemModelProviderUpgC extends ItemModelProvider {
     @Override
     protected void registerModels() {
         withExistingParent(Objects.requireNonNull(RegisterBlocks.SLIMY_PLANKS_BLOCK.get().getRegistryName()).getPath(),
-                new ResourceLocation(MOD_ID, "block/slimy_planks_block"));
+                modLoc("block/slimy_planks_block"));
 
         withExistingTankModel(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK, "wooden_fluid_tank", false);
         withExistingTankModel(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK, "wooden_fluid_tank", true);
@@ -30,11 +29,11 @@ public class ItemModelProviderUpgC extends ItemModelProvider {
 
     private void withExistingTankModel(RegistryObject<? extends Block> registryObject, String typeName, boolean glassed) {
         withExistingParent(Objects.requireNonNull(registryObject.get().getRegistryName()).getPath(),
-                new ResourceLocation(MOD_ID, "block/" + typeName + (glassed ? "/fluid_tank_glassed" : "/fluid_tank")));
+                modLoc("block/" + typeName + (glassed ? "/fluid_tank_glassed" : "/fluid_tank")));
     }
 
     private void registerSimpleTexture(RegistryObject<?> registryObject, String path) {
-        singleTexture(Objects.requireNonNull(registryObject.get().getRegistryName()).getPath(), new ResourceLocation("item/handheld"),
-                "layer0", new ResourceLocation(MOD_ID, path));
+        singleTexture(Objects.requireNonNull(registryObject.get().getRegistryName()).getPath(), mcLoc("item/generated"),
+                "layer0", modLoc(path));
     }
 }

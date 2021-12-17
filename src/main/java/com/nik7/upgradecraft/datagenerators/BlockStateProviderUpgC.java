@@ -6,7 +6,6 @@ import com.nik7.upgradecraft.init.RegisterBlocks;
 import com.nik7.upgradecraft.state.properties.TankType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -26,8 +25,7 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlock(RegisterBlocks.SLIMY_PLANKS_BLOCK.get(),
-                models().cubeAll("slimy_planks_block", new ResourceLocation(MOD_ID, "block/slimy_planks_block")));
+        simpleBlock(RegisterBlocks.SLIMY_PLANKS_BLOCK.get());
 
         tankBlock(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get(), "wooden_fluid_tank", false);
         tankBlock(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get(), "wooden_fluid_tank", true);
