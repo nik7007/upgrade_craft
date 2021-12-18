@@ -15,6 +15,7 @@ public final class LazyOptionalHelper {
         return getHandler(provider.getCapability(capability));
     }
 
+    @Nullable
     public static <T> T getHandler(LazyOptional<T> lazyOptional) {
         if (lazyOptional.isPresent()) {
             return lazyOptional.orElseThrow(() -> new RuntimeException("Failed to retrieve handler when it should be present inside lazy optional!"));
