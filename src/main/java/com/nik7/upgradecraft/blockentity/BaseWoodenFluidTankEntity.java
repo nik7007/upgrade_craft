@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
@@ -28,7 +29,7 @@ public interface BaseWoodenFluidTankEntity {
         boolean isFluidHot = fluidTankEntity.isFluidHot();
         boolean burning = blockState.getValue(BURNING);
         if (burning != isFluidHot) {
-            level.setBlock(pos, blockState.setValue(BURNING, isFluidHot), 11);
+            level.setBlock(pos, blockState.setValue(BURNING, isFluidHot), Block.UPDATE_ALL_IMMEDIATE);
         }
     }
 

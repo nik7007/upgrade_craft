@@ -6,6 +6,7 @@ import com.nik7.upgradecraft.tanks.FluidTankWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -136,7 +137,7 @@ public abstract class AbstractFluidTankEntity extends BaseFluidHandlerEntity {
             otherTank.setTank(singleTank);
 
             if (otherTank.getBlockState().hasProperty(TYPE)) {
-                otherTank.getLevel().setBlock(otherTank.getBlockPos(), otherTank.getBlockState().setValue(TYPE, TankType.SINGLE).setValue(MIXED, false), 11);
+                otherTank.getLevel().setBlock(otherTank.getBlockPos(), otherTank.getBlockState().setValue(TYPE, TankType.SINGLE).setValue(MIXED, false), Block.UPDATE_ALL_IMMEDIATE);
             }
             otherTank.setChanged();
             otherTank.otherTank = null;

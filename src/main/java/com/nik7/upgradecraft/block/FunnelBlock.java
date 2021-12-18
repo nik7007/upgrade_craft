@@ -64,7 +64,7 @@ public class FunnelBlock extends AbstractFluidContainerBlock {
     private void updateState(Level level, BlockPos pos, BlockState state) {
         boolean flag = !level.hasNeighborSignal(pos);
         if (flag != state.getValue(ENABLED)) {
-            level.setBlock(pos, state.setValue(ENABLED, flag), 4);
+            level.setBlock(pos, state.setValue(ENABLED, flag), Block.UPDATE_INVISIBLE);
         }
     }
 
