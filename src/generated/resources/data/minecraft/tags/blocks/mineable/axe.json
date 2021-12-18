@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "upgradecraft:slimy_planks_block",
+    "upgradecraft:wooden_fluid_tank",
+    "upgradecraft:wooden_fluid_glassed_tank"
+  ]
+}
