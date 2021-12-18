@@ -36,7 +36,7 @@ public abstract class AbstractFluidTankEntity extends BaseFluidHandlerEntity {
     }
 
     @Override
-    public void load(CompoundTag tag) {
+    public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         tickNumber = tag.getShort("tickNumber");
     }
