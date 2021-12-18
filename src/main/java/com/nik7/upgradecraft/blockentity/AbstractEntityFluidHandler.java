@@ -44,6 +44,12 @@ public abstract class AbstractEntityFluidHandler extends TileFluidHandler {
         return this.tank.getCapacity();
     }
 
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        this.holder.invalidate();
+    }
+
     public void tick() {
 
     }
