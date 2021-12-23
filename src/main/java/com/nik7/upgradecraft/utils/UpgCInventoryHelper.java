@@ -16,11 +16,13 @@ public final class UpgCInventoryHelper {
 
         if (originalItemStack.getCount() == 1) {
             player.setItemInHand(handIn, newItem);
-        } else if (originalItemStack.getCount() > 1 && player.getInventory().add(newItem)) {
-            originalItemStack.shrink(1);
-        } else {
-            player.drop(newItem, false, true);
-            originalItemStack.shrink(1);
+        } else if (originalItemStack.getCount() > 1) {
+            ItemStack copy = originalItemStack.copy();
+            if (!player.getInventory().add(newItem)) {
+                player.drop(newItem, false, true);
+            }
+            copy.shrink(1);
+            player.setItemInHand(handIn, copy);
         }
     }
 }
