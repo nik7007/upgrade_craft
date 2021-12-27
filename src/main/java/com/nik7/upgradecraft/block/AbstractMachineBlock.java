@@ -42,8 +42,8 @@ public abstract class AbstractMachineBlock extends AbstractFluidContainerBlock {
             return InteractionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof MenuProvider) {
-                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, blockEntity.getBlockPos());
+            if (blockEntity instanceof MenuProvider menuProvider) {
+                NetworkHooks.openGui((ServerPlayer) player, menuProvider, blockEntity.getBlockPos());
             }
             return InteractionResult.CONSUME;
         }
@@ -53,8 +53,8 @@ public abstract class AbstractMachineBlock extends AbstractFluidContainerBlock {
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) {
         if (itemStack.hasCustomHoverName()) {
             BlockEntity blockentity = level.getBlockEntity(blockPos);
-            if (blockentity instanceof AbstractMachineEntity) {
-                ((AbstractMachineEntity) blockentity).setCustomName(itemStack.getHoverName());
+            if (blockentity instanceof AbstractMachineEntity machineEntity) {
+                machineEntity.setCustomName(itemStack.getHoverName());
             }
         }
 
@@ -64,10 +64,10 @@ public abstract class AbstractMachineBlock extends AbstractFluidContainerBlock {
     public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState newBlockState, boolean isMoving) {
         if (!blockState.is(newBlockState.getBlock())) {
             BlockEntity blockentity = level.getBlockEntity(blockPos);
-            if (blockentity instanceof AbstractMachineEntity) {
+            if (blockentity instanceof AbstractMachineEntity machineEntity) {
                 if (level instanceof ServerLevel) {
-                    Containers.dropContents(level, blockPos, ((AbstractMachineEntity) blockentity).itemStacks());
-                    ((AbstractMachineEntity) blockentity).getRecipesToAwardAndPopExperience((ServerLevel) level, Vec3.atCenterOf(blockPos));
+                    Containers.dropContents(level, blockPos, machineEntity.itemStacks());
+                    machineEntity.getRecipesToAwardAndPopExperience((ServerLevel) level, Vec3.atCenterOf(blockPos));
                 }
 
                 level.updateNeighbourForOutputSignal(blockPos, this);
@@ -105,8 +105,8 @@ public abstract class AbstractMachineBlock extends AbstractFluidContainerBlock {
     @Override
     public int getLightEmission(BlockState state, BlockGetter blockGetter, BlockPos pos) {
         BlockEntity blockEntity = blockGetter.getBlockEntity(pos);
-        if (blockEntity instanceof BaseFluidHandlerEntity) {
-            return ((BaseFluidHandlerEntity) blockEntity).getLuminosity();
+        if (blockEntity instanceof BaseFluidHandlerEntity fluidHandler) {
+            return fluidHandler.getLuminosity();
         }
         return 0;
     }

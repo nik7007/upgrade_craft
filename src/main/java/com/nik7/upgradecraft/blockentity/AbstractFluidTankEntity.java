@@ -303,10 +303,10 @@ public abstract class AbstractFluidTankEntity extends BaseFluidHandlerEntity {
         return tank;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({"unchecked"})
     private void setTank(FluidTank tank) {
-        if (this.tank instanceof FluidTankWrapper) {
-            ((FluidTankWrapper) this.tank).setInternalTank(tank);
+        if (this.tank instanceof FluidTankWrapper tankWrapper) {
+            tankWrapper.setInternalTank(tank);
         }
     }
 }

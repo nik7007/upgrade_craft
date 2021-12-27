@@ -23,9 +23,9 @@ public abstract class AbstractFluidContainerBlock extends BaseEntityBlock {
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
         BlockEntity blockEntity = worldIn.getBlockEntity(pos);
-        if (blockEntity instanceof AbstractEntityFluidHandler) {
-            int fluidAmount = ((AbstractEntityFluidHandler) blockEntity).getFluidAmount();
-            int capacity = ((AbstractEntityFluidHandler) blockEntity).getCapacity();
+        if (blockEntity instanceof AbstractEntityFluidHandler fluidHandler) {
+            int fluidAmount = fluidHandler.getFluidAmount();
+            int capacity = fluidHandler.getCapacity();
 
             float compareRaw = 15 * fluidAmount / (float) capacity;
             if (compareRaw > 0 && compareRaw < 1) {
@@ -42,8 +42,8 @@ public abstract class AbstractFluidContainerBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
         if (!level.isClientSide()) {
             return (Level level1, BlockPos blockPos, BlockState state, T entity) -> {
-                if (entity instanceof AbstractEntityFluidHandler) {
-                    ((AbstractEntityFluidHandler) entity).tick();
+                if (entity instanceof AbstractEntityFluidHandler fluidHandler) {
+                    fluidHandler.tick();
                 }
             };
         }

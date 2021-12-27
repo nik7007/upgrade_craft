@@ -57,8 +57,8 @@ public abstract class AbstractFluidTankBlock extends AbstractFluidContainerBlock
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         if (blockState.getValue(TYPE) == TankType.SINGLE && !level.isClientSide()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof AbstractFluidTankEntity) {
-                ((AbstractFluidTankEntity) blockEntity).mergeTank();
+            if (blockEntity instanceof AbstractFluidTankEntity fluidHandler) {
+                fluidHandler.mergeTank();
             }
         }
     }
@@ -69,8 +69,8 @@ public abstract class AbstractFluidTankBlock extends AbstractFluidContainerBlock
             TankType tankType = blockState.getValue(TYPE);
             if (tankType != TankType.SINGLE) {
                 BlockEntity blockEntity = level.getBlockEntity(blockPos);
-                if (blockEntity instanceof AbstractFluidTankEntity) {
-                    ((AbstractFluidTankEntity) blockEntity).separateTank(tankType);
+                if (blockEntity instanceof AbstractFluidTankEntity fluidHandler) {
+                    fluidHandler.separateTank(tankType);
                 }
             }
         }

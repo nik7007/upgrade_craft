@@ -62,8 +62,8 @@ public class LootTableProviderUpgC extends LootTableProvider {
                         }).map(field -> {
                             try {
                                 var fieldObj = field.get(null);
-                                if (fieldObj instanceof RegistryObject) {
-                                    return (Block) ((RegistryObject<?>) fieldObj).get();
+                                if (fieldObj instanceof RegistryObject registryObject) {
+                                    return (Block) registryObject.get();
                                 }
                             } catch (IllegalAccessException e) {
                                 throw new RuntimeException(e);

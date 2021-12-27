@@ -29,8 +29,8 @@ public class WoodenFluidTankGlassedBlock extends WoodenFluidTankBlock {
     @Override
     public int getLightEmission(BlockState state, BlockGetter blockGetter, BlockPos pos) {
         BlockEntity blockEntity = blockGetter.getBlockEntity(pos);
-        if (blockEntity instanceof WoodenFluidGlassTankEntity) {
-            return ((WoodenFluidGlassTankEntity) blockEntity).getLuminosity();
+        if (blockEntity instanceof WoodenFluidGlassTankEntity tankEntity) {
+            return tankEntity.getLuminosity();
         }
         return 0;
     }
