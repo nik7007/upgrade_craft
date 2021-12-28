@@ -6,6 +6,7 @@ import com.nik7.upgradecraft.tanks.FluidTankWrapper;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -26,8 +27,14 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,9 +44,20 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
     protected short tickNumber;
     protected Component name;
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
+    protected final ItemStackHandler inputsHandler;
+    protected final ItemStackHandler outputsHandler;
 
-    public AbstractMachineEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, int initialCapacity) {
+    protected final LazyOptional<IItemHandler> inputs;
+    protected final LazyOptional<IItemHandler> outputs;
+
+    protected final LazyOptional<IItemHandler> combinedHandler = LazyOptional.of(this::createCombinedItemHandler);
+
+    public AbstractMachineEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, int initialCapacity, ItemStackHandler inputsHandler, ItemStackHandler outputsHandler) {
         super(blockEntityType, blockPos, blockState);
+        this.inputsHandler = inputsHandler;
+        this.outputsHandler = outputsHandler;
+        this.inputs = LazyOptional.of(() -> this.inputsHandler);
+        this.outputs = LazyOptional.of(() -> this.outputsHandler);
         this.tank = new FluidTankWrapper<>(new EventFluidTank(initialCapacity * FluidAttributes.BUCKET_VOLUME, this::onFluidChange, this::isFluidValid));
     }
 
@@ -47,6 +65,13 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         tickNumber = tag.getShort("tickNumber");
+        if (tag.contains("inputsHandler")) {
+            inputsHandler.deserializeNBT(tag.getCompound("inputsHandler"));
+        }
+        if (tag.contains("outputsHandler")) {
+            inputsHandler.deserializeNBT(tag.getCompound("outputsHandler"));
+        }
+
         if (tag.contains("CustomName", 8)) {
             this.name = Component.Serializer.fromJson(tag.getString("CustomName"));
         }
@@ -61,6 +86,8 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putShort("tickNumber", tickNumber);
+        tag.put("inputsHandler", inputsHandler.serializeNBT());
+        tag.put("outputsHandler", outputsHandler.serializeNBT());
         if (this.name != null) {
             tag.putString("CustomName", Component.Serializer.toJson(this.name));
         }
@@ -110,10 +137,37 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
         ExperienceOrb.award(serverLevel, vec3, i);
     }
 
+    protected @NotNull IItemHandler createCombinedItemHandler() {
+        return new CombinedInvWrapper(inputsHandler, outputsHandler) {
+            @NotNull
+            @Override
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                return ItemStack.EMPTY;
+            }
+
+            @NotNull
+            @Override
+            public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+                return stack;
+            }
+        };
+    }
+
     @Override
     public abstract void tick();
 
-    public abstract NonNullList<ItemStack> itemStacks();
+    public NonNullList<ItemStack> itemStacks() {
+        NonNullList<ItemStack> itemStacks = NonNullList.create();
+        for (int i = 0; i < this.inputsHandler.getSlots(); i++) {
+            itemStacks.add(this.inputsHandler.getStackInSlot(i));
+        }
+
+        for (int i = 0; i < this.outputsHandler.getSlots(); i++) {
+            itemStacks.add(this.outputsHandler.getStackInSlot(i));
+        }
+
+        return itemStacks;
+    }
 
     @Override
     public Component getDisplayName() {
@@ -149,5 +203,28 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
     @Override
     public Recipe<?> getRecipeUsed() {
         return null;
+    }
+
+    @Nullable
+    protected LazyOptional<IItemHandler> getItemHandler(@Nullable Direction facing) {
+        if (facing == null) {
+            return combinedHandler.cast();
+        } else if (facing == Direction.DOWN) {
+            return outputs.cast();
+        } else {
+            return inputs.cast();
+        }
+    }
+
+    @NotNull
+    @Override
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            LazyOptional<IItemHandler> itemHandler = getItemHandler(facing);
+            if (itemHandler != null) {
+                return itemHandler.cast();
+            }
+        }
+        return super.getCapability(capability, facing);
     }
 }
