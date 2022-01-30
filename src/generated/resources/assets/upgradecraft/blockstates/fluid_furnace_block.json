@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,lit=false": {
+      "model": "upgradecraft:block/fluid_furnace_north_off"
+    },
+    "facing=south,lit=false": {
+      "model": "upgradecraft:block/fluid_furnace_south_off",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "upgradecraft:block/fluid_furnace_west_off",
+      "y": 270
+    },
+    "facing=east,lit=false": {
+      "model": "upgradecraft:block/fluid_furnace_east_off",
+      "y": 90
+    },
+    "facing=north,lit=true": {
+      "model": "upgradecraft:block/fluid_furnace_north_on"
+    },
+    "facing=south,lit=true": {
+      "model": "upgradecraft:block/fluid_furnace_south_on",
+      "y": 180
+    },
+    "facing=west,lit=true": {
+      "model": "upgradecraft:block/fluid_furnace_west_on",
+      "y": 270
+    },
+    "facing=east,lit=true": {
+      "model": "upgradecraft:block/fluid_furnace_east_on",
+      "y": 90
+    }
+  }
+}

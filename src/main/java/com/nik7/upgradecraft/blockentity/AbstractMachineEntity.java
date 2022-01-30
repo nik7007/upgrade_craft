@@ -41,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity implements RecipeHolder, MenuProvider, Nameable {
-    protected short tickNumber;
+    protected short tickNumber = 0;
     protected Component name;
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
     protected final ItemStackHandler inputsHandler;
@@ -52,10 +52,10 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
 
     protected final LazyOptional<IItemHandler> combinedHandler = LazyOptional.of(this::createCombinedItemHandler);
 
-    public AbstractMachineEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, int initialCapacity, ItemStackHandler inputsHandler, ItemStackHandler outputsHandler) {
+    public AbstractMachineEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, int initialCapacity) {
         super(blockEntityType, blockPos, blockState);
-        this.inputsHandler = inputsHandler;
-        this.outputsHandler = outputsHandler;
+        this.inputsHandler = createInputsHandler();
+        this.outputsHandler = createOutputsHandler();
         this.inputs = LazyOptional.of(() -> this.inputsHandler);
         this.outputs = LazyOptional.of(() -> this.outputsHandler);
         this.tank = new FluidTankWrapper<>(new EventFluidTank(initialCapacity * FluidAttributes.BUCKET_VOLUME, this::onFluidChange, this::isFluidValid));
@@ -96,6 +96,10 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
         tag.put("RecipesUsed", compoundTag);
     }
 
+    protected abstract @NotNull ItemStackHandler createInputsHandler();
+
+    protected abstract @NotNull ItemStackHandler createOutputsHandler();
+
     public void setCustomName(Component name) {
         this.name = name;
     }
@@ -106,6 +110,18 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
 
     protected boolean isFluidValid(FluidStack fluidStack) {
         return true;
+    }
+
+    protected void updateContent() {
+        this.updateComparator();
+        this.setChanged();
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        this.inputs.invalidate();
+        this.outputs.invalidate();
     }
 
     public void awardUsedRecipesAndPopExperience(ServerPlayer serverPlayer) {
@@ -154,7 +170,15 @@ public abstract class AbstractMachineEntity extends BaseFluidHandlerEntity imple
     }
 
     @Override
-    public abstract void tick();
+    public final void tick() {
+        if (getLevel() == null) {
+            return;
+        }
+        this.tickNumber++;
+        machineTick();
+    }
+
+    protected abstract void machineTick();
 
     public NonNullList<ItemStack> itemStacks() {
         NonNullList<ItemStack> itemStacks = NonNullList.create();

@@ -1,0 +1,7 @@
+{
+  "parent": "upgradecraft:block/furnace_machine",
+  "textures": {
+    "all": "upgradecraft:block/fluid_furnace",
+    "in": "upgradecraft:block/fluid_furnace_off"
+  }
+}

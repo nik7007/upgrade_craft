@@ -22,6 +22,9 @@ public class RegisterItems {
     public static final RegistryObject<Item> FUNNEL_ITEM_BLOCK = REGISTER.register("funnel_block",
             () -> new UpgCBlockItem(FUNNEL_BLOCK.get()));
 
+    public static final RegistryObject<Item> FLUID_FURNACE_ITEM_BLOCK = REGISTER.register("fluid_furnace_block",
+            () -> new UpgCBlockItem(FLUID_FURNACE_BLOCK.get()));
+
     public static void init() {
         REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
     }

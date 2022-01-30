@@ -7,6 +7,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
@@ -51,6 +52,17 @@ public class RecipeProviderUpgC extends RecipeProvider {
                 .pattern("iti")
                 .pattern(" i ")
                 .unlockedBy("has_wooden_tank", has(RegisterBlocks.WOODEN_FLUID_TANK_BLOCK.get()))
+                .unlockedBy("has_wooden_glassed_tank", has(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RegisterBlocks.FLUID_FURNACE_BLOCK.get())
+                .define('f', Blocks.FURNACE)
+                .define('c', Tags.Items.COBBLESTONE)
+                .define('t', RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get())
+                .define('i', Tags.Items.INGOTS_IRON)
+                .pattern("cfc")
+                .pattern("ctc")
+                .pattern("iii")
                 .unlockedBy("has_wooden_glassed_tank", has(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get()))
                 .save(consumer);
     }

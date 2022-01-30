@@ -54,7 +54,7 @@ public abstract class BaseFluidHandlerEntity extends AbstractEntityFluidHandler 
         if (level == null) {
             return;
         }
-        updateComparator();
+        updateComparator(entity);
         level.sendBlockUpdated(entity.getBlockPos(), entity.getBlockState(), entity.getBlockState(), Block.UPDATE_ALL);
         entity.setChanged();
     }
@@ -64,7 +64,7 @@ public abstract class BaseFluidHandlerEntity extends AbstractEntityFluidHandler 
         return isFluidHot(fluid);
     }
 
-    protected boolean isFluidHot(FluidStack fluidStack) {
+    protected static boolean isFluidHot(FluidStack fluidStack) {
         return fluidStack.getFluid().getAttributes().getTemperature(fluidStack) > 250 + 273;
     }
 

@@ -1,6 +1,7 @@
 package com.nik7.upgradecraft.datagenerators;
 
 import com.nik7.upgradecraft.block.AbstractFluidTankBlock;
+import com.nik7.upgradecraft.block.AbstractMachineBlock;
 import com.nik7.upgradecraft.block.FunnelBlock;
 import com.nik7.upgradecraft.init.RegisterBlocks;
 import com.nik7.upgradecraft.state.properties.TankType;
@@ -31,6 +32,8 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
         tankBlock(RegisterBlocks.WOODEN_FLUID_TANK_GLASSED_BLOCK.get(), "wooden_fluid_tank", true);
 
         createFunnel(RegisterBlocks.FUNNEL_BLOCK.get(), "funnel");
+
+        machineBlock(RegisterBlocks.FLUID_FURNACE_BLOCK.get(), "furnace_machine", "fluid_furnace");
     }
 
     private void tankBlock(Block block, String typeName, boolean glassed) {
@@ -111,5 +114,38 @@ public class BlockStateProviderUpgC extends BlockStateProvider {
                     .rotationY(rotationY)
                     .build();
         }, ENABLED);
+    }
+
+    private void machineBlock(Block block, String modelName, String texture) {
+
+        VariantBlockStateBuilder.PartialBlockstate partialBlockstate = null;
+
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            if (partialBlockstate == null) {
+                partialBlockstate = getVariantBuilder(block).partialState();
+            } else {
+                partialBlockstate = partialBlockstate.partialState();
+            }
+            partialBlockstate = partialBlockstate
+                    .with(AbstractMachineBlock.FACING, direction).with(AbstractMachineBlock.LIT, false)
+                    .addModels(createOrientableMachineModels(modelName, texture, direction, false));
+            partialBlockstate = partialBlockstate.partialState()
+                    .with(AbstractMachineBlock.FACING, direction).with(AbstractMachineBlock.LIT, true)
+                    .addModels(createOrientableMachineModels(modelName, texture, direction, true));
+        }
+
+    }
+
+    private ConfiguredModel[] createOrientableMachineModels(String modelName, String texture, Direction facing, boolean lit) {
+        String active = lit ? "_on" : "_off";
+        ModelFile model = models()
+                .withExistingParent(texture + "_" + facing.name().toLowerCase() + active, modLoc("block/" + modelName))
+                .texture("all", modLoc("block/" + texture))
+                .texture("in", modLoc("block/" + texture + active));
+        return ConfiguredModel.builder()
+                .modelFile(model)
+                .rotationY((int) (facing.toYRot() + 180) % 360)
+                .build();
+
     }
 }
