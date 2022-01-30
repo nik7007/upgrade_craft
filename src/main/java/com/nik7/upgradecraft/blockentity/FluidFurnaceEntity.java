@@ -38,20 +38,20 @@ import java.util.Map;
 public class FluidFurnaceEntity extends AbstractMachineEntity {
     private static final Map<ResourceLocation, FuelInfo> FUEL_CACHE = new HashMap<>();
     private static final FuelInfo LAVA_INFO;
-    public final static int FLUID_TICK_DURATION;
 
     static {
-        float rawBurnAmount = ForgeHooks.getBurnTime(new ItemStack(Items.LAVA_BUCKET), RecipeType.BLASTING);
+        int fluidBurnTime = ForgeHooks.getBurnTime(new ItemStack(Items.LAVA_BUCKET), RecipeType.BLASTING);
+        float rawBurnAmount = FluidAttributes.BUCKET_VOLUME / (float) fluidBurnTime;
         float rawTickDuration = 1 / rawBurnAmount;
         int fluidTickDuration = rawTickDuration < 1 ? 1 : (int) (rawTickDuration + 0.5);
         int burnAmount = rawBurnAmount < 1 ? 1 : (int) (rawBurnAmount + 0.5);
-        FLUID_TICK_DURATION = burnAmount;
         LAVA_INFO = new FuelInfo(fluidTickDuration, burnAmount, 1);
     }
 
     private int burnTime = 0;
     private int cookTime = 0;
     private int cookTimeTotal = 0;
+    private int burnTimeTotal = 0;
 
     protected final ContainerData dataAccess = new ContainerData() {
         public int get(int index) {
@@ -59,6 +59,7 @@ public class FluidFurnaceEntity extends AbstractMachineEntity {
                 case 0 -> FluidFurnaceEntity.this.burnTime;
                 case 1 -> FluidFurnaceEntity.this.cookTime;
                 case 2 -> FluidFurnaceEntity.this.cookTimeTotal;
+                case 3 -> FluidFurnaceEntity.this.burnTimeTotal;
                 default -> 0;
             };
         }
@@ -68,13 +69,14 @@ public class FluidFurnaceEntity extends AbstractMachineEntity {
                 case 0 -> FluidFurnaceEntity.this.burnTime = value;
                 case 1 -> FluidFurnaceEntity.this.cookTime = value;
                 case 2 -> FluidFurnaceEntity.this.cookTimeTotal = value;
+                case 3 -> FluidFurnaceEntity.this.burnTimeTotal = value;
             }
 
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     };
 
@@ -129,6 +131,7 @@ public class FluidFurnaceEntity extends AbstractMachineEntity {
         if (getFluidAmount() > 0) {
             FluidStack fluid = getFluid();
             FuelInfo fuelInfo = getOrCreateFuelInfo(fluid);
+            burnTimeTotal = fuelInfo.tickDuration();
             ItemStack input = getInputs();
             if (!input.isEmpty() && getFluidAmount() >= fuelInfo.burnAmount()) {
                 SmeltingRecipe recipe = getLevel().getRecipeManager()
@@ -156,6 +159,8 @@ public class FluidFurnaceEntity extends AbstractMachineEntity {
                         input.shrink(1);
                         setRecipeUsed(recipe);
                     }
+                } else {
+                    cookTime = 0;
                 }
             }
         }
@@ -209,7 +214,8 @@ public class FluidFurnaceEntity extends AbstractMachineEntity {
         return FUEL_CACHE.computeIfAbsent(name, resourceLocation -> {
 
             Item bucket = fluid.getBucket();
-            float rawBurnAmount = ForgeHooks.getBurnTime(new ItemStack(bucket), RecipeType.BLASTING);
+            int fluidBurnTime = ForgeHooks.getBurnTime(new ItemStack(bucket), RecipeType.BLASTING);
+            float rawBurnAmount = FluidAttributes.BUCKET_VOLUME / (float) fluidBurnTime;
             int fluidTickDuration;
             int burnAmount;
             if (rawBurnAmount == 0) {

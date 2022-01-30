@@ -11,7 +11,6 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
-import static com.nik7.upgradecraft.blockentity.FluidFurnaceEntity.FLUID_TICK_DURATION;
 
 public class FluidFurnaceScreen extends FluidContainerScreen<FluidFurnaceMenu> {
     public final static ResourceLocation GUI = new ResourceLocation(MOD_ID, "textures/gui/screen/fluid_furnace_gui.png");
@@ -45,7 +44,7 @@ public class FluidFurnaceScreen extends FluidContainerScreen<FluidFurnaceMenu> {
         this.blit(pPoseStack, relX + 79, relY + 34, 176, 14, cookProgress + 1, 16);
 
         int burnTime = menu.getBurnTime();
-        int burnProgress = (int) ((burnTime / (float) FLUID_TICK_DURATION) * 14);
+        int burnProgress = (int) ((burnTime / (float) menu.getBurnTimeTotal()) * 14);
         this.blit(pPoseStack, relX + 56, relY + 36 + 13 - burnProgress, 176, 13 - burnProgress, 14, burnProgress);
 
     }

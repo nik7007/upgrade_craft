@@ -24,7 +24,7 @@ public class FluidFurnaceMenu extends BaseMachineContainerMenu<FluidFurnaceEntit
     private final static int OUTPUT = 1;
 
     public FluidFurnaceMenu(int pContainerId, Inventory playerInventory, FriendlyByteBuf data) {
-        this(pContainerId, new SimpleContainerData(3), playerInventory, (FluidFurnaceEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos()), new ItemStackHandler(), new ItemStackHandler());
+        this(pContainerId, new SimpleContainerData(4), playerInventory, (FluidFurnaceEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos()), new ItemStackHandler(), new ItemStackHandler());
     }
 
     public FluidFurnaceMenu(int pContainerId, ContainerData dataAccess, Inventory playerInventory, @Nullable FluidFurnaceEntity blockEntity, ItemStackHandler inputsHandler, ItemStackHandler outputsHandler) {
@@ -44,6 +44,10 @@ public class FluidFurnaceMenu extends BaseMachineContainerMenu<FluidFurnaceEntit
 
     public int getCookTimeTotal() {
         return this.dataAccess.get(2);
+    }
+
+    public int getBurnTimeTotal() {
+        return this.dataAccess.get(3);
     }
 
     @Override
