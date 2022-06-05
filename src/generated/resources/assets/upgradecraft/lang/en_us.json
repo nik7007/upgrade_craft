@@ -1,21 +1,5 @@
 {
-  "block.upgradecraft.clay_bricks_block": "Clay Bricks",
-  "block.upgradecraft.clay_bricks_slab_block": "Clay Bricks Slab",
-  "block.upgradecraft.clay_bricks_stairs_block": "Clay Bricks Stairs",
-  "block.upgradecraft.clay_bricks_wall_block": "Clay Bricks Wall",
-  "block.upgradecraft.clay_fluid_tank_block": "Clay Fluid Tank",
-  "block.upgradecraft.clay_fluid_tank_glassed_block": "Clay Fluid Tank",
   "block.upgradecraft.fluid_furnace_block": "Fluid Furnace",
-  "block.upgradecraft.fluid_infuser_block": "Fluid Infuser",
-  "block.upgradecraft.funnel_block": "Funnel",
   "block.upgradecraft.slimy_planks_block": "Slimy Planks",
-  "block.upgradecraft.terracotta_fluid_tank_block": "Terracotta Fluid Tank",
-  "block.upgradecraft.terracotta_fluid_tank_glassed_block": "Terracotta Fluid Tank",
-  "block.upgradecraft.wooden_fluid_tank_block": "Wooden Fluid Tank",
-  "block.upgradecraft.wooden_fluid_tank_glassed_block": "Wooden Fluid Tank",
-  "item.upgradecraft.clay_ingot_item": "Clay Ingot",
-  "itemGroup.upgrade_craft": "UpgradeCraft",
-  "tooltip.upgradecraft.fluid.empty": "Empty",
-  "tooltip.upgradecraft.tank.glassed": "Transparent",
-  "tooltip.upgradecraft.tank.shift": "<SHIFT>"
+  "itemGroup.upgrade_craft": "UpgradeCraft"
 }

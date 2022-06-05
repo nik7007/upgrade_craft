@@ -1,6 +1,0 @@
-{
-  "parent": "upgradecraft:block/fluid_tank",
-  "textures": {
-    "all": "upgradecraft:block/terracotta_fluid_tank"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "side": "upgradecraft:block/clay_bricks_block",
-    "bottom": "upgradecraft:block/clay_bricks_block",
-    "top": "upgradecraft:block/clay_bricks_block"
-  }
-}
