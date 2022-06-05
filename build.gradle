@@ -8,9 +8,9 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
         // Make sure this version matches the one included in Kotlin for Forge
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
         // OPTIONAL Gradle plugin for Kotlin Serialization
-        classpath 'org.jetbrains.kotlin:kotlin-serialization:1.6.10'
+        classpath "org.jetbrains.kotlin:kotlin-serialization:${kotlin_version}"
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -18,7 +18,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'kotlin'
 apply plugin: 'kotlinx-serialization'
 
-apply from: 'https://raw.githubusercontent.com/thedarkcolour/KotlinForForge/site/thedarkcolour/kotlinforforge/gradle/kff-3.3.2.gradle'
+apply from: "https://raw.githubusercontent.com/thedarkcolour/KotlinForForge/site/thedarkcolour/kotlinforforge/gradle/kff-${kff_version}.gradle"
 
 version = "${minecraft_version}-${upgcraft_version}"
 group = 'com.nik7.upgradecraft'
@@ -91,6 +91,14 @@ compileKotlin {
 kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of("17"))
+    }
+
+    kotlin {
+        sourceSets.all {
+            languageSettings {
+                languageVersion = '1.7'
+            }
+        }
     }
 }
 
