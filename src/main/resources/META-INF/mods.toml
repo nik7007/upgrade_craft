@@ -8,9 +8,9 @@ license='LGPL'
 [[mods]]
 modId="upgradecraft"
 version="${file.jarVersion}"
-displayName="ExampleMod"
-credits="The ExampleMod dev team"
-authors="ExampleModAuthor"
+displayName="UpgradeCraft"
+credits="The UpgradeCraft dev team"
+authors="Nik7"
 description='''
 Example mod that uses Kotlin for Forge.
 '''
