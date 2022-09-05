@@ -1,0 +1,8 @@
+// 1.19.2	2022-09-03T00:22:33.9857701	upgradecraft Block tags
+625fb69b2241f20f63141e6180ef8a864e07ced6 data/minecraft/tags/blocks/doors.json
+b4749a8d090bd36fd7c5d381647c836c6e160cbc data/minecraft/tags/blocks/fences.json
+84729f3e592adecaa0967ecbde984cd2911434c4 data/minecraft/tags/blocks/slabs.json
+6ce58ddb0437ef3a39678a3ac32e5b211b30077b data/minecraft/tags/blocks/stairs.json
+3fa03680b861965153fa9772e47f19aefbdd4df1 data/minecraft/tags/blocks/trapdoors.json
+625fb69b2241f20f63141e6180ef8a864e07ced6 data/minecraft/tags/blocks/wooden_doors.json
+b4749a8d090bd36fd7c5d381647c836c6e160cbc data/minecraft/tags/blocks/wooden_fences.json

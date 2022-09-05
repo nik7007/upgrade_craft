@@ -1,32 +1,28 @@
 package com.nik7.upgradecraft.datagenerators;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
-import static com.nik7.upgradecraft.UpgradeCraft.MOD_ID;
+import static com.nik7.upgradecraft.UpgradeCraft.MODID;
 
-@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
-
     @SubscribeEvent
     public static void gatherDataGenerators(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
-        if (event.includeServer()) {
-            generator.addProvider(new RecipeProviderUpgC(generator));
-            generator.addProvider(new LootTableProviderUpgC(generator));
-            BlockTagsProviderUpgC blockTagsProvider = new BlockTagsProviderUpgC(generator);
-            generator.addProvider(blockTagsProvider);
-            generator.addProvider(new ItemTagsProviderUpgC(generator, blockTagsProvider));
-        }
-        if (event.includeClient()) {
-            ExistingFileHelper helper = event.getExistingFileHelper();
-            generator.addProvider(new BlockStateProviderUpgC(generator, helper));
-            generator.addProvider(new ItemModelProviderUpgC(generator, helper));
-            //lang
-            generator.addProvider(new LanguageProviderUsUpgC(generator));
-        }
+
+
+        generator.addProvider(event.includeServer(), new UpgCLootTableProvider(generator));
+        generator.addProvider(event.includeServer(), new UpgCRecipeProvider(generator));
+        generator.addProvider(event.includeServer(), new UpgCBlockTagsProvider(generator, event.getExistingFileHelper()));
+        // generator.addProvider(new ItemTagsProviderUpgC(generator, blockTagsProvider, existingFileHelper));
+
+        generator.addProvider(event.includeClient(), new UpgCBlockStateProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new UpgCItemModelProvider(generator, event.getExistingFileHelper()));
+        //lang
+        generator.addProvider(event.includeClient(), new UpgCLanguageProvider.US(generator));
+
     }
 }

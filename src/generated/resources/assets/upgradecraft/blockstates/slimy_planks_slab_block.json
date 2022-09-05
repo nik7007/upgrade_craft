@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "upgradecraft:block/slimy_planks_slab_block"
+    },
+    "type=double": {
+      "model": "upgradecraft:block/slimy_planks_block"
+    },
+    "type=top": {
+      "model": "upgradecraft:block/slimy_planks_slab_block_top"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "upgradecraft:block/slimy_planks_block",
+    "side": "upgradecraft:block/slimy_planks_block",
+    "top": "upgradecraft:block/slimy_planks_block"
+  }
+}
