@@ -53,11 +53,8 @@ public abstract class AbstractFluidTankEntityBlock extends AbstractEntityFluidHa
 
     @Override
     public void load(CompoundTag tag) {
+        createDoubleTankClient();
         super.load(tag);
-
-        if (createDoubleTankClient()) {
-            super.load(tag);
-        }
     }
 
     @Override
@@ -98,44 +95,52 @@ public abstract class AbstractFluidTankEntityBlock extends AbstractEntityFluidHa
         return false;
     }
 
-    private boolean createDoubleTankClient() {
+    private void createDoubleTankClient() {
         if (this.getLevel() == null || !this.getLevel().isClientSide()) {
-            return false;
-        }
-        if (otherTank != null) {
-            return false;
+            return;
         }
 
         BlockState blockState = getBlockState();
-        if (!glassed || !(blockState.hasProperty(MIXED) && blockState.getValue(MIXED))) {
-            return false;
-        }
 
         if (!blockState.hasProperty(TYPE)) {
-            return false;
+            return;
         }
 
         TankType tankType = blockState.getValue(TYPE);
+
+        if (tankType != TankType.SINGLE && otherTank != null) {
+            return;
+        }
+
+        if (!glassed && !(blockState.hasProperty(MIXED) && blockState.getValue(MIXED))) {
+            return;
+        }
+
         if (tankType == TankType.SINGLE) {
-            return false;
+            if (this.getTank().getCapacity() == getOriginalCapacity()) {
+                return;
+            }
+            EventFluidTank newTank = createNewTank(getOriginalCapacity(), FluidStack.EMPTY, FluidStack.EMPTY);
+            this.getTank().setInternalTank(newTank);
+            otherTank = null;
+            return;
         }
 
         Optional<MergeInfo> optionalMergeInfo = Arrays.stream(getMergeInfo())
                 .filter(mergeInfo -> mergeInfo.myNewType == tankType)
                 .findFirst();
         if (optionalMergeInfo.isEmpty()) {
-            return false;
+            return;
         }
         MergeInfo mergeInfo = optionalMergeInfo.get();
         otherTank = getEntityTank(mergeInfo.blockPos, mergeInfo.otherNewType);
         if (otherTank == null) {
-            return false;
+            return;
         }
-        EventFluidTank newTank = createNewTank(getOriginalCapacity() * 2, this.getFluid(), otherTank.getFluid());
+        EventFluidTank newTank = createNewTank(getOriginalCapacity() * 2, FluidStack.EMPTY, FluidStack.EMPTY);
         this.getTank().setInternalTank(newTank);
         otherTank.getTank().setInternalTank(newTank);
 
-        return true;
     }
 
     protected void onChangeFluid(FluidStack fluidStack) {
