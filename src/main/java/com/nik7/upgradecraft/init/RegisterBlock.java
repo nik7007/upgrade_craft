@@ -1,12 +1,9 @@
 package com.nik7.upgradecraft.init;
 
 import com.nik7.upgradecraft.block.slimywood.*;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.BlockGetter;
+import com.nik7.upgradecraft.block.tank.WoodenFluidTankBlock;
+import com.nik7.upgradecraft.block.tank.WoodenGlassedFluidTankBlock;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -36,6 +33,8 @@ public final class RegisterBlock {
     public static final RegistryObject<TrapDoorBlock> SLIMY_PLANKS_TRAP_DOOR_BLOCK = BLOCKS.register("slimy_planks_trap_door_block",
             () -> new SlimyPlanksTrapDoorBlock(SLIMY_PLANKS_BLOCK.get()));
 
+    public static final RegistryObject<Block> WOODEN_FLUID_TANK_BLOCK = BLOCKS.register("wooden_fluid_tank", WoodenFluidTankBlock::new);
+    public static final RegistryObject<Block> WOODEN_GLASSED_FLUID_TANK_BLOCK = BLOCKS.register("wooden_glassed_fluid_tank", WoodenGlassedFluidTankBlock::new);
 
     private RegisterBlock() {
     }

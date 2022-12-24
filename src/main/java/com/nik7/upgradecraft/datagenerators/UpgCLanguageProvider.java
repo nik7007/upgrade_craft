@@ -29,6 +29,10 @@ public abstract class UpgCLanguageProvider extends LanguageProvider {
             addBlock(RegisterBlock.SLIMY_PLANKS_FENCE_GATE_BLOCK, "Slimy Fence Gate");
             addBlock(RegisterBlock.SLIMY_PLANKS_DOOR_BLOCK, "Slimy Door");
             addBlock(RegisterBlock.SLIMY_PLANKS_TRAP_DOOR_BLOCK, "Slimy Trapdoor");
+
+            add("tooltip.upgradecraft.tank.glassed", "Glassed");
+            addBlock(RegisterBlock.WOODEN_FLUID_TANK_BLOCK, "Wooden fluid tank");
+            addBlock(RegisterBlock.WOODEN_GLASSED_FLUID_TANK_BLOCK, "Wooden fluid tank");
         }
     }
 }

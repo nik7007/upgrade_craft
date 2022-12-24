@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "upgradecraft:slimy_planks_block"
+    }
+  },
+  "pattern": [
+    "ppp",
+    "p p",
+    "ppp"
+  ],
+  "result": {
+    "item": "upgradecraft:wooden_fluid_tank"
+  }
+}

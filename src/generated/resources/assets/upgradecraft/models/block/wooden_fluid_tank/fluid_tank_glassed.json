@@ -1,0 +1,6 @@
+{
+  "parent": "upgradecraft:block/fluid_tank/fluid_tank",
+  "textures": {
+    "all": "upgradecraft:block/wooden_fluid_tank/fluid_tank_glassed"
+  }
+}

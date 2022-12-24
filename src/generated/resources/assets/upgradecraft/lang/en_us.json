@@ -6,5 +6,8 @@
   "block.upgradecraft.slimy_planks_slab_block": "Slimy Slab",
   "block.upgradecraft.slimy_planks_stairs_block": "Slimy Stairs",
   "block.upgradecraft.slimy_planks_trap_door_block": "Slimy Trapdoor",
-  "itemGroup.upgrade_craft": "UpgradeCraft"
+  "block.upgradecraft.wooden_fluid_tank": "Wooden fluid tank",
+  "block.upgradecraft.wooden_glassed_fluid_tank": "Wooden fluid tank",
+  "itemGroup.upgrade_craft": "UpgradeCraft",
+  "tooltip.upgradecraft.tank.glassed": "Glassed"
 }

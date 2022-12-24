@@ -13,7 +13,6 @@ public class DataGenerators {
     public static void gatherDataGenerators(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
 
-
         generator.addProvider(event.includeServer(), new UpgCLootTableProvider(generator));
         generator.addProvider(event.includeServer(), new UpgCRecipeProvider(generator));
         generator.addProvider(event.includeServer(), new UpgCBlockTagsProvider(generator, event.getExistingFileHelper()));

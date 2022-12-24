@@ -22,6 +22,9 @@ public final class RegisterItem {
     public static final RegistryObject<Item> SLIMY_PLANKS_DOOR_BLOCK_ITEM = registerSimpleItemBlock("slimy_planks_door_block", SLIMY_PLANKS_DOOR_BLOCK);
     public static final RegistryObject<Item> SLIMY_PLANKS_TRAP_DOOR_BLOCK_ITEM = registerSimpleItemBlock("slimy_planks_trap_door_block", SLIMY_PLANKS_TRAP_DOOR_BLOCK);
 
+    public static final RegistryObject<Item> WOODEN_FLUID_TANK_BLOCK_ITEM = registerSimpleItemBlock("wooden_fluid_tank", WOODEN_FLUID_TANK_BLOCK);
+    public static final RegistryObject<Item> WOODEN_GLASSED_FLUID_TANK_BLOCK_ITEM = registerSimpleItemBlock("wooden_glassed_fluid_tank", WOODEN_GLASSED_FLUID_TANK_BLOCK);
+
     private static RegistryObject<Item> registerSimpleItemBlock(String name, RegistryObject<? extends Block> rBlock) {
         return ITEMS.register(name, () -> new ModBlockItem(rBlock.get()));
     }

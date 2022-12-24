@@ -50,6 +50,23 @@ public class UpgCRecipeProvider extends RecipeProvider {
         trapdoorBuilder(RegisterBlock.SLIMY_PLANKS_TRAP_DOOR_BLOCK.get(), Ingredient.of(slimyBlock))
                 .unlockedBy("has_slimy_planks", has(slimyBlock))
                 .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RegisterBlock.WOODEN_FLUID_TANK_BLOCK.get())
+                .define('p', slimyBlock.asItem())
+                .pattern("ppp")
+                .pattern("p p")
+                .pattern("ppp")
+                .unlockedBy("has_slimy_planks", has(slimyBlock))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RegisterBlock.WOODEN_GLASSED_FLUID_TANK_BLOCK.get())
+                .define('p', slimyBlock.asItem())
+                .define('g', Tags.Items.GLASS)
+                .pattern("ppp")
+                .pattern("pgp")
+                .pattern("ppp")
+                .unlockedBy("has_slimy_planks", has(slimyBlock))
+                .save(consumer);
     }
 
 }

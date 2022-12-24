@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "mixed=false,type=bottom": {
+      "model": "upgradecraft:block/wooden_fluid_tank/double_fluid_tank_glassed_bottom"
+    },
+    "mixed=false,type=top": {
+      "model": "upgradecraft:block/wooden_fluid_tank/double_fluid_tank_glassed_top"
+    },
+    "mixed=true,type=bottom": {
+      "model": "upgradecraft:block/wooden_fluid_tank/double_fluid_tank_glassed_mixed_bottom"
+    },
+    "mixed=true,type=top": {
+      "model": "upgradecraft:block/wooden_fluid_tank/double_fluid_tank_glassed_mixed_top"
+    },
+    "type=single": {
+      "model": "upgradecraft:block/wooden_fluid_tank/fluid_tank_glassed"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-03T00:22:33.9877699	LootTables
+// 1.19.2	2022-12-20T19:20:43.4958101	LootTables
 54d2f2e9e2df1006e1be10c1e58962149e750b18 data/upgradecraft/loot_tables/blocks/slimy_planks_block.json
 040e601e0ed897eb9752a4560a0408cc20a4207e data/upgradecraft/loot_tables/blocks/slimy_planks_door_block.json
 5aeafc566a2b4f8a01666e64389c5e10cf99053f data/upgradecraft/loot_tables/blocks/slimy_planks_fence_block.json
@@ -6,3 +6,5 @@
 393de6019b4f67dbbb15391ed0c208e63258c490 data/upgradecraft/loot_tables/blocks/slimy_planks_slab_block.json
 0255ee992d2d17a46282d54ac2c75c773debcc13 data/upgradecraft/loot_tables/blocks/slimy_planks_stairs_block.json
 3626f726e8835586694fca15c47f8f4d266a16bb data/upgradecraft/loot_tables/blocks/slimy_planks_trap_door_block.json
+3336d2a628aa90d9de985dbc76235d61565cdc8b data/upgradecraft/loot_tables/blocks/wooden_fluid_tank.json
+4b5ea5e16b8b69fb448a767af3d3c8faf3bb0c69 data/upgradecraft/loot_tables/blocks/wooden_glassed_fluid_tank.json
