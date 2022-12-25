@@ -321,7 +321,7 @@ public abstract class AbstractFluidTankEntityBlock extends AbstractEntityFluidHa
         madeTankSingle(otherTank);
     }
 
-    private void madeTankSingle(AbstractFluidTankEntityBlock tankEntityBlock) {
+    protected void madeTankSingle(AbstractFluidTankEntityBlock tankEntityBlock) {
         changeTank(tankEntityBlock, tankEntityBlock.getSingleEventTank());
         madeBlockSingle(tankEntityBlock);
         tankEntityBlock.otherTank = null;
