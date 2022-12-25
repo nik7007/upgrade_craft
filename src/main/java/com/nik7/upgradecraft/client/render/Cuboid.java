@@ -1,10 +1,11 @@
 package com.nik7.upgradecraft.client.render;
 
+import com.google.common.base.MoreObjects;
+
 public class Cuboid {
     private final double minX;
     private final double minY;
     private final double minZ;
-
     private final double x;
     private final double z;
     private double y;
@@ -44,5 +45,17 @@ public class Cuboid {
 
     public void scaleY(double scale) {
         this.y *= scale;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("minX", minX)
+                .add("minY", minY)
+                .add("minZ", minZ)
+                .add("x", x)
+                .add("z", z)
+                .add("y", y)
+                .toString();
     }
 }
