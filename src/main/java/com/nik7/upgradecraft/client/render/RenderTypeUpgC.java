@@ -14,8 +14,8 @@ public class RenderTypeUpgC extends RenderType {
     public static RenderType resizableCuboid() {
         RenderType.CompositeState.CompositeStateBuilder stateBuilder = preset()
                 .setLightmapState(RenderStateShard.LIGHTMAP)
-                .setOverlayState(OVERLAY)
-                ;
+                .setOverlayState(OVERLAY);
+
         return create(UpgradeCraft.MODID + ":resizable_cuboid", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,
                 stateBuilder.createCompositeState(true));
     }
@@ -24,7 +24,6 @@ public class RenderTypeUpgC extends RenderType {
         return RenderType.CompositeState.builder()
                 .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
                 .setTextureState(BLOCK_SHEET_MIPPED)
-                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                ;
+                .setTransparencyState(TRANSLUCENT_TRANSPARENCY);
     }
 }
