@@ -6,9 +6,12 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -67,6 +70,18 @@ public class UpgCRecipeProvider extends RecipeProvider {
                 .pattern("ppp")
                 .unlockedBy("has_slimy_planks", has(slimyBlock))
                 .save(consumer);
+
+        // Mode Recipe
+        ModRecipeProvider.fluidInfuserRecipe(slimyBlock)
+                .setInputFluid(new FluidStack(Fluids.LAVA, 50))
+                .setDissolveInput(Ingredient.of(Tags.Items.SLIMEBALLS), 2)
+                .setInfuseInput(Ingredient.of(ItemTags.PLANKS), 1)
+                .setDissolveTime(50)
+                .setInfuseTime(100)
+                .setOutput(new ItemStack(slimyBlock))
+                .setExperience(0.4f)
+                .save(consumer);
+        ;
     }
 
 }

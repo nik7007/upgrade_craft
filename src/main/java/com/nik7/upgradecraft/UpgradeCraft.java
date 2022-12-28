@@ -1,10 +1,7 @@
 package com.nik7.upgradecraft;
 
 import com.mojang.logging.LogUtils;
-import com.nik7.upgradecraft.init.Config;
-import com.nik7.upgradecraft.init.RegisterBlock;
-import com.nik7.upgradecraft.init.RegisterBlockEntity;
-import com.nik7.upgradecraft.init.RegisterItem;
+import com.nik7.upgradecraft.init.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -24,6 +21,8 @@ public class UpgradeCraft {
         RegisterBlock.register(modEventBus);
         RegisterItem.register(modEventBus);
         RegisterBlockEntity.register(modEventBus);
+        RegisterRecipeSerializer.register(modEventBus);
+        RegisterRecipe.register(modEventBus);
 
         // MinecraftForge.EVENT_BUS.register(ClientOnlyEventHandler.class);
     }

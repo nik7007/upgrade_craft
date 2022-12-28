@@ -1,0 +1,51 @@
+{
+  "type": "upgradecraft:fluid_infuser_recipe_serializer",
+  "dissolveInput": {
+    "type": 0,
+    "component": {
+      "amount": 2,
+      "value": {
+        "tag": "forge:slimeballs"
+      }
+    },
+    "name": "dissolveInput"
+  },
+  "dissolveTime": {
+    "type": 3,
+    "component": 50,
+    "name": "dissolveTime"
+  },
+  "experience": {
+    "type": 5,
+    "component": 0.4,
+    "name": "experience"
+  },
+  "infuseInput": {
+    "type": 0,
+    "component": {
+      "tag": "minecraft:planks"
+    },
+    "name": "infuseInput"
+  },
+  "infuseTime": {
+    "type": 3,
+    "component": 100,
+    "name": "infuseTime"
+  },
+  "inputFluid": {
+    "type": 1,
+    "component": {
+      "amount": 50,
+      "fluid": "minecraft:lava"
+    },
+    "name": "inputFluid"
+  },
+  "output": {
+    "type": 4,
+    "component": {
+      "amount": 1,
+      "item": "upgradecraft:slimy_planks_block"
+    },
+    "name": "output"
+  }
+}
